@@ -1,0 +1,28 @@
+# Stage-промпты Receipt Scanner UA
+
+Открывайте только промпт текущего этапа и [универсальные правила этапа](UNIVERSAL_STAGE.md).
+
+- [Stage 00](00-context-compatibility-audit.md)
+- [Stage 01](01-repository-foundation.md)
+- [Stage 02](02-dataset-privacy-baseline.md)
+- [Stage 03](03-domain-model-db-schema.md)
+- [Stage 04](04-ingestion-deduplication.md)
+- [Stage 05](05-image-preprocessing-baseline.md)
+- [Stage 06](06-ocr-baseline.md)
+- [Stage 07](07-ocr-evaluation-profile-selection.md)
+- [Stage 08](08-layout-reconstruction.md)
+- [Stage 09](09-store-detection-adapters.md)
+- [Stage 10](10-receipt-parser-core.md)
+- [Stage 11](11-numeric-parsing-reconciliation.md)
+- [Stage 12](12-product-normalization-baseline.md)
+- [Stage 13](13-human-review-alias-learning.md)
+- [Stage 14](14-price-history-persistence.md)
+- [Stage 15](15-arrow-parquet-analytical-layer.md)
+- [Stage 16](16-excel-export.md)
+- [Stage 17](17-quality-metrics-regression.md)
+- [Stage 18](18-cli-batch-processing.md)
+- [Stage 19](19-performance-caching-parallelism.md)
+- [Stage 20](20-optional-local-review-ui.md)
+- [Stage 21](21-onnx-npu-research.md)
+- [Stage 22](22-security-recovery-backups.md)
+- [Stage 23](23-packaging-final-acceptance.md)
