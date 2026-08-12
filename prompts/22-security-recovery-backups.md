@@ -1,4 +1,4 @@
-# 47. PROMPT 22 — Security / Failure Recovery / Backups
+# 47. PROMPT 22 — безопасность, восстановление после сбоев и резервные копии
 
 ```text
 Проведи project-specific privacy/security review поверх inherited global rules.
@@ -12,9 +12,9 @@ DB backup/restore, migration recovery, user filenames.
 ```
 
 ### DoD
-- threat/failure modes documented;
-- formula injection mitigated;
-- uncontrolled file writes отсутствуют;
-- backup/restore acceptance test проходит.
+- модели угроз и сбоев документированы;
+- injection формул предотвращена;
+- неконтролируемая запись файлов отсутствует;
+- приёмочный тест резервного копирования и восстановления проходит.
 
 ---

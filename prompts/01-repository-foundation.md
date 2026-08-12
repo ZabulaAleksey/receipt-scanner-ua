@@ -1,4 +1,4 @@
-# 26. PROMPT 01 — Repository Foundation
+# 26. PROMPT 01 — основа репозитория
 
 ```text
 Создай Foundation Receipt Scanner UA с учётом CONTEXT_COMPATIBILITY.md.

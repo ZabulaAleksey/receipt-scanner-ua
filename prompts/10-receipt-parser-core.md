@@ -1,4 +1,4 @@
-# 35. PROMPT 10 — Receipt Parser Core
+# 35. PROMPT 10 — core parser чеков
 
 ```text
 Реализуй LogicalLine classification и item extraction.
@@ -13,8 +13,8 @@ Parser result = values + confidence + evidence.
 ```
 
 ### DoD
-- baseline fixtures извлекают items;
+- базовые fixtures извлекают товары;
 - raw names не теряются;
-- regression tests есть.
+- регрессионные тесты существуют.
 
 ---

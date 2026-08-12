@@ -1,4 +1,4 @@
-# 43. PROMPT 18 — CLI Workflow + Batch Processing
+# 43. PROMPT 18 — workflow CLI и пакетная обработка
 
 ```text
 Собери команды:
@@ -14,7 +14,7 @@ Batch:
 ```
 
 ### DoD
-- directory проходит end-to-end;
+- каталог проходит end-to-end проверку;
 - interrupted run можно продолжить;
 - duplicate processing не плодит записи.
 

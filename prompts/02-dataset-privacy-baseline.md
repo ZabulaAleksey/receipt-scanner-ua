@@ -1,4 +1,4 @@
-# 27. PROMPT 02 — Dataset + Privacy Baseline
+# 27. PROMPT 02 — базовый набор данных и конфиденциальность
 
 ```text
 Сделай dataset-first основу.
@@ -16,9 +16,9 @@ long-name wrap, weight item, discount, mixed Ukrainian/Russian.
 ```
 
 ### DoD
-- fixture schema versioned;
-- no real PII tracked;
-- expected outputs есть;
+- схема fixtures версионируется;
+- реальные PII не отслеживаются;
+- ожидаемые результаты существуют;
 - privacy check проходит.
 
 ---

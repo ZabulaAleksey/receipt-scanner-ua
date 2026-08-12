@@ -1,4 +1,4 @@
-# 38. PROMPT 13 — Human Review + Alias Learning
+# 38. PROMPT 13 — ручная проверка и обучение aliases
 
 ```text
 Создай CLI review queue.

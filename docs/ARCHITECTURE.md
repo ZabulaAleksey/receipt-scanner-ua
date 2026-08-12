@@ -27,14 +27,14 @@
 
 - **Local-first:** облачный OCR/LLM не обязателен.
 - **Raw receipts не коммитятся в Git.**
-- **SQLite/PostgreSQL = canonical mutable state.**
+- **SQLite/PostgreSQL = каноническое изменяемое состояние.**
 - **Excel = report/export, не база данных.**
 - **Raw OCR никогда не перезаписывается нормализованным текстом.**
 - **Деньги хранятся через Decimal/fixed precision, не float.**
 - **Low-confidence результат не принимается молча.**
-- **Store-specific логика живёт в adapters.**
-- **CPU baseline обязателен. GPU/NPU — только как feature/capability backend.**
-- **Любое ускорение: benchmark + correctness test + fallback.**
+- **Специфичная для магазина логика находится в адаптерах.**
+- **Базовый вариант на CPU обязателен. GPU/NPU — только как backend необязательных возможностей.**
+- **Любое ускорение требует benchmark, теста корректности и fallback.**
 - **Любое новое архитектурное решение: ADR в `docs/DECISIONS.md`.**
 - **Любая OCR/parser/normalization ошибка после исправления по возможности превращается в regression fixture.**
 
@@ -157,17 +157,17 @@ receipt-scanner-ua/
 
 ## 6. Подробный стек технологий
 
-### Runtime / dependencies
+### Среда выполнения и зависимости
 
 - Python;
-- `uv` — env/dependencies/lockfile;
+- `uv` — окружение, зависимости и lockfile;
 - `pyproject.toml`;
 - `uv.lock`;
 - отдельный `.venv` проекта + общий cache `uv`.
 
 Не использовать одновременно Poetry/Pipenv/Conda как второй source of truth.
 
-### Computer Vision
+### Компьютерное зрение
 
 - OpenCV (`opencv-python-headless`);
 - Pillow;
@@ -175,20 +175,20 @@ receipt-scanner-ua/
 
 Задачи:
 - orientation;
-- receipt boundary;
-- perspective transform;
+- граница чека;
+- коррекция перспективы;
 - crop;
 - grayscale;
-- illumination normalization;
+- нормализация освещения;
 - CLAHE;
 - denoise;
 - deskew;
-- threshold variants;
+- варианты пороговой обработки;
 - resize.
 
 ### OCR
 
-**Primary:** PaddleOCR с украинским language path.<br>
+**Основной вариант:** PaddleOCR с поддержкой украинского языка.<br>
 OCR backend обязан возвращать:
 
 ```text
@@ -208,23 +208,23 @@ class OCRBackend(Protocol):
 
 Parser не должен импортировать PaddleOCR напрямую.
 
-### Parsing / validation
+### Разбор и валидация
 
 - Pydantic;
 - `re`;
 - `Decimal`;
 - `datetime`;
-- store-specific rules/adapters;
-- arithmetic reconciliation.
+- специфичные для магазина правила и адаптеры;
+- арифметическая сверка.
 
-### Product matching
+### Сопоставление товаров
 
-- Unicode normalization;
-- собственные unit/abbreviation rules;
+- нормализация Unicode;
+- собственные правила единиц и сокращений;
 - RapidFuzz как один из сигналов;
-- alias dictionary;
-- brand/size/unit features;
-- human review queue.
+- словарь aliases;
+- признаки бренда, размера и единицы;
+- очередь ручной проверки.
 
 ### Persistence
 
@@ -234,9 +234,9 @@ MVP:
 - Alembic.
 
 Scale-out позже:
-- PostgreSQL, если появится server/multi-user concurrency.
+- PostgreSQL, если появятся сервер и конкурентная многопользовательская работа.
 
-### Analytical layer
+### Аналитический слой
 
 - Apache Arrow / PyArrow;
 - Parquet.
@@ -256,14 +256,14 @@ Excel             = report/export
 - Typer;
 - Rich.
 
-### Testing / quality
+### Тестирование и качество
 
 - pytest;
 - pytest-cov;
 - Hypothesis;
 - pytest-benchmark;
-- golden fixtures;
-- regression fixtures;
+- эталонные fixtures;
+- регрессионные fixtures;
 - ruff;
 - type checker — тот, который уже принят в глобальной AI Dev Team.
 
@@ -447,9 +447,9 @@ Price history
 
 ---
 
-## 9. Image preprocessing
+## 9. Предварительная обработка изображений
 
-Versioned profile:
+Версионируемый профиль:
 
 ```text
 receipt-default-v1
@@ -466,15 +466,15 @@ HIGH_CONTRAST
 
 OCR evaluator может выбирать лучший вариант по нескольким сигналам.
 
-Failure cases:
+Случаи отказа:
 - blur;
 - shadow;
 - glare;
 - perspective;
 - cropped edge;
 - long receipt;
-- thermal paper fading;
-- rotated image.
+- выцветание термобумаги;
+- повёрнутое изображение.
 
 ---
 
@@ -502,15 +502,15 @@ Raw OCR сохраняется неизменно для audit/regression.
 
 ---
 
-## 11. Layout reconstruction
+## 11. Восстановление layout
 
 OCR blocks группируются по:
 - y overlap;
 - baseline;
 - x coordinate;
 - gaps;
-- approximate text height;
-- wrapped-line rules.
+- приблизительная высота текста;
+- правила перенесённых строк.
 
 Результат:
 
@@ -527,7 +527,7 @@ LogicalLine
 
 ---
 
-## 12. Store Adapter architecture
+## 12. Архитектура адаптеров магазинов
 
 ```python
 class StoreAdapter(Protocol):
@@ -551,7 +551,7 @@ class StoreAdapter(Protocol):
 
 ---
 
-## 13. Receipt parser
+## 13. Parser чеков
 
 Типы строк:
 
@@ -588,7 +588,7 @@ UNKNOWN
 
 ---
 
-## 14. Arithmetic reconciliation
+## 14. Арифметическая сверка
 
 После parsing:
 
@@ -599,7 +599,7 @@ sum(item totals) - discounts ≈ receipt total
 
 Несовпадение:
 - не переписывает OCR молча;
-- создаёт quality issue;
+- создаёт проблему качества;
 - может быть сигналом при выборе между OCR candidates.
 
 Tolerance конфигурируемый.
@@ -608,7 +608,7 @@ Tolerance конфигурируемый.
 
 ---
 
-## 15. Product normalization
+## 15. Нормализация товаров
 
 Порядок:
 
@@ -666,15 +666,15 @@ UNRESOLVED
 ## 16. Review loop
 
 CLI review должен показывать:
-- raw image reference;
+- ссылка на исходное изображение;
 - OCR text;
 - raw item;
-- parsed fields;
-- candidate products;
-- confidence/evidence.
+- разобранные поля;
+- товары-кандидаты;
+- уверенность и доказательства.
 
 Действия:
-- выбрать canonical product;
+- выбрать канонический товар;
 - создать новый product;
 - исправить поле;
 - skip;
@@ -711,7 +711,7 @@ Product ID | Product | Brand | Size | 2026-08-01 · ATB | 2026-08-03 · Сіль
 
 ### Другие листы
 
-- `Purchases` — long-form source для отчёта;
+- `Purchases` — источник отчёта в длинном формате;
 - `Receipts`;
 - `Products`;
 - `Aliases`;
@@ -724,33 +724,33 @@ Product ID | Product | Brand | Size | 2026-08-01 · ATB | 2026-08-03 · Сіль
 
 ---
 
-## 18. Quality metrics
+## 18. Метрики качества
 
 ### OCR
 - CER;
 - WER;
-- numeric token accuracy;
-- line detection recall.
+- точность числовых tokens;
+- полнота обнаружения строк.
 
 ### Parser
-- item precision/recall/F1;
-- date accuracy;
-- total accuracy;
-- quantity accuracy;
-- unit-price accuracy.
+- точность, полнота и F1 товаров;
+- точность даты;
+- точность итога;
+- точность количества;
+- точность цены за единицу.
 
-### Normalization
+### Нормализация
 - top-1 accuracy;
-- auto-accept precision;
-- false merge rate;
-- false split rate;
+- точность автоматического принятия;
+- доля ложных объединений;
+- доля ложных разделений;
 - review rate.
 
 ### End-to-end
-- usable receipt rate;
-- manual corrections / receipt;
-- seconds / receipt;
-- failed receipt rate.
+- доля пригодных чеков;
+- ручные исправления на чек;
+- секунд на чек;
+- доля неудачно обработанных чеков.
 
 ---
 

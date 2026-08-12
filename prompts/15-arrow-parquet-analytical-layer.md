@@ -1,16 +1,16 @@
-# 40. PROMPT 15 — Arrow/Parquet Analytical Layer
+# 40. PROMPT 15 — аналитический слой Arrow/Parquet
 
 ```text
-Добавь PyArrow schema и Parquet snapshots.
+Добавь схему PyArrow и снимки Parquet.
 
-Не заменяй SQLite как source of truth.
-DB → Arrow → Parquet → Arrow round-trip tests.
-Schema versioned.
+Не заменяй SQLite как источник истины.
+Добавь round-trip тесты DB → Arrow → Parquet → Arrow.
+Схема должна быть версионируемой.
 ```
 
-### DoD
-- Decimal/timestamps round-trip;
-- Parquet rebuildable from DB;
-- performance documented.
+### Критерии завершения
+- round-trip проверка Decimal и временных меток;
+- возможность восстановить Parquet из базы данных;
+- документированная производительность.
 
 ---

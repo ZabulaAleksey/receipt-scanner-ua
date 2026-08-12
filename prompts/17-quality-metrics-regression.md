@@ -1,4 +1,4 @@
-# 42. PROMPT 17 — Quality Metrics + Regression Harness
+# 42. PROMPT 17 — метрики качества и регрессионная инфраструктура
 
 ```text
 Создай evaluator.
@@ -13,8 +13,8 @@ End-to-end: usable receipt rate, corrections/receipt, seconds/receipt.
 ```
 
 ### DoD
-- baseline versioned;
-- critical threshold comparison работает;
+- базовый уровень версионируется;
+- сравнение критического порога работает;
 - regression report показывает компонент ухудшения.
 
 ---

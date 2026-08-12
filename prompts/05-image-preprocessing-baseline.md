@@ -1,4 +1,4 @@
-# 30. PROMPT 05 — Image Preprocessing Baseline
+# 30. PROMPT 05 — базовая предварительная обработка изображений
 
 ```text
 Реализуй versioned profile receipt-default-v1.
@@ -18,10 +18,10 @@ Processed/cache должен быть rebuildable.
 - perspective;
 - low contrast;
 - shadow;
-- clean receipt.
+- чистый чек.
 
 ### DoD
-- profile version сохранён;
+- версия профиля сохранена;
 - clean fixture существенно не ухудшается;
 - rebuild работает.
 

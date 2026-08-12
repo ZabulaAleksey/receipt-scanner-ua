@@ -1,4 +1,4 @@
-# 39. PROMPT 14 — Price History Persistence
+# 39. PROMPT 14 — сохранение истории цен
 
 ```text
 Сформируй canonical PriceObservation/PurchaseItem history.
@@ -12,7 +12,7 @@ latest price; history by product; history by shop.
 
 ### DoD
 - цены по разным датам не перезаписываются;
-- manual corrections отражаются;
+- ручные исправления отражаются;
 - история трассируется до чека.
 
 ---

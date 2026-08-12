@@ -6,25 +6,25 @@
 
 Если в глобальной AI Dev Team уже есть:
 
-- Lead Architect;
-- Context Curator;
-- Implementation Engineer;
-- Test/QA Engineer;
+- ведущий архитектор;
+- куратор контекста;
+- инженер реализации;
+- инженер тестирования и QA;
 - Reviewer;
-- Performance Engineer;
-- Security/Privacy Engineer;
-- Docs Engineer;
+- инженер производительности;
+- инженер безопасности и конфиденциальности;
+- инженер документации;
 - Git workflow;
 - common hooks;
 - GitHub MCP;
 - Context7 MCP;
 - DevTools MCP;
-- global Skills;
+- глобальные Skills;
 - глобальные security rules;
 
 **не создавать их вторую локальную копию.**
 
-### 3.2. Anti-conflict protocol
+### 3.2. Протокол предотвращения конфликтов
 
 Перед добавлением любого `agent / hook / MCP / skill / config` Codex обязан проверить существующий контекст и присвоить статус:
 
@@ -80,11 +80,11 @@ TARGET SKILL / STAGE PROMPT
 ### Root `AGENTS.md`
 
 Содержит только:
-- Receipt-specific invariants;
-- canonical docs;
-- privacy/data rules;
+- инварианты обработки чеков;
+- канонические документы;
+- правила конфиденциальности и данных;
 - правила выбора локальных skills/agents;
-- anti-conflict rule.
+- правило предотвращения конфликтов.
 
 Целевой размер: ~3–7 KB.
 
@@ -102,11 +102,11 @@ src/receipt_scanner/normalization/AGENTS.md
 
 - весь `PROMPTS.md`;
 - весь `ROADMAP.md`;
-- все TOML subagents;
+- все TOML-файлы субагентов;
 - все Skill bodies;
 - все OCR fixtures;
-- старые benchmark reports;
-- весь alias dictionary;
+- старые отчёты benchmarks;
+- весь словарь aliases;
 - весь `DECISIONS.md`, если нужна одна ADR.
 
 ---
@@ -161,43 +161,43 @@ benchmark when relevant → reviewer → docs → PROGRESS.
 ### 19.2. Rules
 
 `rules/receipt-data.md`:
-- immutable raw input;
+- неизменяемый исходный ввод;
 - provenance;
 - Decimal;
-- unknown data preservation.
+- сохранение неизвестных данных.
 
 `rules/ocr-quality.md`:
-- bbox/confidence mandatory;
-- raw OCR preserved;
-- preprocess profiles versioned;
-- OCR backend abstraction;
+- bbox и confidence обязательны;
+- исходный OCR сохраняется;
+- профили предварительной обработки версионируются;
+- абстракция backend OCR;
 - golden fixtures.
 
 `rules/parser-invariants.md`:
 - parser не мутирует OCR;
 - unknown сохраняется;
-- arithmetic reconciliation;
-- adapter boundary.
+- арифметическая сверка;
+- граница адаптеров.
 
 `rules/normalization.md`:
-- fuzzy score != truth;
-- значимые product attributes;
+- fuzzy-оценка не равна истине;
+- значимые атрибуты товара;
 - thresholds;
-- manual review;
-- alias provenance.
+- ручная проверка;
+- происхождение alias.
 
 `rules/privacy.md`:
-- raw gitignored;
-- fixtures anonymized;
-- cloud off by default;
-- sensitive logs forbidden.
+- исходные данные игнорируются Git;
+- fixtures анонимизированы;
+- облако отключено по умолчанию;
+- чувствительные журналы запрещены.
 
 `rules/context-loading.md`:
-- target docs only;
-- no all-prompts/all-agents load;
-- compatibility audit before new automation.
+- только целевые документы;
+- не загружать все prompts и всех агентов;
+- аудит совместимости перед новой автоматизацией.
 
-### 19.3. Project-specific subagents
+### 19.3. Проектные субагенты
 
 Создавать только domain specialists:
 
@@ -205,52 +205,52 @@ benchmark when relevant → reviewer → docs → PROGRESS.
    - imaging;
    - OCR;
    - layout;
-   - OCR benchmark.
+   - benchmark OCR.
 
 2. `receipt-parser-specialist`
-   - store adapters;
+   - адаптеры магазинов;
    - parser;
-   - numeric reconciliation.
+   - сверка чисел.
 
 3. `product-normalization-specialist`
    - aliases;
-   - candidate generation;
+   - генерация кандидатов;
    - scoring;
-   - false merge/split analysis.
+   - анализ ложных объединений и разделений.
 
 4. `receipt-data-quality-specialist`
-   - labeled fixtures;
+   - размеченные fixtures;
    - metrics;
-   - error taxonomy;
-   - regression dataset.
+   - таксономия ошибок;
+   - регрессионный набор данных.
 
 **Не создавать generic QA/architect/reviewer/security/docs agents локально, если они уже есть глобально.**
 
 ### 19.4. Skills
 
 `receipt-ocr-investigation`:
-- target fixture/image;
-- compare preprocess variants;
+- целевой fixture или изображение;
+- сравнение вариантов предварительной обработки;
 - OCR boxes;
-- error classification;
+- классификация ошибок;
 - minimal fix;
-- regression fixture.
+- регрессионный fixture.
 
 `receipt-parser-debug`:
 - использовать, когда OCR хороший, но структура распарсилась неверно.
 
 `product-normalization-review`:
-- false merge/split;
+- ложное объединение или разделение;
 - aliases;
-- score explanation.
+- объяснение оценки.
 
 `receipt-quality-report`:
-- OCR/parser/normalization metrics;
-- failures by shop;
+- метрики OCR, parser и нормализации;
+- сбои по магазинам;
 - regressions;
-- top error classes;
+- основные классы ошибок;
 - review rate;
-- Markdown + JSON report.
+- отчёт Markdown + JSON.
 
 Большие отчёты сохранять в файл; parent agent получает findings-first summary.
 
@@ -275,7 +275,7 @@ check_receipt_fixture_privacy.py
 
 ### 19.6. MCP
 
-**Baseline: новых project-specific MCP нет.**
+**Базовый вариант: новых проектных MCP нет.**
 
 MCP можно добавить только через ADR:
 
@@ -326,7 +326,7 @@ TASK-SPECIFIC CONTEXT
 
 ---
 
-## 55. Pre-PR / Stage checklist
+## 55. Checklist перед PR и завершением этапа
 
 ```text
 [ ] protected branch workflow соблюдён

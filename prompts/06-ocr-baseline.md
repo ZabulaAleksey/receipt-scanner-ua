@@ -1,4 +1,4 @@
-# 31. PROMPT 06 — OCR Baseline
+# 31. PROMPT 06 — базовый OCR
 
 ```text
 Введи OCRBackend abstraction.
@@ -14,9 +14,9 @@ OCR не пишет Excel напрямую.
 ```
 
 ### DoD
-- backend contract test;
-- anonymized integration fixtures;
+- тест контракта backend;
+- анонимизированные интеграционные fixtures;
 - raw OCR audit сохранён;
-- baseline metrics записаны.
+- базовые метрики записаны.
 
 ---

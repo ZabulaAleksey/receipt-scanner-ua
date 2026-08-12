@@ -1,4 +1,4 @@
-# 37. PROMPT 12 — Product Normalization Baseline
+# 37. PROMPT 12 — базовая нормализация товаров
 
 ```text
 Pipeline:
@@ -13,9 +13,9 @@ RapidFuzz — только один сигнал.
 ```
 
 ### DoD
-- auto-accept precision измеряется;
+- точность автоматического принятия измеряется;
 - false merge отдельно измеряется;
-- every auto-match explainable;
+- каждое автоматическое совпадение объяснимо;
 - low-confidence не merge автоматически.
 
 ---

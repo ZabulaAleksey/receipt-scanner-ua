@@ -1,4 +1,4 @@
-# 45. PROMPT 20 — Optional Local Review UI
+# 45. PROMPT 20 — необязательный локальный UI проверки
 
 ```text
 Только после стабильного CLI review.
@@ -14,7 +14,7 @@ Local-only default.
 
 ### DoD
 - CLI остаётся рабочим;
-- keyboard-first review;
+- проверка с приоритетом клавиатуры;
 - DESIGN.md соответствует UI;
 - business logic не дублирована.
 

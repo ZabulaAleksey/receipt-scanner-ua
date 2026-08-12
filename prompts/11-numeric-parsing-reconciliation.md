@@ -1,21 +1,21 @@
-# 36. PROMPT 11 — Numeric Parsing + Reconciliation
+# 36. PROMPT 11 — разбор чисел и сверка
 
 ```text
-Поддержи decimal comma/dot, spaces, multiplication notation,
-weight quantities и discounts.
+Поддержи десятичные запятые и точки, пробелы, обозначение умножения,
+весовые количества и скидки.
 Используй Decimal.
 
 Проверяй:
 qty * unit_price ≈ line_total;
 sum(items) - discounts ≈ receipt total.
 
-Mismatch создаёт quality issue, а не silent rewrite.
+Несоответствие создаёт проблему качества, а не незаметное исправление данных.
 ```
 
-### DoD
-- property tests;
-- rounding edge cases;
-- configurable tolerance;
-- provenance automatic corrections.
+### Критерии завершения
+- property-based тесты;
+- граничные случаи округления;
+- настраиваемый допуск;
+- происхождение автоматических исправлений.
 
 ---

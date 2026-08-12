@@ -1,4 +1,4 @@
-# 33. PROMPT 08 — Layout Reconstruction
+# 33. PROMPT 08 — восстановление layout
 
 ```text
 Восстанови LogicalLine[] из OCR polygons.
@@ -10,7 +10,7 @@
 
 ### DoD
 - reading order стабилен;
-- wrapped product fixture проходит;
+- fixture перенесённого названия товара проходит;
 - provenance сохраняется.
 
 ---

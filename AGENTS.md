@@ -1,18 +1,18 @@
-# Receipt Scanner UA - local instructions
+# Receipt Scanner UA — локальные инструкции
 
-Before working here, read `~/codex-workspace/AGENTS.md`. This project contains only receipt-processing-specific additions.
+Перед началом работы прочитай `~/codex-workspace/AGENTS.md`. Этот проект содержит только дополнения, относящиеся к обработке чеков.
 
-## Project invariants
+## Инварианты проекта
 
-- Windows-first, Python, and local-first; raw receipts and secrets are never committed.
-- The database is canonical state; Excel is an export.
-- Preserve raw OCR output and provenance. Low-confidence results require review.
-- Use `Decimal` for money and make product merges explainable.
-- Keep a CPU OCR path and require a flag, fallback, and benchmark for experimental technology.
-- Put retailer-specific behavior behind adapters.
+- Основная платформа — Windows, язык — Python, обработка по умолчанию локальная; исходные чеки и секреты никогда не добавляются в коммиты.
+- База данных является каноническим состоянием; Excel используется для экспорта.
+- Сохраняй исходный результат OCR и его происхождение. Результаты с низкой уверенностью требуют проверки.
+- Для денежных значений используй `Decimal`, а объединение товаров делай объяснимым.
+- Сохраняй путь OCR на CPU, а для экспериментальной технологии требуй flag, fallback и benchmark.
+- Специфичное для продавца поведение размещай за адаптерами.
 
-## Context routing
+## Маршрутизация контекста
 
-- Start with `docs/AI_STATUS.md`, then open one relevant architecture, data-model, OCR, normalization, or quality document.
-- Use only the current stage prompt from `prompts/` when stage work is requested.
-- Do not load the full roadmap, prompt collection, fixtures, rules tree, SPEC set, or `LEARNING_LOG.md` together.
+- Начинай с `docs/AI_STATUS.md`, затем открывай один относящийся к задаче документ по архитектуре, модели данных, OCR, нормализации или качеству.
+- При работе над этапом используй только текущий prompt этапа из `prompts/`.
+- Не загружай одновременно полную дорожную карту, коллекцию prompts, fixtures, дерево правил, набор SPEC и `LEARNING_LOG.md`.

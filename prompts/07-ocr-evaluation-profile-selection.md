@@ -1,4 +1,4 @@
-# 32. PROMPT 07 — OCR Evaluation + Multi-Profile Selection
+# 32. PROMPT 07 — оценка OCR и выбор нескольких профилей
 
 ```text
 Сравни OCR для RAW / ENHANCED_GRAY / ADAPTIVE_THRESHOLD / HIGH_CONTRAST.
@@ -10,8 +10,8 @@ line sanity и ground truth metrics в evaluation mode.
 ```
 
 ### DoD
-- automated benchmark report;
+- автоматизированный отчёт benchmark;
 - выбор profile объясним;
-- regression threshold задан.
+- регрессионный порог задан.
 
 ---

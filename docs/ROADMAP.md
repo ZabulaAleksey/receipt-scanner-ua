@@ -57,13 +57,13 @@
 
 После этого уже есть полноценный полезный MVP.
 
-Arrow/Parquet, UI, performance и ONNX/NPU — после стабильного baseline.
+Arrow/Parquet, UI, производительность и ONNX/NPU — после стабильного базового варианта.
 
 ---
 
 ---
 
-## 51. MVP Definition
+## 51. Определение MVP
 
 MVP готов, когда:
 
@@ -77,7 +77,7 @@ MVP готов, когда:
 - Excel содержит историю цен по новым столбцам;
 - повторный запуск не создаёт duplicates;
 - failures видны;
-- quality report строится;
+- отчёт о качестве строится;
 - всё работает local-first.
 
 ---
@@ -89,18 +89,18 @@ MVP готов, когда:
 Не внедрять раньше времени:
 
 - mobile app;
-- multi-photo stitching длинного чека;
-- barcode recognition;
-- QR/fiscal validation;
-- price anomaly detection;
-- graphs/dashboard;
-- category classifier;
-- embeddings product matcher;
-- local LLM/VLM normalization;
+- объединение нескольких фотографий длинного чека;
+- распознавание штрихкодов;
+- проверка QR и фискальных данных;
+- обнаружение аномалий цен;
+- графики и dashboard;
+- классификатор категорий;
+- сопоставление товаров по embeddings;
+- локальная нормализация LLM/VLM;
 - ONNX/NPU;
-- PostgreSQL server mode;
-- e-receipt import;
-- encrypted cloud sync.
+- серверный режим PostgreSQL;
+- импорт электронных чеков;
+- зашифрованная облачная синхронизация.
 
 Каждая новая технология:
 
@@ -142,18 +142,18 @@ problem
 - pytest / Hypothesis
 - structured logging
 
-### OPTIONAL SUPPORTED
+### НЕОБЯЗАТЕЛЬНО ПОДДЕРЖИВАЕТСЯ
 - PostgreSQL
-- second OCR backend
-- local review UI
-- parallel receipt processing
+- второй backend OCR
+- локальный UI проверки
+- параллельная обработка чеков
 
 ### RESEARCH
-- ONNX Runtime optimization
+- оптимизация ONNX Runtime
 - NPU
 - local VLM
-- embeddings/ML product matching
-- anomaly detection
-- advanced GPU preprocessing
+- сопоставление товаров с помощью embeddings/ML
+- обнаружение аномалий
+- продвинутая предварительная обработка на GPU
 
 ---

@@ -17,13 +17,13 @@ Tests/benchmark:
 ```
 
 Первые ADR:
-- SQLite as source of truth;
-- Excel as report only;
-- PaddleOCR primary backend;
-- raw OCR retention;
-- adapter-based store parsing;
-- fuzzy + human-review normalization;
-- Arrow/Parquet analytical layer;
-- CPU baseline before NPU.
+- SQLite как источник истины;
+- Excel только как отчёт;
+- PaddleOCR как основной backend;
+- сохранение исходного OCR;
+- parsing магазинов через адаптеры;
+- fuzzy-нормализация с ручной проверкой;
+- аналитический слой Arrow/Parquet;
+- базовый вариант на CPU перед NPU.
 
 ---

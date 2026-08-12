@@ -1,4 +1,4 @@
-# 25. PROMPT 00 — Context Compatibility Audit
+# 25. PROMPT 00 — аудит совместимости контекста
 
 ```text
 Работай в репозитории Receipt Scanner UA.
@@ -24,10 +24,10 @@
 ```
 
 ### DoD
-- compatibility matrix создана;
-- generic duplicates = 0;
-- duplicate MCP = 0;
-- global config unchanged;
+- матрица совместимости создана;
+- универсальных дубликатов = 0;
+- дублирующих MCP = 0;
+- глобальная конфигурация не изменена;
 - локальный AGENTS компактный.
 
 ---

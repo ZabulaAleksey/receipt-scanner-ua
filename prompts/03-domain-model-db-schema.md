@@ -1,4 +1,4 @@
-# 28. PROMPT 03 — Domain Model + DB Schema
+# 28. PROMPT 03 — доменная модель и схема базы данных
 
 ```text
 Реализуй domain/persistence.
@@ -16,13 +16,13 @@ Repository abstraction не должна привязывать domain к SQLite
 
 ### Tests
 - migrations;
-- Decimal round-trip;
-- unique content hash;
-- repository behavior.
+- round-trip Decimal;
+- уникальный hash содержимого;
+- поведение репозитория.
 
 ### DoD
 - DB создаётся с нуля;
-- schema documented;
-- Excel не storage.
+- схема документирована;
+- Excel не является хранилищем.
 
 ---

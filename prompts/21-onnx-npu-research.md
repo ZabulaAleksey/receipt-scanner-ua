@@ -1,20 +1,20 @@
-# 46. PROMPT 21 — ONNX / NPU Research Path
+# 46. PROMPT 21 — исследование ONNX / NPU
 
 ```text
-Research stage.
+Этап исследования.
 
-Сначала измерь CPU baseline/bottleneck.
-Исследуй ONNX Runtime / hardware execution providers только для конкретной операции.
+Сначала измерь базовый уровень и узкое место на CPU.
+Исследуй ONNX Runtime и аппаратные providers выполнения только для конкретной операции.
 
-Сравни accuracy, startup, latency, throughput, RAM/VRAM, model size, hardware availability.
-CPU = reference/fallback.
+Сравни точность, время запуска, задержку, пропускную способность, RAM/VRAM, размер модели и доступность оборудования.
+CPU = эталон и fallback.
 ```
 
-### DoD
-- research report;
+### Критерии завершения
+- отчёт об исследовании;
 - benchmark;
 - feature flag;
 - fallback;
-- no hard NPU dependency.
+- отсутствие обязательной зависимости от NPU.
 
 ---

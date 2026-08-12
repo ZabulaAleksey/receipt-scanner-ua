@@ -1,4 +1,4 @@
-# Context Compatibility
+# Совместимость контекста
 
 Статус: ожидает аудита Stage 00.
 
@@ -10,4 +10,4 @@
 
 ## Следующее обязательное действие
 
-Перед добавлением или активацией project agents, hooks, MCP, skills или конфигурации выполнить [Stage 00](../prompts/00-context-compatibility-audit.md).
+Перед добавлением или активацией project agents, hooks, MCP, skills или конфигурации выполнить [Этап 00](../prompts/00-context-compatibility-audit.md).

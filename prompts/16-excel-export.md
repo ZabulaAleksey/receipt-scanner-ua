@@ -1,4 +1,4 @@
-# 41. PROMPT 16 — Excel Export
+# 41. PROMPT 16 — экспорт Excel
 
 ```text
 Реализуй openpyxl export.
@@ -16,7 +16,7 @@ low-confidence highlighting и export metadata.
 ### DoD
 - workbook открывается;
 - expected sheets/cells проверяются тестом;
-- multiple observations не теряются;
+- несколько наблюдений не теряются;
 - Excel строится только из canonical data.
 
 ---

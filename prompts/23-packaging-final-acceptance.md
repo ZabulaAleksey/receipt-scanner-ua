@@ -1,4 +1,4 @@
-# 48. PROMPT 23 — Packaging + Final Acceptance
+# 48. PROMPT 23 — упаковка и финальная приёмка
 
 ```text
 Проведи clean acceptance:
@@ -19,13 +19,13 @@
 
 ### Final DoD
 - fresh setup воспроизводим;
-- end-to-end dataset проходит;
+- набор данных проходит end-to-end проверку;
 - Excel корректен;
-- quality thresholds соблюдены;
+- пороги качества соблюдены;
 - audit trail есть;
 - corrections сохраняются;
-- generic AI Dev Team duplicates = 0;
+- универсальных дубликатов AI Dev Team = 0;
 - CPU baseline работает;
-- experimental acceleration отключаема.
+- экспериментальное ускорение можно отключить.
 
 ---

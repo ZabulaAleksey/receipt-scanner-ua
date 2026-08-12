@@ -1,4 +1,4 @@
-# 29. PROMPT 04 — Ingestion + Deduplication
+# 29. PROMPT 04 — приём данных и дедупликация
 
 ```text
 Реализуй scan file/directory/recursive.
@@ -15,7 +15,7 @@ Batch должен переживать повреждённый файл.
 
 ### DoD
 - exact duplicate не создаёт вторую запись;
-- invalid image даёт controlled error;
+- недействительное изображение создаёт контролируемую ошибку;
 - batch продолжает работу.
 
 ---

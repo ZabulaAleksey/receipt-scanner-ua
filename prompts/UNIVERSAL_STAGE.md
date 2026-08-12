@@ -1,35 +1,35 @@
-## 49. Universal stage prompt
+## 49. Универсальный prompt этапа
 
 ```text
 Работай только в Receipt Scanner UA.
 
 Перед изменениями:
 1. прочитай root AGENTS.md;
-2. прочитай текущий section docs/PROGRESS.md;
-3. открой только релевантный section ARCHITECTURE/DECISIONS;
-4. прочитай target rule/skill при необходимости;
-5. не загружай весь PROMPTS/ROADMAP/AI Dev Team archive.
+2. прочитай текущий раздел docs/PROGRESS.md;
+3. открой только относящийся к задаче раздел ARCHITECTURE/DECISIONS;
+4. при необходимости прочитай целевое правило или skill;
+5. не загружай весь архив PROMPTS/ROADMAP/AI Dev Team.
 
 Перед добавлением agent/hook/MCP/config проверь CONTEXT_COMPATIBILITY.md.
 
-Составь короткий implementation plan.
-Сделай минимальный проверяемый scope.
+Составь короткий план реализации.
+Выполни минимальный проверяемый объём.
 
 Обязательно:
-- tests;
-- regression fixture для OCR/parser/normalization bugfix;
-- benchmark для performance-sensitive change;
-- feature flag + fallback для experimental tech;
+- тесты;
+- регрессионный fixture для исправления ошибки OCR, parser или normalization;
+- benchmark для изменения, чувствительного к производительности;
+- feature flag и fallback для экспериментальной технологии;
 - ADR для архитектурного решения;
-- PROGRESS update.
+- обновление PROGRESS.
 
 Запрещено:
-- менять global AI Dev Team config из проекта;
-- дублировать generic agents/hooks/MCP;
-- коммитить raw receipts;
+- менять глобальную конфигурацию AI Dev Team из проекта;
+- дублировать универсальных agents, hooks и MCP;
+- добавлять исходные чеки в коммиты;
 - float для денег;
-- скрывать low-confidence normalization;
-- делать Excel source of truth;
+- скрывать нормализацию с низкой уверенностью;
+- делать Excel источником истины;
 - вводить технологию без причины/измерения.
 ```
 

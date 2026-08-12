@@ -1,4 +1,4 @@
-# 44. PROMPT 19 — Performance / Caching / Parallelism
+# 44. PROMPT 19 — производительность, кэширование и параллелизм
 
 ```text
 Сначала profile, потом optimize.
@@ -10,8 +10,8 @@ Parallelism — между независимыми receipts.
 ```
 
 ### DoD
-- before/after benchmark;
-- correctness regression отсутствует;
-- single-thread fallback есть.
+- benchmark до и после;
+- регрессия корректности отсутствует;
+- однопоточный fallback существует.
 
 ---

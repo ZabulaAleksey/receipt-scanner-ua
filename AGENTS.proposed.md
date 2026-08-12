@@ -1,23 +1,23 @@
-# Receipt Scanner UA — local rules
+# Receipt Scanner UA — локальные правила
 
-This repository inherits installed/global AI Dev Team rules.
-Do not duplicate generic agents, hooks, MCP, Git workflow or common security roles.
+Этот репозиторий наследует установленные глобальные правила AI Dev Team.
+Не дублируй универсальных агентов, hooks, MCP, Git workflow или общие роли безопасности.
 
-## Project invariants
-1. Local-first baseline.
-2. Raw receipts never committed.
-3. DB is canonical state; Excel is export.
-4. Preserve raw OCR/provenance.
-5. Money uses Decimal.
-6. Low confidence creates review.
-7. Product merges must be explainable.
-8. CPU OCR path remains available.
-9. Experimental tech requires flag + fallback + benchmark.
-10. Retailer logic goes through adapters.
-11. Inspect inherited AI Dev Team before adding agent/hook/MCP.
-12. Never load whole PROMPTS/ROADMAP/fixtures for a local task.
+## Инварианты проекта
+1. Базовый вариант работает локально.
+2. Исходные чеки никогда не добавляются в коммиты.
+3. База данных является каноническим состоянием; Excel используется для экспорта.
+4. Сохраняй исходный результат OCR и его происхождение.
+5. Для денежных значений используется Decimal.
+6. Низкая уверенность требует проверки.
+7. Объединение товаров должно быть объяснимым.
+8. Путь OCR на CPU остаётся доступным.
+9. Экспериментальная технология требует flag, fallback и benchmark.
+10. Логика продавцов проходит через адаптеры.
+11. Перед добавлением agent, hook или MCP проверь унаследованную AI Dev Team.
+12. Никогда не загружай целиком PROMPTS, ROADMAP или fixtures для локальной задачи.
 
-## Canonical docs
+## Канонические документы
 - docs/ARCHITECTURE.md
 - docs/DECISIONS.md
 - docs/DESIGN.md
@@ -29,8 +29,8 @@ Do not duplicate generic agents, hooks, MCP, Git workflow or common security rol
 - docs/QUALITY_METRICS.md
 
 ## Python
-Use uv + project .venv + shared uv cache.
+Используй uv, проектное окружение `.venv` и общий кэш uv.
 
-## Work discipline
-Prompt → inspect target context → plan → implement small change → test →
-benchmark when relevant → reviewer → docs → PROGRESS.
+## Порядок работы
+Prompt → проверка целевого контекста → план → небольшое изменение → тест →
+benchmark при необходимости → reviewer → документация → PROGRESS.
