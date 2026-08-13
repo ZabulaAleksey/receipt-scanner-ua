@@ -3,29 +3,29 @@
 ## 22. PROGRESS.md
 
 ```md
-# Current stage
-Stage XX — ...
+# Текущий этап
+Этап XX — ...
 
-## Done
+## Завершено
 - ...
 
-## In progress
+## В работе
 - ...
 
-## Blocked
+## Заблокировано
 - ...
 
-## Next
+## Далее
 - ...
 
-## Quality snapshot
+## Снимок качества
 - OCR CER:
 - Numeric accuracy:
 - Parser item F1:
 - Normalization auto-accept precision:
 - False merge rate:
 
-## Last verified commit
+## Последний проверенный commit
 - ...
 ```
 

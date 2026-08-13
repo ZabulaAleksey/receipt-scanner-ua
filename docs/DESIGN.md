@@ -6,17 +6,17 @@
 
 ```md
 # DESIGN
-Current surface: CLI + generated Excel.
-No visual application UI is canonical yet.
+Текущий интерфейс: CLI и сгенерированный Excel.
+Канонического визуального UI приложения пока нет.
 
-Before introducing review UI document:
-- screens;
-- table behavior;
-- review states;
-- typography/tokens;
-- keyboard workflow;
+Перед добавлением UI проверки документировать:
+- экраны;
+- поведение таблиц;
+- состояния проверки;
+- типографику и tokens;
+- сценарий работы с клавиатуры;
 - accessibility;
-- responsive rules.
+- правила responsive.
 ```
 
 Если UI уже появился без документации — сначала описать фактический UI в `DESIGN.md`, затем менять.
