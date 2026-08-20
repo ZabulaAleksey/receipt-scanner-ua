@@ -1,36 +1,14 @@
-## 49. Универсальный prompt этапа
+# Универсальный контракт этапа
 
-```text
-Работай только в Receipt Scanner UA.
+1. Работай только в Receipt Scanner UA и только в scope текущего prompt.
+2. Прочитай project `AGENTS.md`, `docs/AI_STATUS.md`, текущий prompt и непосредственно относящиеся source-of-truth документы.
+3. Для R00–R03 используй `docs/UX_FIRST_RECONCILIATION.md`; не загружай весь legacy backlog без необходимости.
+4. До реализации существенного поведения проверь SPEC/acceptance criteria. Prompt не заменяет SPEC.
+5. Не добавляй agents/hooks/MCP/skills/config до проверки `docs/CONTEXT_COMPATIBILITY.md`.
+6. Сохраняй local-first режим, provenance, honest confidence, `Decimal`, adapter boundaries и возможность отключить экспериментальный backend.
+7. Не изменяй принятые tests/fixtures/goldens в цикле реализации. Новые contract artifacts проходят отдельную приёмку.
+8. После функциональных изменений обязательны unit, integration и component checks. E2E считается закрытым только для живого `client → API/CLI → backend`; иначе `BLOCKED_BY_BACKEND_RECEIPT_SCANNER`.
+9. Архитектурные решения фиксируй ADR; performance-sensitive изменения — benchmark; retry/fallback/side effects — по fallback policy.
+10. Обновляй `AI_STATUS.md` только подтверждённым evidence. Не начинай следующий prompt автоматически.
 
-Перед изменениями:
-1. прочитай root AGENTS.md;
-2. прочитай текущий раздел docs/PROGRESS.md;
-3. открой только относящийся к задаче раздел ARCHITECTURE/DECISIONS;
-4. при необходимости прочитай целевое правило или skill;
-5. не загружай весь архив PROMPTS/ROADMAP/AI Dev Team.
-
-Перед добавлением agent/hook/MCP/config проверь CONTEXT_COMPATIBILITY.md.
-
-Составь короткий план реализации.
-Выполни минимальный проверяемый объём.
-
-Обязательно:
-- тесты;
-- регрессионный fixture для исправления ошибки OCR, parser или normalization;
-- benchmark для изменения, чувствительного к производительности;
-- feature flag и fallback для экспериментальной технологии;
-- ADR для архитектурного решения;
-- обновление PROGRESS.
-
-Запрещено:
-- менять глобальную конфигурацию AI Dev Team из проекта;
-- дублировать универсальных agents, hooks и MCP;
-- добавлять исходные чеки в коммиты;
-- float для денег;
-- скрывать нормализацию с низкой уверенностью;
-- делать Excel источником истины;
-- вводить технологию без причины/измерения.
-```
-
----
+Запрещено: реальные чеки/секреты в Git, float для денег, скрытие low-confidence normalization, Excel как source of truth, обязательный cloud/account для local core, silent renumbering или удаление legacy prompts.

@@ -4,6 +4,12 @@
 
 ## Инварианты проекта
 
+- Приоритетная продуктовая последовательность: `UX MVP → Functional MVP → Production MVP`; актуальный порядок этапов находится в `prompts/README.md`.
+- Windows/Python остаётся baseline для processing core и CLI, но не запрещает отдельные Android/iOS native app targets. Mobile stack выбирается только через ADR/spike.
+- Consumer core обязан работать local-first/offline без обязательного account, cloud OCR и server storage.
+- OCR SDK подключается через adapter boundary; Receipt Scanner не должен зависеть от одного provider. Text Recognition Core является предпочтительной интеграционной границей, если его контракт подходит.
+- Украина является первым Region Pack. Merchant-specific behavior остаётся за adapters, а неизвестный merchant проходит generic path.
+
 - Основная платформа — Windows, язык — Python, обработка по умолчанию локальная; исходные чеки и секреты никогда не добавляются в коммиты.
 - База данных является каноническим состоянием; Excel используется для экспорта.
 - Сохраняй исходный результат OCR и его происхождение. Результаты с низкой уверенностью требуют проверки.

@@ -1,5 +1,16 @@
 # Архитектура Receipt Scanner UA
 
+## Текущее направление
+
+Архитектура развивается тремя слоями зрелости: UX MVP на fixtures, Functional MVP с local persistence/camera/OCR и Production MVP с необязательными online services. Native client, processing core и optional cloud являются отдельными границами.
+
+- Windows/Python — baseline processing core/CLI, не единственный client stack.
+- Android/iOS shell выбирается через ADR между KMP/Compose и Flutter; PWA не является целевым mobile client.
+- OCR providers, включая Text Recognition Core и PaddleOCR, подключаются через port/adapter boundary.
+- Украина реализуется Region Pack; merchant adapters улучшают generic pipeline, но неизвестный merchant не блокирует extraction.
+- `LOCAL_ONLY` — полноценный baseline. Sync/account/cloud OCR не являются dependency consumer core.
+- B2B — future extension и не влияет на consumer domain до отдельного approval.
+
 ## 1. Цели продукта
 
 Система должна:
