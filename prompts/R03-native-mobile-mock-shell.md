@@ -1,6 +1,6 @@
 # R03 — Native mobile strategy и fixture-driven shell
 
-Статус: `READY`. Тип: prototype implementation. Основание: принятый UX-контракт R02.
+Статус: `COMPLETE`. Тип: prototype implementation. Основание: принятый UX-контракт R02.
 
 ## Цель
 
@@ -30,3 +30,15 @@ Production backend, real sync, billing, обязательный account, real O
 - demo полностью работает без сети;
 - UI зависит от ports/use cases;
 - unit, integration и component проверки выполнены; E2E без живого backend помечен `BLOCKED_BY_BACKEND_RECEIPT_SCANNER`.
+
+## Verification evidence
+
+- ADR-004 выбрал Flutter `3.47.1` / Dart `3.13.1`; KMP остаётся явным fallback для пересмотра до Functional MVP native integrations.
+- Создан `mobile/` package с Android/iOS product targets и Windows validation runner, 15 typed routes, synthetic fixtures, ports/use cases и in-memory adapters.
+- `dart format --output=none --set-exit-if-changed lib test integration_test` — passed.
+- `flutter analyze --no-pub` — passed, no issues.
+- `flutter test --no-pub test` — passed, 14 tests: unit, widget/component, accessibility, golden и smoke всех 15 routes.
+- `flutter test --no-pub integration_test/offline_quick_flow_test.dart -d windows` — passed; offline Quick UX завершён без network dependency.
+- `flutter build windows --release --no-pub` — passed.
+- Android build: `UNVERIFIED` (Android SDK отсутствует). iOS build: `UNVERIFIED` (требуется macOS/Xcode).
+- Product E2E: `BLOCKED_BY_BACKEND_RECEIPT_SCANNER`; Windows integration test не выдаётся за mobile/backend E2E.

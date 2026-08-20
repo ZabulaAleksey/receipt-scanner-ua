@@ -20,6 +20,19 @@
 - [Definition of Done](docs/DEFINITION_OF_DONE.md) — общие критерии завершения этапа.
 - [Stage-промпты](prompts/README.md) — активная цепочка R00–R03 и legacy backlog 00–23.
 
+## R03 mobile prototype
+
+Fixture-driven Flutter shell находится в [`mobile/`](mobile/README.md). Android/iOS остаются product targets, Windows используется только для локальной проверки. Prototype реализует 15 UX routes и offline synthetic flow без real camera/OCR/backend/persistence.
+
+Базовые проверки выполняются из `mobile/`:
+
+```powershell
+flutter analyze --no-pub
+flutter test --no-pub test
+flutter test --no-pub integration_test/offline_quick_flow_test.dart -d windows
+flutter build windows --release --no-pub
+```
+
 ## Правило загрузки
 
 Для обычной задачи открывайте только `AGENTS.md`, текущий раздел `docs/AI_STATUS.md`, один релевантный документ и один stage-промпт. Полный набор промптов автоматически не загружайте.

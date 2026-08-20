@@ -2,22 +2,25 @@
 
 ## Текущая цель
 
-Выполнить R03: выбрать native-mobile stack через ADR/spike и реализовать fixture-driven shell по принятому UX-контракту R02.
+Подготовить первый ограниченный этап Functional MVP поверх проверенного R03 shell, не смешивая local persistence, real camera, OCR и backend в один scope.
 
 ## Устойчивая последовательность
 
-1. R02 — UX MVP specification, state map, synthetic fixture matrix и acceptance criteria — завершён.
-2. R03 — ADR/spike mobile stack и fixture-driven native shell — следующий.
-3. Functional MVP — real local data/camera/OCR/parser/normalization/review.
-4. Production MVP — optional online services и release hardening.
+1. R00 — UX-first reconciliation — завершён.
+2. R01 — project overlay refresh — завершён.
+3. R02 — UX MVP specification — завершён.
+4. R03 — Flutter fixture-driven native shell — завершён и проверен на Windows validation runner.
+5. Functional MVP — планирование: выбрать первый вертикальный slice и зафиксировать SPEC/prompt.
+6. Production MVP — optional online services и release hardening после доказанного local core.
 
-## Зависимости
+## Ограничения следующего решения
 
-- R02 начинается только после DoD и review R01.
-- R03 опирается на принятые `specs/features/ux-mvp.spec.md`, `docs/UX_STATE_MAP.md` и `docs/UX_FIXTURE_MATRIX.md`.
-- Выбор KMP/Compose или Flutter запрещён без R03 ADR/spike evidence.
-- Legacy prompts `00–23` используются через migration map `docs/UX_FIRST_RECONCILIATION.md`.
+- Android/iOS остаются product targets; Windows не становится продуктовой платформой.
+- Перед production persistence определить canonical data owner и migration boundary.
+- Перед real camera/OCR проверить Flutter platform channel/plugin strategy и при необходимости пересмотреть ADR-004.
+- Legacy prompts `00–23` применяются только через migration map `docs/UX_FIRST_RECONCILIATION.md`, а не напрямую.
+- Product E2E нельзя закрыть без живого пути `client → API/CLI → backend`.
 
 ## Первый незавершённый шаг
 
-Выполнить `prompts/R03-native-mobile-mock-shell.md`.
+Создать отдельный план/SPEC для одного Functional MVP slice. Предпочтительный кандидат: локальное сохранение и чтение Receipt aggregates за `ReceiptRepository`, без одновременного подключения camera/OCR/backend.

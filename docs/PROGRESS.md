@@ -2,32 +2,32 @@
 
 ## Текущий этап
 
-R02 — UX MVP specification завершён локально. Следующий этап: R03 — native mobile strategy и fixture-driven shell.
+R03 — native mobile strategy и fixture-driven shell завершён локально. Functional MVP ещё не начат.
 
 ## Завершено
 
-- R00 reconciliation и migration matrix;
-- активная UX-first prompt chain R00–R03;
-- baseline `AGENTS`, architecture, design и roadmap boundaries;
-- канонические SPEC, security/privacy и AI planning artifacts подготовлены в R01.
-- R01 documentation/structure checks и reviewer verification пройдены.
-- R02 UX specification описывает 15 экранов, их actions/navigation/states/accessibility/data boundaries.
-- Quick/Power state map, 14 synthetic fixtures и acceptance criteria R03 подготовлены.
-- R02 structure/link/scope checks и независимый reviewer verification пройдены без блокеров.
+- R00 reconciliation и migration matrix.
+- R01 project overlay и канонические SPEC/security/privacy/planning artifacts.
+- R02 UX specification: 15 экранов, state map, 14 synthetic fixtures и R03 acceptance criteria.
+- ADR-004: Flutter выбран для R03 prototype после сравнения с KMP/Compose.
+- `mobile/`: Android/iOS targets, Windows validation runner, 15 routes, Quick/Power UX, ports/use cases и fixture adapters.
+- Visual concepts, deterministic golden, unit/widget/component/accessibility/state/integration tests.
+- Analyze, 14-test suite со smoke всех 15 routes, Windows offline integration path и Windows release build прошли.
 
 ## В работе
 
-- нет; R03 ещё не начат.
+- нет; следующий Functional MVP slice требует отдельного планирования и approval.
 
-## Заблокировано
+## Заблокировано / не проверено
 
 - Product E2E: `BLOCKED_BY_BACKEND_RECEIPT_SCANNER` до живого client/backend path.
-- Product E2E не может быть закрыт до появления живого backend path.
+- Android build/runtime: `UNVERIFIED` без Android SDK.
+- iOS build/runtime: `UNVERIFIED` без macOS/Xcode.
 
 ## Далее
 
-Выполнить R03 — ADR/spike выбора mobile stack и fixture-driven native shell.
+Спланировать первый bounded Functional MVP slice, предпочтительно persistent `ReceiptRepository`, и только затем переходить к реализации.
 
-## Базовый commit перед R02
+## Базовый commit перед R03
 
-- `77633ba` — R01 завершён и проверен локально.
+- `e62206f` — R02 завершён и проверен локально.

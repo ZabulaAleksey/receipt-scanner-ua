@@ -1,6 +1,6 @@
 # Receipt Scanner UA — DESIGN
 
-Статус: канонический UX/visual baseline. Текущая реализация UI отсутствует; первый UI создаётся как fixture-driven UX MVP.
+Статус: канонический UX/visual baseline. Fixture-driven UX MVP реализован в `mobile/`; real camera/OCR/backend остаются за границей R03.
 
 Детальный контракт экранов и состояний: [`../specs/features/ux-mvp.spec.md`](../specs/features/ux-mvp.spec.md). Навигационные переходы и тестовые сценарии зафиксированы в [`UX_STATE_MAP.md`](UX_STATE_MAP.md) и [`UX_FIXTURE_MATRIX.md`](UX_FIXTURE_MATRIX.md); этот документ остаётся источником visual language и общих UX-принципов.
 
@@ -64,3 +64,13 @@ Desktop/web review остаётся отдельным будущим client mod
 ## UX MVP boundary
 
 UX MVP использует только synthetic fixtures/mock data. Backend-dependent элементы могут быть визуально представлены, но не имитируют готовую production capability. Реальная camera, OCR, persistence, sync, auth и billing подключаются только в последующих этапах через ports/use cases.
+
+## R03 visual evidence
+
+Концепты, использованные для реализации:
+
+- [`design-concepts/r03-quick-ux.png`](design-concepts/r03-quick-ux.png) — Home, Scan simulation, Preview, Processing, Result;
+- [`design-concepts/r03-power-ux.png`](design-concepts/r03-power-ux.png) — Review, Correction, Merchant, Detail, History;
+- [`design-concepts/r03-insights-settings.png`](design-concepts/r03-insights-settings.png) — Price History, Insights, Settings, Backup, Business.
+
+Реализованный Flutter shell сохраняет light-first palette, navy typography, blue primary action, четыре нижних navigation context, tabular totals и компактные receipt cards. Допустимые отклонения R03: вместо реального camera preview используется fixture selector, графики представлены простыми локальными summaries, а platform chrome зависит от Flutter runner. Golden baseline главного экрана: `mobile/test/goldens/home.png` при logical viewport `390×844`.

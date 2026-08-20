@@ -46,3 +46,52 @@
 ### Что стоит изучить
 
 Markdown-навигацию, выборочную загрузку контекста, Git-ветки для документационных изменений и проверку UTF-8.
+
+## 2026-08-20 — R03 Flutter fixture-driven mobile shell
+
+### Что и зачем изменено
+
+- Выбран Flutter для быстрого UX-first prototype Android/iOS shell и зафиксирован ADR-004.
+- Создан offline shell на synthetic fixtures, чтобы проверить навигацию, состояния и accessibility до real camera/OCR/backend.
+
+### Ключевой поток данных / управления
+
+```text
+synthetic fixtures
+→ FixtureScenarioPort
+→ use cases / in-memory adapters
+→ AppController
+→ typed Flutter routes
+→ result / review / history UI
+```
+
+### Команды и проверки
+
+```powershell
+cd mobile
+flutter pub get
+dart format --output=none --set-exit-if-changed lib test integration_test
+flutter analyze --no-pub
+flutter test --no-pub test
+flutter test --no-pub integration_test/offline_quick_flow_test.dart -d windows
+flutter build windows --release --no-pub
+```
+
+### Решения и trade-offs
+
+- Flutter выбран для R03 testing/golden workflow и общей UI codebase; KMP/Compose остаётся вариантом пересмотра перед дорогими native integrations.
+- Windows runner даёт compile/visual evidence, но не заменяет Android/iOS validation.
+- In-memory adapters намеренно не создают преждевременный persistence contract.
+
+### Проблемы и способы исправления
+
+- В исходном golden не отображались кириллица и Material Icons; bundled Roboto и test `FontLoader` сделали baseline детерминированным.
+- Диагностические state controls сначала попали в production UI; states переведены под прямое управление controller в tests.
+
+### Как повторить самостоятельно
+
+1. Установить Flutter и проверить `flutter doctor -v`.
+2. Из `mobile/` выполнить `flutter pub get` и команды проверки выше.
+3. Запустить shell через `flutter run -d windows` либо доступный Android/iOS device.
+4. Сравнить `mobile/test/goldens/home.png` с концептами в `docs/design-concepts/`.
+5. Перед real persistence/camera/OCR создать отдельный Functional MVP SPEC и acceptance criteria.

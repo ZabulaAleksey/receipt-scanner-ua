@@ -3,11 +3,11 @@
 ## Приоритетное UX-first направление
 
 ```text
-R00 Reconciliation
-→ R01 Project overlay refresh
-→ R02 UX MVP specification
-→ R03 Fixture-driven native mobile shell
-→ Functional MVP: local DB, camera, OCR, parsing, normalization, review
+R00 Reconciliation [COMPLETE]
+→ R01 Project overlay refresh [COMPLETE]
+→ R02 UX MVP specification [COMPLETE]
+→ R03 Fixture-driven native mobile shell [COMPLETE]
+→ Functional MVP: local DB, camera, OCR, parsing, normalization, review [PLANNING]
 → Production MVP: optional sync/account/subscription, recovery, privacy/store release
 → Future B2B branch
 ```

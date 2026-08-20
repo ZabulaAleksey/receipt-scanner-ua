@@ -1,6 +1,18 @@
 # Контекстная совместимость (жёсткая проверка)
 
-Статус: Stage 00, R00–R02 пройдены; project overlay совместим с каскадом правил.
+Статус: R00–R03 пройдены; project overlay совместим с каскадом правил.
+
+## R03 — Flutter fixture-driven mobile shell
+
+| Изменение | Класс | Вывод |
+|---|---|---|
+| `mobile/` Flutter package | PROJECT_ONLY | Receipt-specific UX prototype; не копирует глобальную AI Dev Team automation |
+| ADR-004 Flutter и platform boundary | EXTEND | Конкретизирует mobile architecture и fallback до Functional MVP |
+| Unit/component/accessibility/golden/integration проверки | INHERITED | Глобальный test contract сохранён; принятые R02 fixtures не изменены |
+| Windows validation runner | PROJECT_ONLY | Инструмент проверки, не новая product platform |
+| Новые agents/hooks/MCP/skills/config | OBSOLETE | Подтверждённого пробела нет; ничего не добавлено |
+
+R03 не конфликтует с ДЕВ: UI изолирован за ports/use cases, scope не расширен до production integrations, Android/iOS limitations отмечены честно, а product E2E остаётся `BLOCKED_BY_BACKEND_RECEIPT_SCANNER`.
 
 ## R02 — UX MVP specification
 
@@ -35,7 +47,7 @@ R02 не изменяет глобальные test/fallback policies: прин�
 | OCR/mobile/cloud adapter boundaries | EXTEND | Проектная конкретизация architecture/fallback rules |
 | Новые agents/hooks/MCP/skills | OBSOLETE | Для R00 не требуются и не добавлены |
 
-Конфликтов после reconciliation не осталось. R02 обязан создать requirements/acceptance criteria до R03 implementation. Старые prompts и принятые test artifacts не удалены.
+Конфликтов после reconciliation не осталось. R02 создал requirements/acceptance criteria до R03 implementation. Старые prompts и принятые test artifacts не удалены.
 
 - Базовая проверка: workspace/root context (`~/codex-workspace/AGENTS.md`) + project overlay (`AGENTS.md`).
 - `AGENTS.proposed.md` отсутствует как активный слой.

@@ -7,7 +7,9 @@
 1. [R00 — UX-first reconciliation](R00-ux-first-reconciliation.md) — `COMPLETE`.
 2. [R01 — project overlay refresh](R01-project-overlay-refresh.md) — `COMPLETE`.
 3. [R02 — UX MVP specification](R02-ux-mvp-specification.md) — `COMPLETE`.
-4. [R03 — native mobile mock shell](R03-native-mobile-mock-shell.md) — `READY`, следующий этап.
+4. [R03 — native mobile mock shell](R03-native-mobile-mock-shell.md) — `COMPLETE`.
+
+Следующий этап сначала планируется как ограниченный первый slice Functional MVP. До отдельного SPEC/prompt запрещено подключать real camera/OCR/persistence/backend или напрямую выполнять legacy prompts.
 
 Не переходи к следующему этапу только потому, что предыдущий файл существует: нужны выполненный DoD, verification evidence и обновлённый `AI_STATUS.md`.
 
