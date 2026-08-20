@@ -6,8 +6,8 @@
 
 1. [R00 — UX-first reconciliation](R00-ux-first-reconciliation.md) — `COMPLETE`.
 2. [R01 — project overlay refresh](R01-project-overlay-refresh.md) — `COMPLETE`.
-3. [R02 — UX MVP specification](R02-ux-mvp-specification.md) — `READY`, текущий этап.
-4. [R03 — native mobile mock shell](R03-native-mobile-mock-shell.md) — после R02.
+3. [R02 — UX MVP specification](R02-ux-mvp-specification.md) — `COMPLETE`.
+4. [R03 — native mobile mock shell](R03-native-mobile-mock-shell.md) — `READY`, следующий этап.
 
 Не переходи к следующему этапу только потому, что предыдущий файл существует: нужны выполненный DoD, verification evidence и обновлённый `AI_STATUS.md`.
 

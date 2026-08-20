@@ -2,7 +2,7 @@
 
 ## Текущий этап
 
-R01 — обновление project overlay/КАРКАСА завершён локально и проверен. Следующий разрешённый этап: R02 — UX MVP specification и state map без реализации приложения.
+R02 — UX MVP specification завершён локально. Следующий разрешённый этап: R03 — ADR/spike mobile stack и fixture-driven native shell.
 
 ## Выполнено
 
@@ -13,13 +13,16 @@ R01 — обновление project overlay/КАРКАСА завершён л�
 - Активная последовательность изменена на `R00 → R01 → R02 → R03 → Functional MVP → Production MVP`.
 - UX MVP, native mobile shell, local-first storage, Region Pack и OCR adapter boundaries согласованы в канонических документах.
 - Добавлены канонические SPEC, AI plan, security/privacy delta и принятые ADR для UX-first, local-first и provider/regional boundaries.
+- Принят детальный UX MVP-контракт для 15 экранов, Quick/Power navigation, lifecycle и cross-screen error policy.
+- Зафиксирована матрица из 14 синтетических fixture scenarios и 10 acceptance criteria для R03.
 
 ## Известные ограничения
 
 - Прямых project-специфичных agents/hooks/MCP/skills конфигов в репозитории сейчас нет; используются только описания в `docs/CONTEXT_AUTOMATION.md`.
-- Product code, dependencies, schemas и CI в R00/R01 не изменялись.
+- Product code, dependencies, schemas и CI в R00–R02 не изменялись.
+- Реальный путь `client → API/CLI → backend` отсутствует; product E2E остаётся `BLOCKED_BY_BACKEND_RECEIPT_SCANNER`.
 
 ## Далее
 
-1. Выполнить `prompts/R02-ux-mvp-specification.md`.
-2. Не начинать R03 до принятой UX state map, fixture matrix и acceptance criteria R02.
+1. Выполнить `prompts/R03-native-mobile-mock-shell.md`.
+2. До реализации выбрать KMP/Compose или Flutter через ADR/spike evidence, не расширяя scope до camera/OCR/backend.

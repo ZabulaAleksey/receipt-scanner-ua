@@ -1,6 +1,6 @@
 # R03 — Native mobile strategy и fixture-driven shell
 
-Статус: `BLOCKED_BY_R02`. Тип: prototype implementation.
+Статус: `READY`. Тип: prototype implementation. Основание: принятый UX-контракт R02.
 
 ## Цель
 

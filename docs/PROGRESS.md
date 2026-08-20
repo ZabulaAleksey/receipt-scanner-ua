@@ -2,7 +2,7 @@
 
 ## Текущий этап
 
-R01 — завершён локально и проверен. Следующий этап: R02 — UX MVP specification.
+R02 — UX MVP specification завершён локально. Следующий этап: R03 — native mobile strategy и fixture-driven shell.
 
 ## Завершено
 
@@ -11,20 +11,23 @@ R01 — завершён локально и проверен. Следующи�
 - baseline `AGENTS`, architecture, design и roadmap boundaries;
 - канонические SPEC, security/privacy и AI planning artifacts подготовлены в R01.
 - R01 documentation/structure checks и reviewer verification пройдены.
+- R02 UX specification описывает 15 экранов, их actions/navigation/states/accessibility/data boundaries.
+- Quick/Power state map, 14 synthetic fixtures и acceptance criteria R03 подготовлены.
+- R02 structure/link/scope checks и независимый reviewer verification пройдены без блокеров.
 
 ## В работе
 
-- нет; R02 ещё не начат.
+- нет; R03 ещё не начат.
 
 ## Заблокировано
 
 - Product E2E: `BLOCKED_BY_BACKEND_RECEIPT_SCANNER` до живого client/backend path.
-- R03 implementation заблокирован до принятой UX specification R02.
+- Product E2E не может быть закрыт до появления живого backend path.
 
 ## Далее
 
-Выполнить R02 — UX MVP specification и state map.
+Выполнить R03 — ADR/spike выбора mobile stack и fixture-driven native shell.
 
-## Последний проверенный commit
+## Базовый commit перед R02
 
-- `8d8d3b3` — R00 завершён и проверен локально.
+- `77633ba` — R01 завершён и проверен локально.

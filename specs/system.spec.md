@@ -1,6 +1,6 @@
 # Receipt Scanner UA — system specification
 
-Статус: baseline требований после R01. Детальная UX MVP specification создаётся в R02.
+Статус: канонический baseline требований после R02. Детальный UX MVP-контракт находится в [`features/ux-mvp.spec.md`](features/ux-mvp.spec.md).
 
 ## Цель продукта
 
@@ -41,3 +41,9 @@
 ## Non-goals до Production MVP
 
 Always-on infrastructure, обязательный account, mandatory cloud OCR, enterprise organization model, billing implementation и постоянное хранение raw receipt images на сервере.
+
+## Связанные спецификации
+
+- [`features/ux-mvp.spec.md`](features/ux-mvp.spec.md) — экраны, состояния, navigation boundaries и acceptance criteria для R03.
+- [`../docs/UX_STATE_MAP.md`](../docs/UX_STATE_MAP.md) — Quick/Power UX и lifecycle transitions.
+- [`../docs/UX_FIXTURE_MATRIX.md`](../docs/UX_FIXTURE_MATRIX.md) — синтетические сценарии и ожидаемые состояния.

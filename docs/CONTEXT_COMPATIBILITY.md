@@ -1,6 +1,17 @@
 # Контекстная совместимость (жёсткая проверка)
 
-Статус: Stage 00, R00 и R01 пройдены; project overlay совместим с каскадом правил.
+Статус: Stage 00, R00–R02 пройдены; project overlay совместим с каскадом правил.
+
+## R02 — UX MVP specification
+
+| Изменение | Класс | Вывод |
+|---|---|---|
+| `specs/features/ux-mvp.spec.md` | PROJECT_ONLY | Receipt-specific UX contract, уточняющий system spec без дублирования глобального ДЕВ |
+| `docs/UX_STATE_MAP.md`, `docs/UX_FIXTURE_MATRIX.md` | PROJECT_ONLY | Проектные navigation/lifecycle и synthetic fixture contracts для R03 |
+| Синхронизация prompt/status/index документов | PROJECT_ONLY | Производные статусы приведены к фактическому состоянию R02 |
+| Новые agents/hooks/MCP/skills/config | OBSOLETE | Для specification-stage подтверждённого пробела нет; ничего не добавлено |
+
+R02 не изменяет глобальные test/fallback policies: принятые fixtures остаются контрактом, а E2E без живого backend отмечается `BLOCKED_BY_BACKEND_RECEIPT_SCANNER`.
 
 ## R01 — project overlay refresh
 

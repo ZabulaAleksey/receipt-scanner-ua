@@ -2,6 +2,8 @@
 
 Статус: канонический UX/visual baseline. Текущая реализация UI отсутствует; первый UI создаётся как fixture-driven UX MVP.
 
+Детальный контракт экранов и состояний: [`../specs/features/ux-mvp.spec.md`](../specs/features/ux-mvp.spec.md). Навигационные переходы и тестовые сценарии зафиксированы в [`UX_STATE_MAP.md`](UX_STATE_MAP.md) и [`UX_FIXTURE_MATRIX.md`](UX_FIXTURE_MATRIX.md); этот документ остаётся источником visual language и общих UX-принципов.
+
 ## Product experience
 
 Практичный light-first интерфейс без fintech-декоративности. Основной путь: импорт/скан → распознавание → результат → при необходимости review → история/экспорт. Confidence, manual correction и normalization всегда отображаются как разные состояния.

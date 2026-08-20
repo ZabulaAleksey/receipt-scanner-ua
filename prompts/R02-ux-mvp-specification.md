@@ -1,6 +1,6 @@
 # R02 — UX MVP specification и state map
 
-Статус: `READY`. Тип: specification/design. Реализацию приложения не начинать.
+Статус: `COMPLETE`. Тип: specification/design. Реализация приложения в этом этапе не выполнялась.
 
 ## Цель
 
@@ -35,3 +35,12 @@ Home; Camera/Scan simulation; Crop/Preview; Processing; Receipt Result; Review Q
 - Quick/Power state map и fixture matrix готовы;
 - acceptance criteria для R03 определены;
 - реализации и инфраструктуры нет.
+
+## Verification evidence
+
+- UX contract: `specs/features/ux-mvp.spec.md`;
+- state map: `docs/UX_STATE_MAP.md`;
+- fixture matrix: `docs/UX_FIXTURE_MATRIX.md`;
+- все 15 экранов и R03 acceptance criteria проверены;
+- независимый read-only review пройден без блокеров после устранения lifecycle/privacy неоднозначностей;
+- product code, dependencies, CI и принятые test artifacts не изменялись.
