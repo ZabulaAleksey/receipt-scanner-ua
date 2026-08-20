@@ -4,8 +4,8 @@
 
 ## Активная последовательность
 
-1. [R00 — UX-first reconciliation](R00-ux-first-reconciliation.md) — `READY`.
-2. [R01 — project overlay refresh](R01-project-overlay-refresh.md) — после R00.
+1. [R00 — UX-first reconciliation](R00-ux-first-reconciliation.md) — `COMPLETE`.
+2. [R01 — project overlay refresh](R01-project-overlay-refresh.md) — `READY`, текущий этап.
 3. [R02 — UX MVP specification](R02-ux-mvp-specification.md) — после R01.
 4. [R03 — native mobile mock shell](R03-native-mobile-mock-shell.md) — после R02.
 

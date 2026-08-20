@@ -2,20 +2,23 @@
 
 ## Текущий этап
 
-Stage 00 — Context Compatibility Audit ещё не выполнялся.
+R00 — UX-first reconciliation завершён. Следующий разрешённый этап: R01 — обновление project overlay/КАРКАСА без product code.
 
 ## Выполнено
 
-- Монолитная спецификация разделена на тематические документы и отдельный промпт для каждого этапа.
-- Все 57 нумерованных разделов исходника сохранены в разнесённых файлах.
+- Проектная спецификация разнесена по тематическим документам и отдельным stage-промптам.
+- Все разделы разбивки сохранены в `prompts/01..23`.
+- `AGENTS.proposed.md` удалён; теперь единственным активным проектным слоем является `AGENTS.md`.
+- Старые prompts `00–23` сохранены как legacy backlog и классифицированы в `docs/UX_FIRST_RECONCILIATION.md`.
+- Активная последовательность изменена на `R00 → R01 → R02 → R03 → Functional MVP → Production MVP`.
+- UX MVP, native mobile shell, local-first storage, Region Pack и OCR adapter boundaries согласованы в канонических документах.
 
 ## Известные ограничения
 
-- Корневой `AGENTS.md` уже существовал, но был пустым, поэтому он не перезаписан.
-- Предлагаемые Receipt-specific правила находятся в `AGENTS.proposed.md` и ожидают согласования.
+- Прямых project-специфичных agents/hooks/MCP/skills конфигов в репозитории сейчас нет; используются только описания в `docs/CONTEXT_AUTOMATION.md`.
+- Product code, dependencies, schemas и CI в R00 не изменялись.
 
 ## Далее
 
-1. Согласовать перенос или объединение `AGENTS.proposed.md` с `AGENTS.md`.
-2. Выполнить `prompts/00-context-compatibility-audit.md`.
-3. Зафиксировать результаты аудита в `docs/CONTEXT_COMPATIBILITY.md`.
+1. Выполнить `prompts/R01-project-overlay-refresh.md`.
+2. Не начинать R02 до завершения documentation/structure checks и DoD R01.

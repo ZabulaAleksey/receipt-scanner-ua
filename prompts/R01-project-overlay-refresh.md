@@ -1,6 +1,6 @@
 # R01 — Обновление КАРКАСА Receipt Scanner UA
 
-Статус: `BLOCKED_BY_R00`. Тип: project overlay/documentation. Product code не изменять.
+Статус: `READY`. Тип: project overlay/documentation. Product code не изменять.
 
 ## Цель
 

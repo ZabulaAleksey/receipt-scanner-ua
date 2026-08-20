@@ -1,6 +1,6 @@
 # R00 — Согласование старого плана с UX-first направлением
 
-Статус: `READY`. Тип: documentation/reconciliation. Product code не изменять.
+Статус: `COMPLETE` (2026-08-20). Тип: documentation/reconciliation. Product code не изменён.
 
 ## Цель
 
@@ -31,3 +31,12 @@
 - UX MVP стоит перед DB/OCR/backend implementation;
 - следующий этап однозначно `R01`;
 - product code и зависимости не изменены.
+
+## Evidence завершения
+
+- матрица сохранения и переноса: `docs/UX_FIRST_RECONCILIATION.md`;
+- активная последовательность: `prompts/README.md`;
+- UX/mobile/local-first границы согласованы в `AGENTS.md`, `docs/DESIGN.md`, `docs/ARCHITECTURE.md` и `docs/ROADMAP.md`;
+- все legacy prompts `00–23` присутствуют;
+- проверка Markdown-ссылок и `git diff --check` пройдена;
+- изменения `src/`, `tests/`, manifests, dependencies и CI отсутствуют.

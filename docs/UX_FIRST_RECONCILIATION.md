@@ -1,6 +1,6 @@
 # UX-first reconciliation
 
-Статус: принятая миграционная карта prompt roadmap. Product code не изменён.
+Статус: R00 завершён 2026-08-20; миграционная карта принята как вход для R01. Product code не изменён.
 
 ## Решение
 
@@ -10,7 +10,7 @@
 
 | Старые этапы | Решение | Новое место |
 |---|---|---|
-| 00 | KEEP / SUPERSEDED | Исторический compatibility audit; R00 выполняет продуктовую reconciliation |
+| 00 | KEEP / REWRITE | Исторический compatibility audit сохранён; R00 заменяет его только для продуктовой reconciliation |
 | 01 | MOVE / SPLIT | Foundation после выбора topology; Python core и mobile shell разделить |
 | 02 | KEEP / MOVE | Synthetic fixture/privacy baseline уже в R02/R03, расширение в Functional MVP |
 | 03–05 | KEEP / MOVE | Functional MVP после UX validation |
