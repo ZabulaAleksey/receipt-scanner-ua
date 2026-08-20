@@ -12,7 +12,7 @@ R00 Reconciliation
 → Future B2B branch
 ```
 
-До завершения R00/R01 старая карта `00–23` ниже является legacy backlog, а не очередью автоматического исполнения. Подробная миграция: `docs/UX_FIRST_RECONCILIATION.md`.
+Старая карта `00–23` ниже навсегда остаётся legacy backlog, а не очередью автоматического исполнения. Каждый её этап требует явного remapping в текущую UX-first фазу. Подробная миграция: `docs/UX_FIRST_RECONCILIATION.md`.
 
 # 24. Stage Map
 

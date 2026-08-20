@@ -1,6 +1,18 @@
 # Контекстная совместимость (жёсткая проверка)
 
-Статус: Stage 00 и R00 пройдены; UX-first prompt roadmap совместим с каскадом правил.
+Статус: Stage 00, R00 и R01 пройдены; project overlay совместим с каскадом правил.
+
+## R01 — project overlay refresh
+
+| Изменение | Класс | Вывод |
+|---|---|---|
+| `specs/system.spec.md`, `specs/README.md` | PROJECT_ONLY | Канонические Receipt-specific product requirements |
+| `docs/SECURITY.md`, `docs/PRIVACY.md` | EXTEND | Project delta поверх глобальных security/fallback policies |
+| `docs/AI_PLAN.md`, актуализация status/progress | PROJECT_ONLY | Локальная маршрутизация следующего этапа и evidence |
+| ADR-001..003, architecture/design/roadmap updates | PROJECT_ONLY | Receipt-specific boundaries и решения |
+| Canonical source list и anti-overengineering в `AGENTS.md` | EXTEND | Уточнение локального overlay без копирования ДЕВ |
+| Удаление `AGENTS.proposed.md` | OBSOLETE | Дублирующий proposal заменён активным project `AGENTS.md` |
+| Новые local agents/hooks/MCP/skills | OBSOLETE | Подтверждённого пробела нет; не добавлены |
 
 ## R00 — UX-first reconciliation
 

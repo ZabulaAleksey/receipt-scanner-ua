@@ -53,7 +53,9 @@
 
 ---
 
-## 5. Структура репозитория
+## 5. Целевая структура Functional MVP
+
+Блок ниже — планируемая структура поздних этапов, а не описание уже существующих файлов. R01 создаёт только project context; каталоги product code, dependencies, local agents/skills/hooks/config добавляются лишь отдельными одобренными этапами и только при подтверждённой необходимости.
 
 ```text
 receipt-scanner-ua/
@@ -69,6 +71,8 @@ receipt-scanner-ua/
 │  ├─ ARCHITECTURE.md
 │  ├─ DECISIONS.md
 │  ├─ DESIGN.md
+│  ├─ AI_PLAN.md
+│  ├─ AI_STATUS.md
 │  ├─ PROGRESS.md
 │  ├─ ROADMAP.md
 │  ├─ PROMPTS.md
@@ -78,7 +82,8 @@ receipt-scanner-ua/
 │  ├─ NORMALIZATION.md
 │  ├─ EXCEL_FORMAT.md
 │  ├─ QUALITY_METRICS.md
-│  ├─ SECURITY_PRIVACY.md
+│  ├─ SECURITY.md
+│  ├─ PRIVACY.md
 │  └─ PERFORMANCE.md
 │
 ├─ rules/
@@ -199,7 +204,7 @@ receipt-scanner-ua/
 
 ### OCR
 
-**Основной вариант:** PaddleOCR с поддержкой украинского языка.<br>
+**Первый Functional MVP candidate:** PaddleOCR с поддержкой украинского языка через общий OCR port. Конкретный provider не является зависимостью domain/application layers.<br>
 OCR backend обязан возвращать:
 
 ```text

@@ -1,6 +1,6 @@
 # R02 — UX MVP specification и state map
 
-Статус: `BLOCKED_BY_R01`. Тип: specification/design. Реализацию приложения не начинать.
+Статус: `READY`. Тип: specification/design. Реализацию приложения не начинать.
 
 ## Цель
 

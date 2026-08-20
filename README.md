@@ -1,7 +1,7 @@
 # Receipt Scanner UA — архитектура, АВТОМАТИЗАЦИЯ КОНТЕКСТА и промпты для Codex
 
 **Назначение:** локальная система для обработки фотографий украинских чеков: OCR → парсинг → нормализация товаров → история цен → Excel.<br>
-**Режим:** Windows-first, Python, local-first.<br>
+**Режим:** UX-first; Windows/Python processing core; Android/iOS native target; local-first.<br>
 **Ключевой принцип:** проект наследует уже установленную **AI Dev Team / «АВТОМАТИЗАЦИЮ КОНТЕКСТА»** и содержит только локальные project-specific deltas.<br>
 **Дата спецификации:** 2026-08-10.
 
@@ -13,10 +13,12 @@
 
 - [Архитектура](docs/ARCHITECTURE.md) — продукт, стек, модель данных и pipeline.
 - [Автоматизация контекста](docs/CONTEXT_AUTOMATION.md) — наследование правил, локальные deltas и checklist.
-- [Roadmap](docs/ROADMAP.md) — Stage Map, MVP, post-MVP и статусы технологий.
+- [System specification](specs/system.spec.md) — требования и границы UX/Functional/Production MVP.
+- [Roadmap](docs/ROADMAP.md) — UX-first stages и сохранённый legacy backlog.
+- [Security](docs/SECURITY.md) и [Privacy](docs/PRIVACY.md) — project-specific data boundaries.
+- [AI Plan](docs/AI_PLAN.md) и [AI Status](docs/AI_STATUS.md) — следующий шаг и подтверждённое состояние.
 - [Definition of Done](docs/DEFINITION_OF_DONE.md) — общие критерии завершения этапа.
-- [Stage-промпты](prompts/README.md) — отдельный файл на каждый этап 00–23.
-- [Предложенный AGENTS.md](AGENTS.proposed.md) — подготовлен отдельно, потому что корневой `AGENTS.md` уже существовал.
+- [Stage-промпты](prompts/README.md) — активная цепочка R00–R03 и legacy backlog 00–23.
 
 ## Правило загрузки
 
