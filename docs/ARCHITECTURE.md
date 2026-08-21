@@ -1,5 +1,30 @@
 # Архитектура Receipt Scanner UA
 
+## Текущее направление
+
+Архитектура развивается тремя слоями зрелости: UX MVP на fixtures, Functional MVP с local persistence/camera/OCR и Production MVP с необязательными online services. Native client, processing core и optional cloud являются отдельными границами.
+
+- Windows/Python — baseline processing core/CLI, не единственный client stack.
+- Android/iOS shell R03 реализуется на Flutter по ADR-004; Windows runner используется только для локальной compile/visual verification. PWA не является целевым mobile client.
+- OCR providers, включая Text Recognition Core и PaddleOCR, подключаются через port/adapter boundary.
+- Украина реализуется Region Pack; merchant adapters улучшают generic pipeline, но неизвестный merchant не блокирует extraction.
+- `LOCAL_ONLY` — полноценный baseline. Sync/account/cloud OCR не являются dependency consumer core.
+- B2B — future extension и не влияет на consumer domain до отдельного approval.
+
+## R03 mobile shell boundary
+
+```text
+bundled synthetic fixtures
+→ FixtureScenarioPort / fixture adapter
+→ use cases + prototype in-memory store
+→ immutable app state
+→ Flutter screens/navigation
+```
+
+R03 создаёт один `mobile/` package с Android/iOS product targets и Windows validation runner. UI не читает fixture JSON напрямую и не импортирует platform plugins. `CameraCapturePort`, `ReceiptRepository`, `ReviewQueuePort` и `SettingsPort` имеют только deterministic prototype adapters. Real camera, OCR, database, network, auth, billing и sync остаются за границей этапа.
+
+Windows build подтверждает компилируемость общего Flutter shell, но не заменяет Android/iOS build или product E2E. Android остаётся `UNVERIFIED` до установки Android SDK, iOS — до macOS/Xcode.
+
 ## 1. Цели продукта
 
 Система должна:
@@ -42,7 +67,9 @@
 
 ---
 
-## 5. Структура репозитория
+## 5. Целевая структура Functional MVP
+
+Блок ниже — планируемая структура поздних этапов, а не описание уже существующих файлов. R01 создаёт только project context; каталоги product code, dependencies, local agents/skills/hooks/config добавляются лишь отдельными одобренными этапами и только при подтверждённой необходимости.
 
 ```text
 receipt-scanner-ua/
@@ -58,7 +85,8 @@ receipt-scanner-ua/
 │  ├─ ARCHITECTURE.md
 │  ├─ DECISIONS.md
 │  ├─ DESIGN.md
-│  ├─ PROGRESS.md
+│  ├─ AI_PLAN.md
+│  ├─ AI_STATUS.md
 │  ├─ ROADMAP.md
 │  ├─ PROMPTS.md
 │  ├─ CONTEXT_COMPATIBILITY.md
@@ -67,7 +95,8 @@ receipt-scanner-ua/
 │  ├─ NORMALIZATION.md
 │  ├─ EXCEL_FORMAT.md
 │  ├─ QUALITY_METRICS.md
-│  ├─ SECURITY_PRIVACY.md
+│  ├─ SECURITY.md
+│  ├─ PRIVACY.md
 │  └─ PERFORMANCE.md
 │
 ├─ rules/
@@ -188,7 +217,7 @@ receipt-scanner-ua/
 
 ### OCR
 
-**Основной вариант:** PaddleOCR с поддержкой украинского языка.<br>
+**Первый Functional MVP candidate:** PaddleOCR с поддержкой украинского языка через общий OCR port. Конкретный provider не является зависимостью domain/application layers.<br>
 OCR backend обязан возвращать:
 
 ```text

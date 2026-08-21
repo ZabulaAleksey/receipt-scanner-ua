@@ -1,5 +1,7 @@
 # Автоматизация контекста
 
+> Исторический reference исходной декомпозиции. Активный порядок этапов определяется `prompts/README.md`, а текущий статус — `docs/AI_STATUS.md`.
+
 ## 3. Совместимость с существующим архивом «АВТОМАТИЗАЦИЯ КОНТЕКСТА»
 
 ### 3.1. Что считается унаследованным и локально не дублируется
@@ -143,7 +145,8 @@ Do not duplicate generic agents, hooks, MCP, Git workflow or common security rol
 - docs/ARCHITECTURE.md
 - docs/DECISIONS.md
 - docs/DESIGN.md
-- docs/PROGRESS.md
+- docs/AI_STATUS.md
+- docs/AI_PLAN.md
 - docs/CONTEXT_COMPATIBILITY.md
 - docs/DATA_MODEL.md
 - docs/OCR_PIPELINE.md
@@ -155,7 +158,7 @@ Use uv + project .venv + shared uv cache.
 
 ## Work discipline
 Prompt → inspect target context → plan → implement small change → test →
-benchmark when relevant → reviewer → docs → PROGRESS.
+benchmark when relevant → reviewer → docs → AI_STATUS / AI_PLAN.
 ```
 
 ### 19.2. Rules
@@ -345,7 +348,8 @@ TASK-SPECIFIC CONTEXT
 [ ] ARCHITECTURE обновлена при boundary change
 [ ] DECISIONS обновлён при ADR
 [ ] DESIGN обновлён при UI change
-[ ] PROGRESS обновлён
+[ ] AI_STATUS обновлён при изменении подтверждённого состояния
+[ ] AI_PLAN обновлён при изменении следующего шага
 [ ] experimental feature имеет fallback
 ```
 

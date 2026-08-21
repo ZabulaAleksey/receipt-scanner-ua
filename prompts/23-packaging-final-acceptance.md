@@ -13,7 +13,7 @@
 8. full tests;
 9. verify no raw PII/secrets tracked;
 10. verify context automation compatibility;
-11. update ARCHITECTURE/DECISIONS/DESIGN/PROGRESS;
+11. update ARCHITECTURE/DECISIONS/DESIGN/AI_STATUS/AI_PLAN;
 12. separate supported vs experimental features.
 ```
 

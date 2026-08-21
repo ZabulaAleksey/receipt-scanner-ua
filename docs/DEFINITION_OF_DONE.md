@@ -8,7 +8,8 @@
 - нужные integration tests проходят;
 - acceptance/golden fixture добавлен при изменении поведения;
 - regression dataset не ухудшен без ADR;
-- `PROGRESS.md` обновлён;
+- `AI_STATUS.md` обновлён при изменении подтверждённого состояния;
+- `AI_PLAN.md` обновлён при изменении следующего шага;
 - `DECISIONS.md` обновлён при архитектурном решении;
 - `ARCHITECTURE.md` обновлён при изменении boundaries;
 - `DESIGN.md` обновлён при UI change;

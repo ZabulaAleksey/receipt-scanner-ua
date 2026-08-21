@@ -1,5 +1,19 @@
 # Roadmap
 
+## Приоритетное UX-first направление
+
+```text
+R00 Reconciliation [COMPLETE]
+→ R01 Project overlay refresh [COMPLETE]
+→ R02 UX MVP specification [COMPLETE]
+→ R03 Fixture-driven native mobile shell [COMPLETE]
+→ Functional MVP: local DB, camera, OCR, parsing, normalization, review [PLANNING]
+→ Production MVP: optional sync/account/subscription, recovery, privacy/store release
+→ Future B2B branch
+```
+
+Старая карта `00–23` ниже навсегда остаётся legacy backlog, а не очередью автоматического исполнения. Каждый её этап требует явного remapping в текущую UX-first фазу. Подробная миграция: `docs/UX_FIRST_RECONCILIATION.md`.
+
 # 24. Stage Map
 
 ```text
@@ -33,7 +47,7 @@
 
 ---
 
-## 50. Рекомендуемый порядок MVP
+## 50. Исторический порядок CLI/core MVP
 
 ```text
 00 compatibility
@@ -55,7 +69,7 @@
 18 batch CLI
 ```
 
-После этого уже есть полноценный полезный MVP.
+После этого есть полезный CLI/core milestone, но не завершённый UX-first product MVP.
 
 Arrow/Parquet, UI, производительность и ONNX/NPU — после стабильного базового варианта.
 
@@ -84,11 +98,11 @@ MVP готов, когда:
 
 ---
 
-## 52. Post-MVP
+## 52. Исторический Post-MVP backlog
 
 Не внедрять раньше времени:
 
-- mobile app;
+- real mobile camera/OCR integration (fixture-driven mobile shell создаётся раньше в R03);
 - объединение нескольких фотографий длинного чека;
 - распознавание штрихкодов;
 - проверка QR и фискальных данных;
