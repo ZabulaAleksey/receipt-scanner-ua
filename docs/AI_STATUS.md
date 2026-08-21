@@ -2,7 +2,7 @@
 
 ## Текущий этап
 
-R04 — local receipt persistence реализован и validated на Windows runner в рабочей ветке `plan/functional-mvp-local-persistence` поверх R03 shell. SQLite adapter, async bootstrap, local read/save/error/retry lifecycle и security boundaries проверены format/analyze/unit/widget/component и Windows platform integration tests.
+R04 — local receipt persistence реализован и validated на Windows runner в рабочей ветке `plan/functional-mvp-local-persistence` поверх R03 shell. R05 — local receipt image intake подготовлен как следующий отдельный Functional MVP slice в ветке `plan/local-receipt-image-intake`; код ещё не начат.
 
 Позиция в активной последовательности: R04 реализует первый slice этапа 5 из 6 (`Functional MVP`), но сама product-фаза ещё не завершена. На уровне продуктовых фаз завершена первая из трёх: `UX MVP`; Functional MVP находится в реализации.
 
@@ -42,7 +42,7 @@ R04 — local receipt persistence реализован и validated на Windows
 
 ## Далее
 
-1. Спланировать R05 как отдельный image-intake или preprocessing slice; не подключать camera, OCR и backend одним этапом.
+1. Реализовать R05 image intake по отдельным SPEC/prompt; не подключать camera, preprocessing, OCR и backend одним этапом.
 2. Для real Android/iOS image acquisition получить native runtime evidence на соответствующем host.
 3. Не объявлять Android/iOS runtime или product E2E выполненными без соответствующего host/backend evidence.
 

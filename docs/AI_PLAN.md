@@ -2,7 +2,7 @@
 
 ## Текущая цель
 
-Подготовить R05 как следующий отдельный Functional MVP slice: local image intake и preprocessing contract без подключения OCR или backend.
+Реализовать R05 как следующий отдельный Functional MVP slice: local image intake из photo library без camera capture, preprocessing, OCR или backend.
 
 ## Устойчивая последовательность
 
@@ -23,4 +23,4 @@
 
 ## Первый незавершённый шаг
 
-Спланировать R05 после [R04](../prompts/R04-local-receipt-persistence.md): отдельный image-intake/preprocessing slice с independent SPEC/prompt. Реальный camera plugin, OCR и backend не смешивать в одной работе.
+Выполнить [R05](../prompts/R05-local-receipt-image-intake.md) по отдельной SPEC: single photo-library import, validation и local controlled copy. Camera capture, preprocessing, OCR и backend не смешивать в одной работе.
