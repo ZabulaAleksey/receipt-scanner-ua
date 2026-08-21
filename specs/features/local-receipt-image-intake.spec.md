@@ -1,6 +1,6 @@
 # Local receipt image intake specification
 
-Статус: `PLANNED`
+Статус: `IMPLEMENTED_LOCALLY`; Windows runner exit evidence and Android/iOS runtime pending
 Версия: 0.1
 
 ## 1. Назначение

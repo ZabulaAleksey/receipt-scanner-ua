@@ -6,6 +6,7 @@
 - Собирать и хранить только данные, необходимые выбранному пользователем режиму.
 - Original receipt images не загружаются автоматически.
 - R04 structured local database хранится в dedicated app-controlled directory; Android backup выключен, iOS получает backup exclusion до открытия SQLite. Эта native runtime гарантия ещё не проверена на Android/iOS host.
+- R05 raw image draft хранится только в отдельном app-controlled Application Support directory с manifest одной active image; Android backup выключен, iOS получает directory backup exclusion до первой записи. Raw image, absolute path и bytes не входят в SQLite aggregate или обычные logs. Native runtime гарантия ещё не проверена на Android/iOS host.
 - Cloud processing, structured sync и raw-image backup имеют раздельные opt-in controls.
 - Model-training consent отделён от обычной обработки и по умолчанию выключен.
 

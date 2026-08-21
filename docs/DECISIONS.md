@@ -88,13 +88,13 @@ Tests/benchmark: format/analyze and 25 Flutter unit/widget/component tests passe
 ## ADR-006 — Photo-library import behind a local image-intake port
 
 Date: 2026-08-21
-Status: Accepted for planned R05 scope
+Status: Accepted; implemented locally in R05, native platform evidence pending
 Context: R04 хранит только structured receipt aggregates. Следующий Functional MVP slice требует real user image input, но одновременное добавление camera capture, transforms и OCR расширяет native permissions, lifecycle и security risks без одного проверяемого outcome.
-Decision: R05 вводит `ReceiptImageIntakePort` и выбирает endorsed `image_picker` только для single `ImageSource.gallery` selection. Adapter получает image, выполняет validation/copy в fixed app-controlled storage и возвращает domain draft с safe metadata; `XFile`, absolute user paths и raw bytes не покидают adapter. Android lost-data recovery повторно применяет тот же validation/copy pipeline. Camera capture, preprocessing и OCR остаются отдельными stages.
+Decision: R05 вводит `ReceiptImageIntakePort` и выбирает endorsed `image_picker` только для single `ImageSource.gallery` selection. Adapter принимает только JPEG/PNG, валидирует byte/dimension/pixel bounds, выполняет atomic controlled copy в backup-excluded Application Support directory и возвращает domain draft с safe metadata; `XFile`, absolute user paths и raw bytes не покидают adapter. Один active draft имеет local manifest; stale/partial/replaced copies очищаются, а manifest validates image again after restart. Android lost-data recovery повторно применяет тот же validation/copy pipeline. Camera capture, preprocessing и OCR остаются отдельными stages.
 Alternatives: сразу подключить `ImageSource.camera`; использовать direct filesystem path; реализовать собственный platform channel; хранить image blob в SQLite; продолжить fixture-only flow. Они отклонены как смешивающие независимые permissions/processing concerns, нарушающие storage boundary либо не дающие real local user input.
 Consequences: iOS получает photo-library purpose string, Android не получает широкое storage permission. New plugin dependency требует native runtime evidence на Android/iOS. Windows может использовать deterministic/plugin validation, но не становится product target. Image asset не создаёт ReceiptAggregate и не изменяет SQLite v1.
 Fallback: user cancellation — no-op. Transient picker/storage failures допускают явный retry; permission denial, unsupported/corrupt/over-limit input и unknown partial copy fail closed без fixture/camera/cloud fallback. Lost data не создаёт receipt автоматически.
-Tests/benchmark: negative validation, controlled-copy cleanup, lost-data recovery, controller/widget states and existing full Flutter suite; product Android/iOS evidence only on appropriate host.
+Tests/benchmark: 36 Flutter unit/widget/component tests passed, including negative validation, stale-copy reconciliation, stored-draft recovery, lost-data result flow and fixture/image switching. Windows runner built, but the current tool did not return a final integration/build exit verdict; Android/iOS evidence requires an appropriate host.
 
 Основания: [image_picker](https://pub.dev/packages/image_picker) — Flutter-maintained plugin для photo library/camera, описывающий iOS usage description, Android Photo Picker и lost-data recovery.
 

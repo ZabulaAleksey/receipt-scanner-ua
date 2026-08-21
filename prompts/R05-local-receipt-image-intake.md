@@ -1,6 +1,6 @@
 # R05 — Local receipt image intake
 
-Статус: `PLANNED`. Тип: Functional MVP implementation slice.
+Статус: `IMPLEMENTED_LOCALLY`; native platform evidence pending. Тип: Functional MVP implementation slice.
 
 ## Goal
 

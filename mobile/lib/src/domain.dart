@@ -129,6 +129,68 @@ enum DemoState { normal, loading, empty, error, offline }
 
 enum StorageMode { localOnly, syncTeaser }
 
+/// Safe, app-owned description of an imported receipt image.  It deliberately
+/// contains no picker type, raw bytes, or user-controlled absolute path.
+class ReceiptImageDraft {
+  const ReceiptImageDraft({
+    required this.id,
+    required this.storageRef,
+    required this.mimeType,
+    required this.byteSize,
+    required this.width,
+    required this.height,
+    required this.source,
+  });
+
+  final String id;
+  final String storageRef;
+  final String mimeType;
+  final int byteSize;
+  final int width;
+  final int height;
+  final ReceiptImageSource source;
+}
+
+enum ReceiptImageSource { gallery, recoveredGallery }
+
+enum ReceiptImageFailureKind {
+  permissionDenied,
+  unsupportedImage,
+  invalidImage,
+  byteLimitExceeded,
+  dimensionsExceeded,
+  pixelLimitExceeded,
+  pickerUnavailable,
+  localImportError,
+}
+
+class ReceiptImageFailure {
+  const ReceiptImageFailure(this.kind, {required this.retryable});
+
+  final ReceiptImageFailureKind kind;
+  final bool retryable;
+}
+
+sealed class ReceiptImageIntakeResult {
+  const ReceiptImageIntakeResult();
+}
+
+class ReceiptImageReady extends ReceiptImageIntakeResult {
+  const ReceiptImageReady(this.draft);
+  final ReceiptImageDraft draft;
+}
+
+class ReceiptImageCancelled extends ReceiptImageIntakeResult {
+  const ReceiptImageCancelled();
+}
+
+class ReceiptImageFailed extends ReceiptImageIntakeResult {
+  const ReceiptImageFailed(this.failure);
+  final ReceiptImageFailure failure;
+}
+
+enum ReceiptImageIntakeState { idle, selecting, ready, cancelled, error }
+
 class ReceiptAggregate {
   const ReceiptAggregate({
     required this.id,

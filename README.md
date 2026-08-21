@@ -18,11 +18,11 @@
 - [Security](docs/SECURITY.md) и [Privacy](docs/PRIVACY.md) — project-specific data boundaries.
 - [AI Plan](docs/AI_PLAN.md) и [AI Status](docs/AI_STATUS.md) — следующий шаг и подтверждённое состояние.
 - [Definition of Done](docs/DEFINITION_OF_DONE.md) — общие критерии завершения этапа.
-- [Stage-промпты](prompts/README.md) — активная цепочка R00–R04 и legacy backlog 00–23.
+- [Stage-промпты](prompts/README.md) — активная цепочка R00–R05 и legacy backlog 00–23.
 
-## R04 local persistence
+## R05 local image intake
 
-Flutter shell находится в [`mobile/`](mobile/README.md). R04 добавляет local-first SQLite v1 для агрегатов чеков и async loading/empty/local-error/retry lifecycle. Synthetic fixtures остаются только для demo/test composition: они не seed'ят пользовательскую БД. Android/iOS остаются product targets, Windows используется только для локальной проверки. Real camera/OCR/backend всё ещё вне scope.
+Flutter shell находится в [`mobile/`](mobile/README.md). R04 добавил local-first SQLite v1 для агрегатов чеков, а R05 — выбор одной JPEG/PNG из photo library за port/adapter boundary, bounded local copy и Preview metadata. Synthetic fixtures остаются только для demo/test composition: они не seed'ят пользовательскую БД. Android/iOS остаются product targets, Windows используется только для локальной проверки. Camera capture/OCR/backend всё ещё вне scope.
 
 Базовые проверки выполняются из `mobile/`:
 
@@ -31,6 +31,7 @@ flutter analyze --no-pub
 flutter test --no-pub test
 flutter test --no-pub integration_test/offline_quick_flow_test.dart -d windows
 flutter test --no-pub integration_test/local_persistence_flow_test.dart -d windows
+flutter test --no-pub integration_test/local_image_intake_flow_test.dart -d windows
 ```
 
 Последняя команда требует Windows Developer Mode для symlink support Flutter plugins. Android/iOS runtime evidence требует соответствующего host.

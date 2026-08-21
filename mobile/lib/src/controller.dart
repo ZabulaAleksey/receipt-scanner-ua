@@ -15,6 +15,7 @@ class AppController extends ChangeNotifier {
       cameraPort = dependencies.cameraPort,
       reviewQueuePort = dependencies.reviewQueuePort,
       settingsPort = dependencies.settingsPort,
+      imageIntakePort = dependencies.imageIntakePort,
       selectedFixture = dependencies.fixturePort.byId('FX-01-CLEAN') {
     if (legacyStore case final store?) {
       // Fixture/demo composition is explicit and never used for user storage.
@@ -34,6 +35,7 @@ class AppController extends ChangeNotifier {
   final CameraCapturePort cameraPort;
   final ReviewQueuePort reviewQueuePort;
   final SettingsPort settingsPort;
+  final ReceiptImageIntakePort imageIntakePort;
   final ProcessReceiptUseCase processUseCase = ProcessReceiptUseCase();
   late final SaveReceiptUseCase saveUseCase = SaveReceiptUseCase(legacyStore!);
   late final CaptureReceiptUseCase captureUseCase = CaptureReceiptUseCase(
@@ -55,6 +57,9 @@ class AppController extends ChangeNotifier {
   DemoState historyState = DemoState.normal;
   ProcessingState processingState = ProcessingState.idle;
   bool saved = false;
+  ReceiptImageIntakeState imageIntakeState = ReceiptImageIntakeState.idle;
+  ReceiptImageDraft? imageDraft;
+  ReceiptImageFailure? imageFailure;
 
   List<ReceiptFixture> get receipts => List.unmodifiable(_receipts);
   int get reviewCount => reviewQueueUseCase.pending(receipts).length;
@@ -63,7 +68,10 @@ class AppController extends ChangeNotifier {
 
   Future<void> bootstrap() async {
     final loader = dependencies.repositoryLoader;
-    if (loader == null || _disposed) return;
+    if (loader == null || _disposed) {
+      await recoverLostImageData();
+      return;
+    }
 
     _setPersistentState(HomeState.loading);
     final previous = _repository;
@@ -85,6 +93,7 @@ class AppController extends ChangeNotifier {
       _setPersistentState(
         _receipts.isEmpty ? HomeState.empty : HomeState.normal,
       );
+      await recoverLostImageData();
     } catch (_) {
       if (repository != null) {
         await _closeSafely(repository);
@@ -95,6 +104,56 @@ class AppController extends ChangeNotifier {
       _receipts = const [];
       _setPersistentState(HomeState.error);
     }
+  }
+
+  Future<void> selectReceiptImage() async {
+    if (_disposed) return;
+    final previousDraft = imageDraft;
+    imageIntakeState = ReceiptImageIntakeState.selecting;
+    imageFailure = null;
+    notifyListeners();
+    final result = await imageIntakePort.selectFromGallery();
+    await _applyImageIntakeResult(result, previousDraft: previousDraft);
+  }
+
+  Future<void> retryReceiptImage() => selectReceiptImage();
+
+  Future<void> recoverLostImageData() async {
+    if (_disposed) return;
+    await imageIntakePort.clearStaleDrafts();
+    final stored = await imageIntakePort.restoreStoredDraft();
+    if (stored != null) await _applyImageIntakeResult(stored);
+    final previousDraft = imageDraft;
+    final result = await imageIntakePort.recoverLostData();
+    if (result != null) {
+      await _applyImageIntakeResult(result, previousDraft: previousDraft);
+    }
+  }
+
+  Future<void> _applyImageIntakeResult(
+    ReceiptImageIntakeResult result, {
+    ReceiptImageDraft? previousDraft,
+  }) async {
+    if (_disposed) return;
+    switch (result) {
+      case ReceiptImageReady(:final draft):
+        if (previousDraft != null && previousDraft.id != draft.id) {
+          await imageIntakePort.discard(previousDraft);
+        }
+        imageDraft = draft;
+        imageFailure = null;
+        imageIntakeState = ReceiptImageIntakeState.ready;
+      case ReceiptImageCancelled():
+        imageFailure = null;
+        imageIntakeState = previousDraft == null
+            ? ReceiptImageIntakeState.cancelled
+            : ReceiptImageIntakeState.ready;
+      case ReceiptImageFailed(:final failure):
+        imageDraft = previousDraft;
+        imageFailure = failure;
+        imageIntakeState = ReceiptImageIntakeState.error;
+    }
+    notifyListeners();
   }
 
   Future<bool> _closeSafely(ReceiptRepository repository) async {
@@ -128,6 +187,12 @@ class AppController extends ChangeNotifier {
   }
 
   void selectFixture(ReceiptFixture fixture) {
+    final previousDraft = imageDraft;
+    imageDraft = null;
+    imageFailure = null;
+    imageIntakeState = ReceiptImageIntakeState.idle;
+    if (previousDraft != null)
+      unawaited(imageIntakePort.discard(previousDraft));
     selectedFixture = fixture;
     saved = false;
     processingState = ProcessingState.idle;

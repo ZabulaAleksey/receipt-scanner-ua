@@ -9,7 +9,7 @@
 3. [R02 — UX MVP specification](R02-ux-mvp-specification.md) — `COMPLETE`.
 4. [R03 — native mobile mock shell](R03-native-mobile-mock-shell.md) — `COMPLETE`.
 5. [R04 — local receipt persistence](R04-local-receipt-persistence.md) — `COMPLETE`; первый ограниченный slice Functional MVP, validated на Windows runner.
-6. [R05 — local receipt image intake](R05-local-receipt-image-intake.md) — `PLANNED`; single photo-library import и безопасный local image draft.
+6. [R05 — local receipt image intake](R05-local-receipt-image-intake.md) — `IMPLEMENTED_LOCALLY`; single photo-library import и безопасный local image draft, native platform evidence pending.
 
 До отдельного SPEC/prompt запрещено подключать real camera/preprocessing/OCR/backend или напрямую выполнять legacy prompts. R05 разрешает только photo-library import за `ReceiptImageIntakePort`.
 

@@ -139,3 +139,32 @@ flutter test --no-pub integration_test/local_persistence_flow_test.dart -d windo
 2. Из `mobile/` выполнить команды выше.
 3. На устройстве сохранить чек, перезапустить приложение и убедиться, что History открывает те же данные.
 4. Проверить loading, empty, local-error и retry без подключения сети.
+
+## 2026-08-21 — R05 безопасный local photo-library intake
+
+### Что и зачем изменено
+
+- Добавлен один local image draft за `ReceiptImageIntakePort`; raw image не входит в SQLite receipt aggregate.
+- `image_picker` используется только для gallery selection. Camera, preprocessing и OCR остались следующими отдельными этапами.
+
+### Важные границы
+
+- Принимаются только JPEG/PNG с ограничениями byte size, dimensions, pixels и frames до полного decode.
+- Image copy идёт через temporary file и manifest ownership в Application Support; old/partial files reconciled.
+- Android Auto Backup disabled; iOS directory исключается из backup до записи. Platform runtime evidence всё ещё нужно получить на Android/iOS host.
+
+### Проверки
+
+```powershell
+cd mobile
+flutter analyze --no-pub
+flutter test --no-pub test
+flutter test --no-pub integration_test/local_image_intake_flow_test.dart -d windows
+```
+
+### Как повторить самостоятельно
+
+1. На Android/iOS открыть Scan и выбрать один JPEG/PNG из photo library.
+2. Проверить Preview metadata, cancel, invalid image и retry state без сети.
+3. Перезапустить приложение и проверить восстановление active draft.
+4. Подтвердить, что camera permission не запрашивается.

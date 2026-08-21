@@ -1,6 +1,17 @@
 # Контекстная совместимость (жёсткая проверка)
 
-Статус: R00–R03 пройдены; R04 реализован локально и ожидает platform evidence. Project overlay совместим с каскадом правил.
+Статус: R00–R04 пройдены; R05 реализован локально и ожидает native platform evidence. Project overlay совместим с каскадом правил.
+
+## R05 — local receipt image intake
+
+| Изменение | Класс | Вывод |
+|---|---|---|
+| `image_picker` и pure-Dart image decoder | PROJECT_ONLY | Узкая mobile boundary для одного local photo-library input; без глобального toolchain или cloud integration |
+| `ReceiptImageIntakePort` и manifest-owned active draft | EXTEND | Дополняет port/adapter architecture, не смешивая raw image со SQLite aggregate или widgets |
+| iOS photo usage string и backup-excluded Application Support directory | PROJECT_ONLY | Project-specific local privacy control; Android broad storage permission не добавляется |
+| Новые validation/lifecycle tests | INHERITED | Существующие R03/R04 contracts не редактировались; новые tests покрывают R05 behaviour |
+
+R05 не конфликтует с ДЕВ: only JPEG/PNG input bounded before decode, selection errors fail closed without fixture/camera/cloud fallback, а Android/iOS runtime и недополученный Windows integration verdict не объявляются успешными.
 
 ## R04 — local receipt persistence
 

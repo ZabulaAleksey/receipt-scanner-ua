@@ -2,7 +2,7 @@
 
 ## Текущий этап
 
-R04 — local receipt persistence реализован и validated на Windows runner в рабочей ветке `plan/functional-mvp-local-persistence` поверх R03 shell. R05 — local receipt image intake подготовлен как следующий отдельный Functional MVP slice в ветке `plan/local-receipt-image-intake`; код ещё не начат.
+R04 — local receipt persistence реализован и validated на Windows runner в рабочей ветке `plan/functional-mvp-local-persistence` поверх R03 shell. R05 — local receipt image intake реализован локально в ветке `plan/local-receipt-image-intake`: single photo-library import, safe local draft и Preview lifecycle; native platform evidence pending.
 
 Позиция в активной последовательности: R04 реализует первый slice этапа 5 из 6 (`Functional MVP`), но сама product-фаза ещё не завершена. На уровне продуктовых фаз завершена первая из трёх: `UX MVP`; Functional MVP находится в реализации.
 
@@ -31,6 +31,9 @@ R04 — local receipt persistence реализован и validated на Windows
 - R04: `flutter test --no-pub test` — passed, 25 tests, включая SQLite round-trip/reopen, corruption/index mismatch/size limits и lifecycle retry/dispose.
 - R04: `flutter test --no-pub integration_test/local_persistence_flow_test.dart -d windows` — passed; Windows app собран и persistence-flow без сети выполнен.
 - R04 reviews: code review — no blocking findings after fixes; security review findings fixed in code, iOS runtime remains unverified.
+- R05: `flutter analyze --no-pub` — passed, no issues.
+- R05: `flutter test --no-pub test` — passed, 36 tests, включая JPEG/PNG bounds, truncated input, stale-copy reconciliation, stored-draft recovery, lost-data lifecycle и fixture/image switching.
+- R05: Windows debug runner was built after plugin integration, but the current tool did not return a final platform-test/build exit verdict; record is `UNVERIFIED`, not a pass.
 
 ## Известные ограничения
 
@@ -42,8 +45,8 @@ R04 — local receipt persistence реализован и validated на Windows
 
 ## Далее
 
-1. Реализовать R05 image intake по отдельным SPEC/prompt; не подключать camera, preprocessing, OCR и backend одним этапом.
-2. Для real Android/iOS image acquisition получить native runtime evidence на соответствующем host.
+1. Повторить R05 Windows platform integration outside the interrupted runner и получить Android/iOS image-intake evidence на соответствующем host.
+2. Только после этого спланировать camera capture или preprocessing как отдельный Functional MVP slice.
 3. Не объявлять Android/iOS runtime или product E2E выполненными без соответствующего host/backend evidence.
 
 ## Реализовано и validated на Windows

@@ -2,7 +2,7 @@
 
 ## Текущая цель
 
-Реализовать R05 как следующий отдельный Functional MVP slice: local image intake из photo library без camera capture, preprocessing, OCR или backend.
+Подтвердить native platform evidence R05: local image intake из photo library без camera capture, preprocessing, OCR или backend уже реализован локально.
 
 ## Устойчивая последовательность
 
@@ -23,4 +23,4 @@
 
 ## Первый незавершённый шаг
 
-Выполнить [R05](../prompts/R05-local-receipt-image-intake.md) по отдельной SPEC: single photo-library import, validation и local controlled copy. Camera capture, preprocessing, OCR и backend не смешивать в одной работе.
+Получить platform evidence для [R05](../prompts/R05-local-receipt-image-intake.md): повторить Windows integration с полным exit verdict и проверить Android/iOS на подходящем host. Только затем планировать camera capture или preprocessing как отдельный slice.
