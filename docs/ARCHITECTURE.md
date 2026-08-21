@@ -11,17 +11,24 @@
 - `LOCAL_ONLY` — полноценный baseline. Sync/account/cloud OCR не являются dependency consumer core.
 - B2B — future extension и не влияет на consumer domain до отдельного approval.
 
-## R03 mobile shell boundary
+## R03 shell и R04 local storage boundary
 
 ```text
 bundled synthetic fixtures
 → FixtureScenarioPort / fixture adapter
-→ use cases + prototype in-memory store
+→ demo/test in-memory store
 → immutable app state
 → Flutter screens/navigation
 ```
 
-R03 создаёт один `mobile/` package с Android/iOS product targets и Windows validation runner. UI не читает fixture JSON напрямую и не импортирует platform plugins. `CameraCapturePort`, `ReceiptRepository`, `ReviewQueuePort` и `SettingsPort` имеют только deterministic prototype adapters. Real camera, OCR, database, network, auth, billing и sync остаются за границей этапа.
+```text
+Application Support / receipt_scanner_storage (Android/iOS only)
+→ SQLite v1 adapter (`ReceiptRepository`)
+→ async AppController bootstrap/load/save/retry
+→ Home / Review / History local states
+```
+
+R03 создаёт один `mobile/` package с Android/iOS product targets и Windows validation runner. UI не читает fixture JSON, SQLite или platform APIs напрямую. R04 добавляет async SQLite `ReceiptRepository` для `ReceiptAggregate`; fixture store остаётся только explicit demo/test composition. База находится в app-controlled directory; Android backup disabled, а iOS directory исключается из backup через platform channel до открытия SQLite. Real camera, OCR, network, auth, billing и sync остаются за границей этапа.
 
 Windows build подтверждает компилируемость общего Flutter shell, но не заменяет Android/iOS build или product E2E. Android остаётся `UNVERIFIED` до установки Android SDK, iOS — до macOS/Xcode.
 

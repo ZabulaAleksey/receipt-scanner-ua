@@ -5,6 +5,7 @@
 - `LOCAL_ONLY` — baseline: raw images и structured purchase data остаются на устройстве.
 - Собирать и хранить только данные, необходимые выбранному пользователем режиму.
 - Original receipt images не загружаются автоматически.
+- R04 structured local database хранится в dedicated app-controlled directory; Android backup выключен, iOS получает backup exclusion до открытия SQLite. Эта native runtime гарантия ещё не проверена на Android/iOS host.
 - Cloud processing, structured sync и raw-image backup имеют раздельные opt-in controls.
 - Model-training consent отделён от обычной обработки и по умолчанию выключен.
 

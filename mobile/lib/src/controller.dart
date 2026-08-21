@@ -1,31 +1,41 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 
 import 'adapters.dart';
 import 'composition.dart';
 import 'domain.dart';
+import 'persistence.dart';
 import 'ports.dart';
 
 class AppController extends ChangeNotifier {
   AppController({required this.dependencies})
-    : store = dependencies.store,
+    : legacyStore = dependencies.store,
       fixturePort = dependencies.fixturePort,
       cameraPort = dependencies.cameraPort,
       reviewQueuePort = dependencies.reviewQueuePort,
       settingsPort = dependencies.settingsPort,
       selectedFixture = dependencies.fixturePort.byId('FX-01-CLEAN') {
-    for (final fixture in fixturePort.scenarios.take(3)) {
-      store.save(fixture);
+    if (legacyStore case final store?) {
+      // Fixture/demo composition is explicit and never used for user storage.
+      for (final fixture in fixturePort.scenarios.take(3)) {
+        store.save(fixture);
+      }
+      _receipts = List<ReceiptFixture>.of(store.receipts);
+    } else {
+      homeState = HomeState.loading;
+      unawaited(bootstrap());
     }
   }
 
   final AppDependencies dependencies;
-  final ReceiptRepository store;
+  final LegacyReceiptRepository? legacyStore;
   final FixtureScenarioPort fixturePort;
   final CameraCapturePort cameraPort;
   final ReviewQueuePort reviewQueuePort;
   final SettingsPort settingsPort;
   final ProcessReceiptUseCase processUseCase = ProcessReceiptUseCase();
-  late final SaveReceiptUseCase saveUseCase = SaveReceiptUseCase(store);
+  late final SaveReceiptUseCase saveUseCase = SaveReceiptUseCase(legacyStore!);
   late final CaptureReceiptUseCase captureUseCase = CaptureReceiptUseCase(
     cameraPort,
   );
@@ -33,6 +43,10 @@ class AppController extends ChangeNotifier {
     reviewQueuePort,
   );
   late final SettingsUseCase settingsUseCase = SettingsUseCase(settingsPort);
+
+  ReceiptRepository? _repository;
+  List<ReceiptFixture> _receipts = const [];
+  var _disposed = false;
   ReceiptFixture selectedFixture;
   HomeState homeState = HomeState.normal;
   DemoState resultState = DemoState.normal;
@@ -42,8 +56,76 @@ class AppController extends ChangeNotifier {
   ProcessingState processingState = ProcessingState.idle;
   bool saved = false;
 
-  int get reviewCount => reviewQueueUseCase.pending(store.receipts).length;
+  List<ReceiptFixture> get receipts => List.unmodifiable(_receipts);
+  int get reviewCount => reviewQueueUseCase.pending(receipts).length;
   StorageMode get storageMode => settingsUseCase.mode;
+  bool get isPersistent => dependencies.repositoryLoader != null;
+
+  Future<void> bootstrap() async {
+    final loader = dependencies.repositoryLoader;
+    if (loader == null || _disposed) return;
+
+    _setPersistentState(HomeState.loading);
+    final previous = _repository;
+    _repository = null;
+    if (previous != null && !await _closeSafely(previous)) {
+      _setPersistentState(HomeState.error);
+      return;
+    }
+    ReceiptRepository? repository;
+    try {
+      repository = await loader();
+      final aggregates = await repository.load();
+      if (_disposed) {
+        await _closeSafely(repository);
+        return;
+      }
+      _repository = repository;
+      _receipts = aggregates.map(fixtureFromAggregate).toList(growable: false);
+      _setPersistentState(
+        _receipts.isEmpty ? HomeState.empty : HomeState.normal,
+      );
+    } catch (_) {
+      if (repository != null) {
+        await _closeSafely(repository);
+      }
+      if (_disposed) return;
+      // Details can contain storage paths or implementation data; UI only sees
+      // the safe state category.
+      _receipts = const [];
+      _setPersistentState(HomeState.error);
+    }
+  }
+
+  Future<bool> _closeSafely(ReceiptRepository repository) async {
+    try {
+      await repository.close();
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  void _setPersistentState(HomeState state) {
+    if (_disposed) return;
+    homeState = state;
+    reviewState = switch (state) {
+      HomeState.loading => DemoState.loading,
+      HomeState.empty => DemoState.empty,
+      HomeState.error => DemoState.error,
+      HomeState.normal || HomeState.offline => DemoState.normal,
+    };
+    historyState = reviewState;
+    notifyListeners();
+  }
+
+  Future<void> retryLocalStorage() async {
+    if (!isPersistent) {
+      setHomeState(HomeState.normal);
+      return;
+    }
+    await bootstrap();
+  }
 
   void selectFixture(ReceiptFixture fixture) {
     selectedFixture = fixture;
@@ -74,8 +156,28 @@ class AppController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void save() {
-    saveUseCase.save(selectedFixture);
+  Future<void> save() async {
+    final repository = _repository;
+    if (isPersistent) {
+      if (repository == null) {
+        homeState = HomeState.error;
+        notifyListeners();
+        return;
+      }
+      try {
+        await repository.save(aggregateFromFixture(selectedFixture));
+        _receipts = [selectedFixture, ..._receipts];
+        _setPersistentState(HomeState.normal);
+      } on ReceiptStorageException {
+        saved = false;
+        homeState = HomeState.error;
+        notifyListeners();
+        return;
+      }
+    } else {
+      saveUseCase.save(selectedFixture);
+      _receipts = List<ReceiptFixture>.of(legacyStore!.receipts);
+    }
     saved = true;
     notifyListeners();
   }
@@ -108,5 +210,15 @@ class AppController extends ChangeNotifier {
   void setStorageMode(StorageMode mode) {
     settingsUseCase.setMode(mode);
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _disposed = true;
+    final repository = _repository;
+    if (repository != null) {
+      unawaited(repository.close());
+    }
+    super.dispose();
   }
 }

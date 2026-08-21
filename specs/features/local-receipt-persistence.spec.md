@@ -1,6 +1,6 @@
 # Local receipt persistence specification
 
-Статус: `PLANNED` для R04 — первого ограниченного implementation slice Functional MVP.
+Статус: `IMPLEMENTED_LOCALLY`; platform integration evidence pending (`BLOCKED_BY_ENVIRONMENT` on current Windows host).
 
 ## Цель
 

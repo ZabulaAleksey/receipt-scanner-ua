@@ -1,6 +1,18 @@
 # Контекстная совместимость (жёсткая проверка)
 
-Статус: R00–R03 пройдены; project overlay совместим с каскадом правил.
+Статус: R00–R03 пройдены; R04 реализован локально и ожидает platform evidence. Project overlay совместим с каскадом правил.
+
+## R04 — local receipt persistence
+
+| Изменение | Класс | Вывод |
+|---|---|---|
+| `sqflite` SQLite adapter и `sqflite_common_ffi` test runner | PROJECT_ONLY | Local-first persistence — конкретное требование Receipt Scanner; не добавляет глобальный toolchain или automation |
+| Async `ReceiptRepository` и SQLite v1 schema | EXTEND | Развивает существующие ports/use cases без обхода controller/UI boundary |
+| Android backup disable и iOS backup exclusion через MethodChannel | PROJECT_ONLY | Платформенная privacy boundary для пользовательских данных; не является новой глобальной security policy |
+| New persistence tests | INHERITED | Следует глобальному test contract: R03 accepted tests и fixtures не менялись |
+| Новые agents/hooks/MCP/skills/config | OBSOLETE | Подтверждённого пробела нет; ничего не добавлено |
+
+R04 не конфликтует с ДЕВ: зависимости ограничены `mobile/`, persistence не подменяется fixture fallback, а недоступные Android/iOS/Windows platform checks отмечены как `UNVERIFIED` или `BLOCKED_BY_ENVIRONMENT`, а не как успешные.
 
 ## Maintenance — консолидация статуса
 

@@ -26,7 +26,7 @@ Receipt Scanner обрабатывает недоверенные изображ
 ## Phase boundaries
 
 - UX MVP: только synthetic fixtures, network не требуется.
-- Functional MVP: local data protection, import limits, backup/restore integrity и permissions testing.
+- Functional MVP / R04: SQLite payload has schema, size and integrity validation; Android Auto Backup is disabled; iOS excludes the dedicated local-storage directory from backup before SQLite opens. Android/iOS runtime verification remains pending.
 - Production MVP: threat model для account/sync, server authorization, quotas, retention, deletion/export, dependency/SDK telemetry audit и store declarations.
 
 ## Deferred controls

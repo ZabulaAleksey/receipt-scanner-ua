@@ -129,12 +129,44 @@ enum DemoState { normal, loading, empty, error, offline }
 
 enum StorageMode { localOnly, syncTeaser }
 
-abstract interface class ReceiptRepository {
+class ReceiptAggregate {
+  const ReceiptAggregate({
+    required this.id,
+    required this.merchant,
+    required this.date,
+    required this.total,
+    required this.items,
+    this.unknownMerchant = false,
+    this.duplicate = false,
+    this.offline = false,
+    this.totalMismatch = false,
+    this.rawMerchantAddress,
+  });
+  final String id;
+  final String merchant;
+  final String date;
+  final Money total;
+  final List<LineItem> items;
+  final bool unknownMerchant;
+  final bool duplicate;
+  final bool offline;
+  final bool totalMismatch;
+  final String? rawMerchantAddress;
+}
+
+abstract interface class LegacyReceiptRepository {
   List<ReceiptFixture> get receipts;
   void save(ReceiptFixture receipt);
 }
 
-class InMemoryReceiptStore implements ReceiptRepository {
+abstract interface class ReceiptRepository {
+  Future<List<ReceiptAggregate>> load();
+  Future<void> save(ReceiptAggregate receipt);
+  Future<void> close();
+}
+
+/// Synchronous fixture/demo helper retained for the accepted UX tests.
+class InMemoryReceiptStore implements LegacyReceiptRepository {
   InMemoryReceiptStore([List<ReceiptFixture>? initial])
     : _receipts = [...?initial];
 
@@ -158,7 +190,9 @@ class ProcessReceiptUseCase {
 class SaveReceiptUseCase {
   SaveReceiptUseCase(this.repository);
 
-  final ReceiptRepository repository;
+  final LegacyReceiptRepository repository;
 
-  void save(ReceiptFixture fixture) => repository.save(fixture);
+  void save(ReceiptFixture fixture) {
+    repository.save(fixture);
+  }
 }

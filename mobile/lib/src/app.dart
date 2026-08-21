@@ -6,9 +6,14 @@ import 'design_system.dart';
 import 'domain.dart';
 
 class ReceiptScannerApp extends StatefulWidget {
-  const ReceiptScannerApp({this.dependencies, super.key});
+  const ReceiptScannerApp({
+    this.dependencies,
+    this.usePersistentStorage = false,
+    super.key,
+  });
 
   final AppDependencies? dependencies;
+  final bool usePersistentStorage;
 
   @override
   State<ReceiptScannerApp> createState() => _ReceiptScannerAppState();
@@ -21,7 +26,11 @@ class _ReceiptScannerAppState extends State<ReceiptScannerApp> {
   void initState() {
     super.initState();
     controller = AppController(
-      dependencies: widget.dependencies ?? AppDependencies.create(),
+      dependencies:
+          widget.dependencies ??
+          (widget.usePersistentStorage
+              ? AppDependencies.createPersistent()
+              : AppDependencies.create()),
     );
   }
 
@@ -178,7 +187,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final receipts = controller.store.receipts;
+    final receipts = controller.receipts;
     return ListView(
       padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
       children: [
@@ -213,7 +222,7 @@ class HomeScreen extends StatelessWidget {
         else if (controller.homeState == HomeState.error)
           ErrorState(
             message: 'Локальне сховище тимчасово недоступне.',
-            onRetry: () => controller.setHomeState(HomeState.normal),
+            onRetry: controller.retryLocalStorage,
           )
         else if (controller.homeState == HomeState.offline)
           const InfoCard(
@@ -523,7 +532,7 @@ class ReviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final issues = controller.store.receipts
+    final issues = controller.receipts
         .where((receipt) => receipt.needsReview)
         .toList();
     final blockingState = _blockingDemoState(
@@ -531,7 +540,9 @@ class ReviewScreen extends StatelessWidget {
       emptyTitle: 'Черга порожня',
       emptyMessage: 'Чисті чеки не потрапляють сюди.',
       errorMessage: 'Черга перевірки недоступна через локальну помилку.',
-      onRetry: () => controller.setReviewState(DemoState.normal),
+      onRetry: controller.isPersistent
+          ? controller.retryLocalStorage
+          : () => controller.setReviewState(DemoState.normal),
     );
     if (blockingState != null) {
       return ListView(
@@ -732,7 +743,9 @@ class HistoryScreen extends StatelessWidget {
       emptyTitle: 'Історія порожня',
       emptyMessage: 'Збережені чеки з’являться тут.',
       errorMessage: 'Історія недоступна через локальну помилку запиту.',
-      onRetry: () => controller.setHistoryState(DemoState.normal),
+      onRetry: controller.isPersistent
+          ? controller.retryLocalStorage
+          : () => controller.setHistoryState(DemoState.normal),
     );
     if (blockingState != null) {
       return ListView(
@@ -746,12 +759,12 @@ class HistoryScreen extends StatelessWidget {
         if (controller.historyState == DemoState.offline) const OfflineBanner(),
         SectionTitle(title: 'Усі покупки', action: 'Фільтри', onTap: () {}),
         const SizedBox(height: 12),
-        if (controller.store.receipts.isEmpty)
+        if (controller.receipts.isEmpty)
           const EmptyState(
             title: 'Історія порожня',
             message: 'Збережені чеки з’являться тут.',
           ),
-        for (final receipt in controller.store.receipts)
+        for (final receipt in controller.receipts)
           ReceiptCard(
             receipt: receipt,
             onTap: () {
@@ -829,7 +842,7 @@ class InsightsScreen extends StatelessWidget {
       MetricCard(
         label: 'Сума у вибірці',
         value:
-            '${controller.store.receipts.fold<int>(0, (sum, item) => sum + item.total.minor) ~/ 100},00 UAH',
+            '${controller.receipts.fold<int>(0, (sum, item) => sum + item.total.minor) ~/ 100},00 UAH',
       ),
       const SizedBox(height: 10),
       const Card(

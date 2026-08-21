@@ -1,6 +1,6 @@
 # R04 — Local receipt persistence
 
-Статус: `APPROVED FOR IMPLEMENTATION` после планирования 2026-08-21. Тип: Functional MVP implementation slice.
+Статус: `IMPLEMENTED_LOCALLY`; Android/iOS runtime and Windows device integration evidence pending. Тип: Functional MVP implementation slice.
 
 ## Goal
 
