@@ -2,7 +2,7 @@
 
 ## Текущий этап
 
-R04 — local receipt persistence реализован в рабочей ветке `plan/functional-mvp-local-persistence` поверх R03 shell. SQLite adapter, async bootstrap, local read/save/error/retry lifecycle и security boundaries проверены format/analyze/unit/widget/component tests; platform integration acceptance ещё не закрыта.
+R04 — local receipt persistence реализован и validated на Windows runner в рабочей ветке `plan/functional-mvp-local-persistence` поверх R03 shell. SQLite adapter, async bootstrap, local read/save/error/retry lifecycle и security boundaries проверены format/analyze/unit/widget/component и Windows platform integration tests.
 
 Позиция в активной последовательности: R04 реализует первый slice этапа 5 из 6 (`Functional MVP`), но сама product-фаза ещё не завершена. На уровне продуктовых фаз завершена первая из трёх: `UX MVP`; Functional MVP находится в реализации.
 
@@ -29,6 +29,7 @@ R04 — local receipt persistence реализован в рабочей вет�
 - R04: `dart format --output=none --set-exit-if-changed lib test integration_test` — passed.
 - R04: `flutter analyze --no-pub` — passed, no issues.
 - R04: `flutter test --no-pub test` — passed, 25 tests, включая SQLite round-trip/reopen, corruption/index mismatch/size limits и lifecycle retry/dispose.
+- R04: `flutter test --no-pub integration_test/local_persistence_flow_test.dart -d windows` — passed; Windows app собран и persistence-flow без сети выполнен.
 - R04 reviews: code review — no blocking findings after fixes; security review findings fixed in code, iOS runtime remains unverified.
 
 ## Известные ограничения
@@ -36,16 +37,16 @@ R04 — local receipt persistence реализован в рабочей вет�
 - Android build/runtime — `UNVERIFIED`: в текущей Windows-среде нет Android SDK.
 - iOS build/runtime — `UNVERIFIED`: требуется macOS/Xcode.
 - Windows runner служит только compile/visual/integration validation и не является product target.
-- Windows device local-persistence integration — `BLOCKED_BY_ENVIRONMENT`: Flutter plugin build needs Windows Developer Mode/symlink support. The same persistence behavior has unit/widget/component evidence, but it is not platform integration evidence.
+- Windows device local-persistence integration — passed после включения Windows Developer Mode; Windows остаётся validation runner, а не product target.
 - Реальный путь `client → API/CLI → backend` отсутствует; product E2E остаётся `BLOCKED_BY_BACKEND_RECEIPT_SCANNER`.
 
 ## Далее
 
-1. Enable Windows Developer Mode or use a suitable Android/iOS host, then re-run R04 platform integration and native runtime validation.
-2. После закрытия platform evidence отдельно выбрать следующий ограниченный Functional MVP slice; не подключать camera, OCR и backend одним этапом.
+1. Спланировать R05 как отдельный image-intake или preprocessing slice; не подключать camera, OCR и backend одним этапом.
+2. Для real Android/iOS image acquisition получить native runtime evidence на соответствующем host.
 3. Не объявлять Android/iOS runtime или product E2E выполненными без соответствующего host/backend evidence.
 
-## Реализовано, но platform evidence pending
+## Реализовано и validated на Windows
 
 - R04 ограничен local-first SQLite persistence: async `ReceiptRepository`, lossless сохранение/чтение Receipt aggregates, migration/failure boundaries и restart evidence.
-- Выбор и rationale зафиксированы в ADR-005; Android/iOS build/runtime и Windows device integration не выдаются за пройденные.
+- Выбор и rationale зафиксированы в ADR-005; Android/iOS build/runtime всё ещё не выдаются за пройденные.

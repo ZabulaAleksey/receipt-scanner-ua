@@ -2,7 +2,7 @@
 
 ## Текущая цель
 
-Закрыть platform evidence R04, затем выбрать следующий ограниченный Functional MVP slice без смешивания camera, OCR и backend.
+Подготовить R05 как следующий отдельный Functional MVP slice: local image intake и preprocessing contract без подключения OCR или backend.
 
 ## Устойчивая последовательность
 
@@ -10,7 +10,7 @@
 2. R01 — project overlay refresh — завершён.
 3. R02 — UX MVP specification — завершён.
 4. R03 — Flutter fixture-driven native shell — завершён и проверен на Windows validation runner.
-5. Functional MVP — R04 local receipt persistence реализован и локально validated; Windows device integration blocked by Developer Mode, Android/iOS runtime `UNVERIFIED`.
+5. Functional MVP — R04 local receipt persistence реализован и validated на Windows device integration; Android/iOS runtime `UNVERIFIED`.
 6. Production MVP — optional online services и release hardening после доказанного local core.
 
 ## Ограничения следующего решения
@@ -23,4 +23,4 @@
 
 ## Первый незавершённый шаг
 
-Получить platform evidence для [R04](../prompts/R04-local-receipt-persistence.md): включить Windows Developer Mode для Flutter plugin symlinks либо проверить Android/iOS на подходящем host. Только затем спланировать следующий отдельный Functional MVP slice.
+Спланировать R05 после [R04](../prompts/R04-local-receipt-persistence.md): отдельный image-intake/preprocessing slice с independent SPEC/prompt. Реальный camera plugin, OCR и backend не смешивать в одной работе.

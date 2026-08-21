@@ -8,9 +8,9 @@
 2. [R01 — project overlay refresh](R01-project-overlay-refresh.md) — `COMPLETE`.
 3. [R02 — UX MVP specification](R02-ux-mvp-specification.md) — `COMPLETE`.
 4. [R03 — native mobile mock shell](R03-native-mobile-mock-shell.md) — `COMPLETE`.
-5. [R04 — local receipt persistence](R04-local-receipt-persistence.md) — `PLANNED`; первый ограниченный slice Functional MVP.
+5. [R04 — local receipt persistence](R04-local-receipt-persistence.md) — `COMPLETE`; первый ограниченный slice Functional MVP, validated на Windows runner.
 
-До отдельного SPEC/prompt запрещено подключать real camera/OCR/backend или напрямую выполнять legacy prompts. R04 разрешает только local persistence и чтение Receipt aggregates за `ReceiptRepository`.
+До отдельного SPEC/prompt запрещено подключать real camera/import/OCR/backend или напрямую выполнять legacy prompts. R04 разрешал только local persistence и чтение Receipt aggregates за `ReceiptRepository`.
 
 Не переходи к следующему этапу только потому, что предыдущий файл существует: нужны выполненный DoD, verification evidence и обновлённый `AI_STATUS.md`.
 

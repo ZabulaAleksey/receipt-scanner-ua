@@ -1,6 +1,6 @@
 # Local receipt persistence specification
 
-Статус: `IMPLEMENTED_LOCALLY`; platform integration evidence pending (`BLOCKED_BY_ENVIRONMENT` on current Windows host).
+Статус: `IMPLEMENTED_AND_VALIDATED_ON_WINDOWS`; Android/iOS runtime остаётся `UNVERIFIED` из-за отсутствия соответствующих host/SDK.
 
 ## Цель
 
