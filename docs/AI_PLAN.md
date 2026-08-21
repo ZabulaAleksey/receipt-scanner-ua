@@ -2,7 +2,7 @@
 
 ## Текущая цель
 
-Подготовить первый ограниченный этап Functional MVP поверх проверенного R03 shell, не смешивая local persistence, real camera, OCR и backend в один scope.
+Реализовать R04 — первый ограниченный этап Functional MVP: local-first сохранение и чтение Receipt aggregates за `ReceiptRepository` поверх проверенного R03 shell.
 
 ## Устойчивая последовательность
 
@@ -10,7 +10,7 @@
 2. R01 — project overlay refresh — завершён.
 3. R02 — UX MVP specification — завершён.
 4. R03 — Flutter fixture-driven native shell — завершён и проверен на Windows validation runner.
-5. Functional MVP — планирование: выбрать первый вертикальный slice и зафиксировать SPEC/prompt.
+5. Functional MVP — R04 local receipt persistence: SPEC, ADR и implementation prompt подготовлены; реализация ещё не начата.
 6. Production MVP — optional online services и release hardening после доказанного local core.
 
 ## Ограничения следующего решения
@@ -23,4 +23,4 @@
 
 ## Первый незавершённый шаг
 
-Создать отдельный план/SPEC для одного Functional MVP slice. Предпочтительный кандидат: локальное сохранение и чтение Receipt aggregates за `ReceiptRepository`, без одновременного подключения camera/OCR/backend.
+Выполнить [`R04 — local receipt persistence`](../prompts/R04-local-receipt-persistence.md) по [`local persistence SPEC`](../specs/features/local-receipt-persistence.spec.md): создать async SQLite adapter за `ReceiptRepository`, local read/save lifecycle и проверяемое восстановление после перезапуска. Camera, OCR и backend остаются вне scope.

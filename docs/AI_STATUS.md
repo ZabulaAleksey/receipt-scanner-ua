@@ -2,9 +2,9 @@
 
 ## Текущий этап
 
-R03 — fixture-driven native mobile shell завершён и локально проверен. Следующий разрешённый шаг — спланировать ограниченный первый slice Functional MVP и создать для него SPEC/prompt до подключения production integrations.
+R03 — fixture-driven native mobile shell завершён, локально проверен и слит в локальный `main` коммитом `9add92a`. Для первого Functional MVP slice подготовлены R04 SPEC, ADR и implementation prompt; реализация ещё не начата.
 
-Позиция в активной последовательности: завершён этап 4 из 6; этап 5 (`Functional MVP`) ещё не начат и находится в планировании. На уровне продуктовых фаз завершена первая из трёх: `UX MVP`.
+Позиция в активной последовательности: завершены этапы 1–4 из 6; для этапа 5 (`Functional MVP`) подготовлен первый implementation slice R04, но product-код этого этапа ещё не реализован. На уровне продуктовых фаз завершена первая из трёх: `UX MVP`.
 
 ## Выполнено
 
@@ -35,6 +35,11 @@ R03 — fixture-driven native mobile shell завершён и локально 
 
 ## Далее
 
-1. Спланировать первый Functional MVP slice с явным ownership локальных данных и контрактом Flutter ↔ processing core.
-2. До реализации определить отдельный SPEC/prompt, acceptance criteria, миграционные и fallback boundaries.
-3. Не подключать одновременно camera, OCR, persistence и backend одним неограниченным этапом.
+1. Реализовать R04 строго по отдельному persistence SPEC/prompt: async local repository, SQLite schema v1, UI lifecycle и focused checks.
+2. Не подключать одновременно camera, OCR и backend; после R04 отдельно выбрать следующий Functional MVP slice.
+3. Не объявлять Android/iOS runtime или product E2E выполненными без соответствующего host/backend evidence.
+
+## Подготовлено, но не реализовано
+
+- R04 ограничен local-first SQLite persistence: async `ReceiptRepository`, lossless сохранение/чтение Receipt aggregates, migration/failure boundaries и restart evidence.
+- Выбор и rationale зафиксированы в ADR-005; реализация выполняется только по `prompts/R04-local-receipt-persistence.md`.

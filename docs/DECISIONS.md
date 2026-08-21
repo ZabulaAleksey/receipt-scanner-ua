@@ -72,4 +72,17 @@ Tests/benchmark: `flutter analyze`, unit/widget/integration tests, Flutter Acces
 
 Официальные основания: [Flutter testing](https://docs.flutter.dev/testing/overview), [accessibility testing](https://docs.flutter.dev/ui/accessibility/accessibility-testing), [platform channels](https://docs.flutter.dev/platform-integration/platform-channels), [Kotlin Multiplatform quickstart](https://kotlinlang.org/docs/multiplatform/quickstart.html), [Compose accessibility](https://kotlinlang.org/docs/multiplatform/compose-accessibility.html).
 
+## ADR-005 — SQLite за async `ReceiptRepository` для первого local persistence slice
+
+Date: 2026-08-21
+Status: Accepted for R04 planning; not implemented
+Context: R03 хранит `ReceiptFixture` только в памяти процесса. Functional MVP требует local-first сохранение и чтение после перезапуска, но не разрешает одновременно подключать camera, OCR, backend или sync. Android/iOS остаются product targets, а Windows — только validation runner.
+Decision: В R04 `ReceiptRepository` становится асинхронной application boundary для `ReceiptAggregate`. Android/iOS persistence adapter использует SQLite через `sqflite`; `sqflite_common_ffi` используется только для deterministic unit/integration проверки на Windows. Первый schema version хранит lossless versioned representation aggregate и минимальные query fields; деньги остаются integer minor units, без `double`/`float`. В production composition root нет автоматического заполнения пользовательской базы fixtures.
+Alternatives: оставить in-memory store; использовать файлы/JSON как canonical state; сразу внедрить ORM/code generation; выбрать Drift; подключить Python/SQLAlchemy core. Они отклонены для R04 как недолговечные, преждевременно сложные либо не соответствующие Flutter mobile boundary. Drift или отдельный processing core могут быть рассмотрены позже при доказанной сложности schema/query.
+Consequences: UI и use cases получают typed async load/save failures и честные loading/empty/local-read-error states. Persistent DTO/schema не смешивается с Flutter UI или fixture data. SQLite schema migration выполняется транзакционно; corrupted/incompatible state не подменяется in-memory/fixture данными. Повторное открытие доступно только по user-initiated retry; destructive reset и backup/restore не входят в R04.
+Fallback: local SQLite is primary. Для transient open failure разрешён явный retry с повторным open; при corrupted/incompatible schema — fail closed с безопасной ошибкой и без перезаписи данных. Camera/OCR/network fallback отсутствует, потому что эти capabilities вне scope.
+Tests/benchmark: repository contract, serialization round-trip, duplicate semantics, reopen persistence, migration/open failure и UI states; существующие Flutter checks остаются обязательными. Android/iOS runtime проверяются отдельно, когда доступны SDK/host.
+
+Основания: [sqflite package](https://pub.dev/packages/sqflite) документирует SQLite для Android/iOS; [sqflite_common_ffi](https://pub.dev/documentation/sqflite_common_ffi/latest/) поддерживает Windows и unit tests.
+
 ---
