@@ -1,5 +1,13 @@
 # AI Status
 
+## Governance migration — 2026-08-24
+
+- Репозиторий перемещён в `~/codex-workspace/receipt-scanner-ua`; linked worktree восстановлен.
+- Содержание универсального контракта, R00–R05 и legacy backlog 00–23 полностью объединено в единственный `prompts/STAGES.md`.
+- Project overlay validator, Dart formatting, Flutter analyze и 14 Flutter tests — PASS.
+- Основной checkout остаётся в пользовательском merge с R04/R05; `MERGE_HEAD`, index и backup ref сохранены, автоматическое разрешение не выполнялось.
+- Push/merge не выполнялись.
+
 ## Текущий этап
 
 R03 — fixture-driven native mobile shell завершён и локально проверен. Следующий разрешённый шаг — спланировать ограниченный первый slice Functional MVP и создать для него SPEC/prompt до подключения production integrations.
