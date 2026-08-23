@@ -59,7 +59,7 @@ R02 не изменяет глобальные test/fallback policies: прин�
 
 Конфликтов после reconciliation не осталось. R02 создал requirements/acceptance criteria до R03 implementation. Старые prompts и принятые test artifacts не удалены.
 
-- Базовая проверка: workspace/root context (`~/codex-workspace/AGENTS.md`) + project overlay (`AGENTS.md`).
+- Базовая проверка: global context (`~/.codex/AGENTS.md`) + project overlay (`AGENTS.md`).
 - `AGENTS.proposed.md` отсутствует как активный слой.
 - Автоматизация, hooks/MCP/skills/config/workflow в проекте не дублируются.
 
@@ -68,7 +68,7 @@ R02 не изменяет глобальные test/fallback policies: прин�
 | Компонент | Слой | Класс | Обоснование |
 |---|---|---|---|
 | Preset | workspace/presets | INHERITED | Для `receipt-scanner-ua` не используется отдельный preset (директория `projects/receipt-scanner-ua` не подключена к preset).
-| `AGENTS.md` (workspace) | root/global | INHERITED | Базовые правила из `~/codex-workspace/AGENTS.md`.
+| `AGENTS.md` (global) | root/global | INHERITED | Базовые правила из `~/.codex/AGENTS.md`.
 | `AGENTS.md` (project) | project | EXTEND | Проектный overlay с локальными ограничениями и правилами.
 | `docs/AI_STATUS.md` | project | PROJECT_ONLY | Описание текущего статуса проекта.
 | `docs/CONTEXT_COMPATIBILITY.md` | project | PROJECT_ONLY | Локальный аудит совместимости и delta-решений.
