@@ -145,6 +145,7 @@ Do not duplicate generic agents, hooks, MCP, Git workflow or common security rol
 - docs/ARCHITECTURE.md
 - docs/DECISIONS.md
 - docs/DESIGN.md
+- docs/CALM_BLUE_UI.md
 - docs/AI_STATUS.md
 - docs/AI_PLAN.md
 - docs/CONTEXT_COMPATIBILITY.md

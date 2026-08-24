@@ -1,5 +1,14 @@
 # AI Status
 
+## Governance migration — 2026-08-24
+
+- Репозиторий перемещён в `~/codex-workspace/receipt-scanner-ua`; linked worktree восстановлен.
+- Содержание универсального контракта, R00–R05 и legacy backlog 00–23 полностью объединено в единственный `prompts/STAGES.md`.
+- Calm Blue UI перенесён из глобального `~/.codex/DESIGN.md` в проектный `docs/CALM_BLUE_UI.md` и подключён через канонический `docs/DESIGN.md` без перезаписи Receipt-specific правил.
+- Project overlay validator, Dart formatting, Flutter analyze и 14 Flutter tests — PASS.
+- R04/R05 и governance migration объединены в `main`; уникальные mobile implementation, tests и stage contracts сохранены.
+- Push/merge не выполнялись.
+
 ## Текущий этап
 
 R04 — local receipt persistence реализован и validated на Windows runner в рабочей ветке `plan/functional-mvp-local-persistence` поверх R03 shell. R05 — local receipt image intake реализован локально в ветке `plan/local-receipt-image-intake`: single photo-library import, safe local draft и Preview lifecycle; native platform evidence pending.

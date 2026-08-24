@@ -1,29 +1,6 @@
 # Контекстная совместимость (жёсткая проверка)
 
-Статус: R00–R04 пройдены; R05 реализован локально и ожидает native platform evidence. Project overlay совместим с каскадом правил.
-
-## R05 — local receipt image intake
-
-| Изменение | Класс | Вывод |
-|---|---|---|
-| `image_picker` и pure-Dart image decoder | PROJECT_ONLY | Узкая mobile boundary для одного local photo-library input; без глобального toolchain или cloud integration |
-| `ReceiptImageIntakePort` и manifest-owned active draft | EXTEND | Дополняет port/adapter architecture, не смешивая raw image со SQLite aggregate или widgets |
-| iOS photo usage string и backup-excluded Application Support directory | PROJECT_ONLY | Project-specific local privacy control; Android broad storage permission не добавляется |
-| Новые validation/lifecycle tests | INHERITED | Существующие R03/R04 contracts не редактировались; новые tests покрывают R05 behaviour |
-
-R05 не конфликтует с ДЕВ: only JPEG/PNG input bounded before decode, selection errors fail closed without fixture/camera/cloud fallback, а Android/iOS runtime и недополученный Windows integration verdict не объявляются успешными.
-
-## R04 — local receipt persistence
-
-| Изменение | Класс | Вывод |
-|---|---|---|
-| `sqflite` SQLite adapter и `sqflite_common_ffi` test runner | PROJECT_ONLY | Local-first persistence — конкретное требование Receipt Scanner; не добавляет глобальный toolchain или automation |
-| Async `ReceiptRepository` и SQLite v1 schema | EXTEND | Развивает существующие ports/use cases без обхода controller/UI boundary |
-| Android backup disable и iOS backup exclusion через MethodChannel | PROJECT_ONLY | Платформенная privacy boundary для пользовательских данных; не является новой глобальной security policy |
-| New persistence tests | INHERITED | Следует глобальному test contract: R03 accepted tests и fixtures не менялись |
-| Новые agents/hooks/MCP/skills/config | OBSOLETE | Подтверждённого пробела нет; ничего не добавлено |
-
-R04 не конфликтует с ДЕВ: зависимости ограничены `mobile/`, persistence не подменяется fixture fallback, а недоступные Android/iOS/Windows platform checks отмечены как `UNVERIFIED` или `BLOCKED_BY_ENVIRONMENT`, а не как успешные.
+Статус: R00–R03 пройдены; project overlay совместим с каскадом правил.
 
 ## Maintenance — консолидация статуса
 
@@ -91,7 +68,7 @@ R02 не изменяет глобальные test/fallback policies: прин�
 | Компонент | Слой | Класс | Обоснование |
 |---|---|---|---|
 | Preset | workspace/presets | INHERITED | Для `receipt-scanner-ua` не используется отдельный preset (директория `projects/receipt-scanner-ua` не подключена к preset).
-| `AGENTS.md` (`~/.codex`) | global | INHERITED | Базовые правила из `~/.codex/AGENTS.md`.
+| `AGENTS.md` (global) | root/global | INHERITED | Базовые правила из `~/.codex/AGENTS.md`.
 | `AGENTS.md` (project) | project | EXTEND | Проектный overlay с локальными ограничениями и правилами.
 | `docs/AI_STATUS.md` | project | PROJECT_ONLY | Описание текущего статуса проекта.
 | `docs/CONTEXT_COMPATIBILITY.md` | project | PROJECT_ONLY | Локальный аудит совместимости и delta-решений.

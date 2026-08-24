@@ -27,7 +27,7 @@
 ## Канонические источники
 
 - product requirements: `specs/system.spec.md`;
-- UX/visual requirements: `docs/DESIGN.md`;
+- UX/visual requirements: `docs/DESIGN.md`; подключённый проектный design-system baseline: `docs/CALM_BLUE_UI.md`;
 - system boundaries: `docs/ARCHITECTURE.md`;
 - security/privacy delta: `docs/SECURITY.md`, `docs/PRIVACY.md`;
 - stages: `docs/ROADMAP.md`, `prompts/README.md`;
