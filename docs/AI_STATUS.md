@@ -13,7 +13,7 @@
 - Calm Blue UI перенесён из глобального `~/.codex/DESIGN.md` в проектный `docs/CALM_BLUE_UI.md` и подключён через канонический `docs/DESIGN.md` без перезаписи Receipt-specific правил.
 - Project overlay validator, Dart formatting, Flutter analyze и 14 Flutter tests — PASS.
 - R04/R05 и governance migration объединены в `main`; уникальные mobile implementation, tests и stage contracts сохранены.
-- Push/merge не выполнялись.
+- Dependency audit локально интегрирован в `main`; push не выполнялся.
 
 ## Текущий этап
 
