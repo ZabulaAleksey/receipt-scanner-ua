@@ -11,17 +11,32 @@
 - `LOCAL_ONLY` — полноценный baseline. Sync/account/cloud OCR не являются dependency consumer core.
 - B2B — future extension и не влияет на consumer domain до отдельного approval.
 
-## R03 mobile shell boundary
+## R03 shell, R04 structured storage и R05 image intake boundaries
 
 ```text
 bundled synthetic fixtures
 → FixtureScenarioPort / fixture adapter
-→ use cases + prototype in-memory store
+→ demo/test in-memory store
 → immutable app state
 → Flutter screens/navigation
 ```
 
-R03 создаёт один `mobile/` package с Android/iOS product targets и Windows validation runner. UI не читает fixture JSON напрямую и не импортирует platform plugins. `CameraCapturePort`, `ReceiptRepository`, `ReviewQueuePort` и `SettingsPort` имеют только deterministic prototype adapters. Real camera, OCR, database, network, auth, billing и sync остаются за границей этапа.
+```text
+Application Support / receipt_scanner_storage (Android/iOS only)
+→ SQLite v1 adapter (`ReceiptRepository`)
+→ async AppController bootstrap/load/save/retry
+→ Home / Review / History local states
+```
+
+```text
+photo library (single user-selected JPEG/PNG)
+→ ReceiptImageIntakePort
+→ picker / validation / atomic app-controlled copy adapter
+→ manifest-owned ReceiptImageDraft
+→ Scan / Preview local states
+```
+
+R03 создаёт один `mobile/` package с Android/iOS product targets и Windows validation runner. UI не читает fixture JSON, SQLite, picker или platform APIs напрямую. R04 добавляет async SQLite `ReceiptRepository` для `ReceiptAggregate`; fixture store остаётся только explicit demo/test composition. R05 добавляет `ReceiptImageIntakePort`: accepted image живёт отдельно от SQLite как один manifest-owned draft в Application Support. Android backup disabled, а iOS directory исключается из backup через platform channel до SQLite/image writes. Real camera, preprocessing, OCR, network, auth, billing и sync остаются за границей этапа.
 
 Windows build подтверждает компилируемость общего Flutter shell, но не заменяет Android/iOS build или product E2E. Android остаётся `UNVERIFIED` до установки Android SDK, iOS — до macOS/Xcode.
 
@@ -85,6 +100,7 @@ receipt-scanner-ua/
 │  ├─ ARCHITECTURE.md
 │  ├─ DECISIONS.md
 │  ├─ DESIGN.md
+│  ├─ CALM_BLUE_UI.md
 │  ├─ AI_PLAN.md
 │  ├─ AI_STATUS.md
 │  ├─ ROADMAP.md
@@ -803,3 +819,12 @@ image quality
 ```
 
 Если один сигнал ошибается, остальные должны помочь обнаружить ошибку, а не скрыть её.
+
+## Контракт зависимостей
+
+- Источник истины (Source of truth) мобильного приложения: `mobile/pubspec.yaml` + `mobile/pubspec.lock`; Android toolchain дополнительно закреплён Gradle wrapper и Kotlin Gradle build-файлами.
+- Канонические менеджеры — Flutter/Dart pub и Gradle wrapper, вызываемый Flutter; отдельный npm/pnpm/uv lock-граф проекту не нужен.
+- Чистое восстановление (Clean restore): из `mobile/` удалить только `.dart_tool` и build outputs, выполнить `flutter pub get --enforce-lockfile`, затем запускать Flutter/Gradle через repository wrapper/toolchain.
+- Общие pub, Flutter SDK и Gradle caches разрешены; `.dart_tool`, `build` и platform build outputs disposable и не коммитятся.
+- Проверки: `dart format --output=none --set-exit-if-changed .`, `flutter analyze` и `flutter test`; Android/iOS runtime остаётся непроверенным без соответствующего host/device evidence.
+- Receipt images, SQLite/application data, fixtures и regression dataset не являются dependency cache и не удаляются cleanup-процедурой.

@@ -72,4 +72,30 @@ Tests/benchmark: `flutter analyze`, unit/widget/integration tests, Flutter Acces
 
 Официальные основания: [Flutter testing](https://docs.flutter.dev/testing/overview), [accessibility testing](https://docs.flutter.dev/ui/accessibility/accessibility-testing), [platform channels](https://docs.flutter.dev/platform-integration/platform-channels), [Kotlin Multiplatform quickstart](https://kotlinlang.org/docs/multiplatform/quickstart.html), [Compose accessibility](https://kotlinlang.org/docs/multiplatform/compose-accessibility.html).
 
+## ADR-005 — SQLite за async `ReceiptRepository` для первого local persistence slice
+
+Date: 2026-08-21
+Status: Accepted; implemented and validated on Windows runner in R04; Android/iOS runtime `UNVERIFIED`
+Context: R03 хранит `ReceiptFixture` только в памяти процесса. Functional MVP требует local-first сохранение и чтение после перезапуска, но не разрешает одновременно подключать camera, OCR, backend или sync. Android/iOS остаются product targets, а Windows — только validation runner.
+Decision: В R04 `ReceiptRepository` становится асинхронной application boundary для `ReceiptAggregate`. Android/iOS persistence adapter использует SQLite через `sqflite`; `sqflite_common_ffi` используется только для deterministic unit/integration проверки на Windows. Первый schema version хранит lossless versioned representation aggregate и минимальные query fields; деньги остаются integer minor units, без `double`/`float`. В production composition root нет автоматического заполнения пользовательской базы fixtures.
+Alternatives: оставить in-memory store; использовать файлы/JSON как canonical state; сразу внедрить ORM/code generation; выбрать Drift; подключить Python/SQLAlchemy core. Они отклонены для R04 как недолговечные, преждевременно сложные либо не соответствующие Flutter mobile boundary. Drift или отдельный processing core могут быть рассмотрены позже при доказанной сложности schema/query.
+Consequences: UI и use cases получают typed async load/save failures и честные loading/empty/local-read-error states. Persistent DTO/schema не смешивается с Flutter UI или fixture data. SQLite schema migration выполняется транзакционно; corrupted/incompatible state не подменяется in-memory/fixture данными. Повторное открытие доступно только по user-initiated retry; destructive reset и backup/restore не входят в R04.
+Fallback: local SQLite is primary. Для transient open failure разрешён явный retry с повторным open; при corrupted/incompatible schema — fail closed с безопасной ошибкой и без перезаписи данных. Camera/OCR/network fallback отсутствует, потому что эти capabilities вне scope.
+Tests/benchmark: format/analyze and 25 Flutter unit/widget/component tests passed, including repository round-trip/reopen, duplicate, corruption, index mismatch, size limits, lifecycle retry and dispose. Windows device integration passed after Developer Mode activation; Android/iOS runtime require their SDK/host and remain `UNVERIFIED`.
+
+Основания: [sqflite package](https://pub.dev/packages/sqflite) документирует SQLite для Android/iOS; [sqflite_common_ffi](https://pub.dev/documentation/sqflite_common_ffi/latest/) поддерживает Windows и unit tests.
+
+## ADR-006 — Photo-library import behind a local image-intake port
+
+Date: 2026-08-21
+Status: Accepted; implemented locally in R05, native platform evidence pending
+Context: R04 хранит только structured receipt aggregates. Следующий Functional MVP slice требует real user image input, но одновременное добавление camera capture, transforms и OCR расширяет native permissions, lifecycle и security risks без одного проверяемого outcome.
+Decision: R05 вводит `ReceiptImageIntakePort` и выбирает endorsed `image_picker` только для single `ImageSource.gallery` selection. Adapter принимает только JPEG/PNG, валидирует byte/dimension/pixel bounds, выполняет atomic controlled copy в backup-excluded Application Support directory и возвращает domain draft с safe metadata; `XFile`, absolute user paths и raw bytes не покидают adapter. Один active draft имеет local manifest; stale/partial/replaced copies очищаются, а manifest validates image again after restart. Android lost-data recovery повторно применяет тот же validation/copy pipeline. Camera capture, preprocessing и OCR остаются отдельными stages.
+Alternatives: сразу подключить `ImageSource.camera`; использовать direct filesystem path; реализовать собственный platform channel; хранить image blob в SQLite; продолжить fixture-only flow. Они отклонены как смешивающие независимые permissions/processing concerns, нарушающие storage boundary либо не дающие real local user input.
+Consequences: iOS получает photo-library purpose string, Android не получает широкое storage permission. New plugin dependency требует native runtime evidence на Android/iOS. Windows может использовать deterministic/plugin validation, но не становится product target. Image asset не создаёт ReceiptAggregate и не изменяет SQLite v1.
+Fallback: user cancellation — no-op. Transient picker/storage failures допускают явный retry; permission denial, unsupported/corrupt/over-limit input и unknown partial copy fail closed без fixture/camera/cloud fallback. Lost data не создаёт receipt автоматически.
+Tests/benchmark: 36 Flutter unit/widget/component tests passed, including negative validation, stale-copy reconciliation, stored-draft recovery, lost-data result flow and fixture/image switching. Windows runner built, but the current tool did not return a final integration/build exit verdict; Android/iOS evidence requires an appropriate host.
+
+Основания: [image_picker](https://pub.dev/packages/image_picker) — Flutter-maintained plugin для photo library/camera, описывающий iOS usage description, Android Photo Picker и lost-data recovery.
+
 ---

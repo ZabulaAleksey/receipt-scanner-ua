@@ -4,6 +4,12 @@
 
 Детальный контракт экранов и состояний: [`../specs/features/ux-mvp.spec.md`](../specs/features/ux-mvp.spec.md). Навигационные переходы и тестовые сценарии зафиксированы в [`UX_STATE_MAP.md`](UX_STATE_MAP.md) и [`UX_FIXTURE_MATRIX.md`](UX_FIXTURE_MATRIX.md); этот документ остаётся источником visual language и общих UX-принципов.
 
+## Design system ownership
+
+[`CALM_BLUE_UI.md`](CALM_BLUE_UI.md) — принадлежащий Receipt Scanner UA подробный baseline токенов, компонентов, layout, accessibility и бесконфликтной интеграции. Он перенесён из глобального `~/.codex`, потому что не является общим правилом ДЕВ.
+
+Этот `DESIGN.md` остаётся каноническим проектным контрактом и адаптером baseline к продукту. При расхождении действуют требования Receipt Scanner, UX SPEC, этот документ и существующие компоненты; `CALM_BLUE_UI.md` применяется после них через token mapping, без глобальных CSS-переопределений и дублирования компонентов.
+
 ## Product experience
 
 Практичный light-first интерфейс без fintech-декоративности. Основной путь: импорт/скан → распознавание → результат → при необходимости review → история/экспорт. Confidence, manual correction и normalization всегда отображаются как разные состояния.

@@ -1,6 +1,6 @@
 # Receipt Scanner UA mobile shell
 
-Fixture-driven Flutter prototype для проверки UX MVP без real camera, OCR, database, backend, account, billing или sync.
+Flutter shell с fixture-driven UX и R04/R05 local-first slices: structured SQLite persistence и single photo-library image intake. Camera capture, preprocessing, OCR, backend, account, billing и sync ещё не реализованы.
 
 ## Targets
 
@@ -17,7 +17,7 @@ flutter pub get
 flutter run -d windows
 ```
 
-Начальный экран использует только bundled synthetic fixtures. Основной путь: `Home → Scan Simulation → Preview → Processing → Result → Save`.
+Scan сохраняет accepted fixture flow и добавляет отдельный путь `photo library → bounded local image draft → Preview`. R05 не создаёт receipt автоматически и не запускает OCR; raw image не добавляется в SQLite payload.
 
 ## Проверки
 
@@ -26,6 +26,7 @@ dart format --output=none --set-exit-if-changed lib test integration_test
 flutter analyze --no-pub
 flutter test --no-pub test
 flutter test --no-pub integration_test/offline_quick_flow_test.dart -d windows
+flutter test --no-pub integration_test/local_image_intake_flow_test.dart -d windows
 flutter build windows --release --no-pub
 ```
 
