@@ -1,5 +1,11 @@
 # AI Status
 
+## Dependency audit — 2026-08-24
+
+- Существующая связка Flutter/Dart pub + Gradle wrapper признана канонической; Node/Python migration не требуется.
+- Lock/source-of-truth, clean restore, shared-cache и runtime-data границы зафиксированы в `docs/ARCHITECTURE.md`.
+- Mobile implementation, receipt data, fixtures и platform evidence не изменялись.
+
 ## Governance migration — 2026-08-24
 
 - Репозиторий перемещён в `~/codex-workspace/receipt-scanner-ua`; linked worktree восстановлен.

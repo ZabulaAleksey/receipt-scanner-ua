@@ -819,3 +819,12 @@ image quality
 ```
 
 Если один сигнал ошибается, остальные должны помочь обнаружить ошибку, а не скрыть её.
+
+## Контракт зависимостей
+
+- Источник истины (Source of truth) мобильного приложения: `mobile/pubspec.yaml` + `mobile/pubspec.lock`; Android toolchain дополнительно закреплён Gradle wrapper и Kotlin Gradle build-файлами.
+- Канонические менеджеры — Flutter/Dart pub и Gradle wrapper, вызываемый Flutter; отдельный npm/pnpm/uv lock-граф проекту не нужен.
+- Чистое восстановление (Clean restore): из `mobile/` удалить только `.dart_tool` и build outputs, выполнить `flutter pub get --enforce-lockfile`, затем запускать Flutter/Gradle через repository wrapper/toolchain.
+- Общие pub, Flutter SDK и Gradle caches разрешены; `.dart_tool`, `build` и platform build outputs disposable и не коммитятся.
+- Проверки: `dart format --output=none --set-exit-if-changed .`, `flutter analyze` и `flutter test`; Android/iOS runtime остаётся непроверенным без соответствующего host/device evidence.
+- Receipt images, SQLite/application data, fixtures и regression dataset не являются dependency cache и не удаляются cleanup-процедурой.
