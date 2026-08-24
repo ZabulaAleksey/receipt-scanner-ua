@@ -9,5 +9,5 @@ export 'src/design_system.dart';
 export 'src/domain.dart';
 
 void main() {
-  runApp(const ReceiptScannerApp());
+  runApp(const ReceiptScannerApp(usePersistentStorage: true));
 }

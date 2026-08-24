@@ -11,6 +11,15 @@ abstract interface class CameraCapturePort {
   CapturedDraft capture(ReceiptFixture fixture);
 }
 
+/// Application boundary for a single photo-library import.
+abstract interface class ReceiptImageIntakePort {
+  Future<ReceiptImageIntakeResult> selectFromGallery();
+  Future<ReceiptImageIntakeResult?> recoverLostData();
+  Future<ReceiptImageIntakeResult?> restoreStoredDraft();
+  Future<void> discard(ReceiptImageDraft draft);
+  Future<void> clearStaleDrafts();
+}
+
 class CapturedDraft {
   const CapturedDraft({required this.fixture, required this.sourceLabel});
 

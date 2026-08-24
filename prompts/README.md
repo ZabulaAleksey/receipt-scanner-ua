@@ -8,8 +8,10 @@
 2. [R01 — project overlay refresh](R01-project-overlay-refresh.md) — `COMPLETE`.
 3. [R02 — UX MVP specification](R02-ux-mvp-specification.md) — `COMPLETE`.
 4. [R03 — native mobile mock shell](R03-native-mobile-mock-shell.md) — `COMPLETE`.
+5. [R04 — local receipt persistence](R04-local-receipt-persistence.md) — `COMPLETE`; первый ограниченный slice Functional MVP, validated на Windows runner.
+6. [R05 — local receipt image intake](R05-local-receipt-image-intake.md) — `IMPLEMENTED_LOCALLY`; single photo-library import и безопасный local image draft, native platform evidence pending.
 
-Следующий этап сначала планируется как ограниченный первый slice Functional MVP. До отдельного SPEC/prompt запрещено подключать real camera/OCR/persistence/backend или напрямую выполнять legacy prompts.
+До отдельного SPEC/prompt запрещено подключать real camera/preprocessing/OCR/backend или напрямую выполнять legacy prompts. R05 разрешает только photo-library import за `ReceiptImageIntakePort`.
 
 Не переходи к следующему этапу только потому, что предыдущий файл существует: нужны выполненный DoD, verification evidence и обновлённый `AI_STATUS.md`.
 

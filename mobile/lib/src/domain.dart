@@ -129,12 +129,106 @@ enum DemoState { normal, loading, empty, error, offline }
 
 enum StorageMode { localOnly, syncTeaser }
 
-abstract interface class ReceiptRepository {
+/// Safe, app-owned description of an imported receipt image.  It deliberately
+/// contains no picker type, raw bytes, or user-controlled absolute path.
+class ReceiptImageDraft {
+  const ReceiptImageDraft({
+    required this.id,
+    required this.storageRef,
+    required this.mimeType,
+    required this.byteSize,
+    required this.width,
+    required this.height,
+    required this.source,
+  });
+
+  final String id;
+  final String storageRef;
+  final String mimeType;
+  final int byteSize;
+  final int width;
+  final int height;
+  final ReceiptImageSource source;
+}
+
+enum ReceiptImageSource { gallery, recoveredGallery }
+
+enum ReceiptImageFailureKind {
+  permissionDenied,
+  unsupportedImage,
+  invalidImage,
+  byteLimitExceeded,
+  dimensionsExceeded,
+  pixelLimitExceeded,
+  pickerUnavailable,
+  localImportError,
+}
+
+class ReceiptImageFailure {
+  const ReceiptImageFailure(this.kind, {required this.retryable});
+
+  final ReceiptImageFailureKind kind;
+  final bool retryable;
+}
+
+sealed class ReceiptImageIntakeResult {
+  const ReceiptImageIntakeResult();
+}
+
+class ReceiptImageReady extends ReceiptImageIntakeResult {
+  const ReceiptImageReady(this.draft);
+  final ReceiptImageDraft draft;
+}
+
+class ReceiptImageCancelled extends ReceiptImageIntakeResult {
+  const ReceiptImageCancelled();
+}
+
+class ReceiptImageFailed extends ReceiptImageIntakeResult {
+  const ReceiptImageFailed(this.failure);
+  final ReceiptImageFailure failure;
+}
+
+enum ReceiptImageIntakeState { idle, selecting, ready, cancelled, error }
+
+class ReceiptAggregate {
+  const ReceiptAggregate({
+    required this.id,
+    required this.merchant,
+    required this.date,
+    required this.total,
+    required this.items,
+    this.unknownMerchant = false,
+    this.duplicate = false,
+    this.offline = false,
+    this.totalMismatch = false,
+    this.rawMerchantAddress,
+  });
+  final String id;
+  final String merchant;
+  final String date;
+  final Money total;
+  final List<LineItem> items;
+  final bool unknownMerchant;
+  final bool duplicate;
+  final bool offline;
+  final bool totalMismatch;
+  final String? rawMerchantAddress;
+}
+
+abstract interface class LegacyReceiptRepository {
   List<ReceiptFixture> get receipts;
   void save(ReceiptFixture receipt);
 }
 
-class InMemoryReceiptStore implements ReceiptRepository {
+abstract interface class ReceiptRepository {
+  Future<List<ReceiptAggregate>> load();
+  Future<void> save(ReceiptAggregate receipt);
+  Future<void> close();
+}
+
+/// Synchronous fixture/demo helper retained for the accepted UX tests.
+class InMemoryReceiptStore implements LegacyReceiptRepository {
   InMemoryReceiptStore([List<ReceiptFixture>? initial])
     : _receipts = [...?initial];
 
@@ -158,7 +252,9 @@ class ProcessReceiptUseCase {
 class SaveReceiptUseCase {
   SaveReceiptUseCase(this.repository);
 
-  final ReceiptRepository repository;
+  final LegacyReceiptRepository repository;
 
-  void save(ReceiptFixture fixture) => repository.save(fixture);
+  void save(ReceiptFixture fixture) {
+    repository.save(fixture);
+  }
 }

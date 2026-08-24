@@ -2,7 +2,7 @@
 
 ## Текущая цель
 
-Подготовить первый ограниченный этап Functional MVP поверх проверенного R03 shell, не смешивая local persistence, real camera, OCR и backend в один scope.
+Подтвердить native platform evidence R05: local image intake из photo library без camera capture, preprocessing, OCR или backend уже реализован локально.
 
 ## Устойчивая последовательность
 
@@ -10,7 +10,7 @@
 2. R01 — project overlay refresh — завершён.
 3. R02 — UX MVP specification — завершён.
 4. R03 — Flutter fixture-driven native shell — завершён и проверен на Windows validation runner.
-5. Functional MVP — планирование: выбрать первый вертикальный slice и зафиксировать SPEC/prompt.
+5. Functional MVP — R04 local receipt persistence реализован и validated на Windows device integration; Android/iOS runtime `UNVERIFIED`.
 6. Production MVP — optional online services и release hardening после доказанного local core.
 
 ## Ограничения следующего решения
@@ -23,4 +23,4 @@
 
 ## Первый незавершённый шаг
 
-Создать отдельный план/SPEC для одного Functional MVP slice. Предпочтительный кандидат: локальное сохранение и чтение Receipt aggregates за `ReceiptRepository`, без одновременного подключения camera/OCR/backend.
+Получить platform evidence для [R05](../prompts/R05-local-receipt-image-intake.md): повторить Windows integration с полным exit verdict и проверить Android/iOS на подходящем host. Только затем планировать camera capture или preprocessing как отдельный slice.

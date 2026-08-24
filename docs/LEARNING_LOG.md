@@ -95,3 +95,76 @@ flutter build windows --release --no-pub
 3. Запустить shell через `flutter run -d windows` либо доступный Android/iOS device.
 4. Сравнить `mobile/test/goldens/home.png` с концептами в `docs/design-concepts/`.
 5. Перед real persistence/camera/OCR создать отдельный Functional MVP SPEC и acceptance criteria.
+
+## 2026-08-21 — R04 local-first SQLite persistence
+
+### Что и зачем изменено
+
+- Добавлен асинхронный SQLite repository для локальных агрегатов чеков, чтобы данные переживали перезапуск приложения без backend или fixture seed.
+- UI получает состояния загрузки, пустого хранилища, ошибки чтения и retry через controller; сохранение не должно зависеть от синтетических данных.
+
+### Ключевой поток данных / управления
+
+```text
+app startup
+→ persistent composition
+→ async ReceiptRepository.load
+→ AppController state
+→ Home / History / Review
+```
+
+### Команды и проверки
+
+```powershell
+cd mobile
+dart format --output=none --set-exit-if-changed lib test integration_test
+flutter analyze --no-pub
+flutter test --no-pub test
+flutter test --no-pub integration_test/local_persistence_flow_test.dart -d windows
+```
+
+### Решения и trade-offs
+
+- SQLite v1 хранит lossless JSON и проверяемые индексные поля; денежные суммы представлены minor units.
+- Размеры payload и общее число строк ограничены до JSON decode; повреждённые или несовместимые данные fail closed.
+- Android Auto Backup отключён. На iOS исключается из backup отдельный каталог SQLite, чтобы покрыть DB/WAL/SHM sidecars.
+
+### Ограничение среды
+
+- Windows device integration требует включённого Developer Mode для plugin symlinks. Android runtime требует Android SDK, iOS runtime — macOS/Xcode. Отсутствующая среда — это `BLOCKED_BY_ENVIRONMENT`/`UNVERIFIED`, а не подтверждение платформенной работы.
+
+### Как повторить самостоятельно
+
+1. Включить Windows Developer Mode либо подготовить Android/iOS host.
+2. Из `mobile/` выполнить команды выше.
+3. На устройстве сохранить чек, перезапустить приложение и убедиться, что History открывает те же данные.
+4. Проверить loading, empty, local-error и retry без подключения сети.
+
+## 2026-08-21 — R05 безопасный local photo-library intake
+
+### Что и зачем изменено
+
+- Добавлен один local image draft за `ReceiptImageIntakePort`; raw image не входит в SQLite receipt aggregate.
+- `image_picker` используется только для gallery selection. Camera, preprocessing и OCR остались следующими отдельными этапами.
+
+### Важные границы
+
+- Принимаются только JPEG/PNG с ограничениями byte size, dimensions, pixels и frames до полного decode.
+- Image copy идёт через temporary file и manifest ownership в Application Support; old/partial files reconciled.
+- Android Auto Backup disabled; iOS directory исключается из backup до записи. Platform runtime evidence всё ещё нужно получить на Android/iOS host.
+
+### Проверки
+
+```powershell
+cd mobile
+flutter analyze --no-pub
+flutter test --no-pub test
+flutter test --no-pub integration_test/local_image_intake_flow_test.dart -d windows
+```
+
+### Как повторить самостоятельно
+
+1. На Android/iOS открыть Scan и выбрать один JPEG/PNG из photo library.
+2. Проверить Preview metadata, cancel, invalid image и retry state без сети.
+3. Перезапустить приложение и проверить восстановление active draft.
+4. Подтвердить, что camera permission не запрашивается.

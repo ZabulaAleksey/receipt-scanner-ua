@@ -6,9 +6,14 @@ import 'design_system.dart';
 import 'domain.dart';
 
 class ReceiptScannerApp extends StatefulWidget {
-  const ReceiptScannerApp({this.dependencies, super.key});
+  const ReceiptScannerApp({
+    this.dependencies,
+    this.usePersistentStorage = false,
+    super.key,
+  });
 
   final AppDependencies? dependencies;
+  final bool usePersistentStorage;
 
   @override
   State<ReceiptScannerApp> createState() => _ReceiptScannerAppState();
@@ -21,7 +26,11 @@ class _ReceiptScannerAppState extends State<ReceiptScannerApp> {
   void initState() {
     super.initState();
     controller = AppController(
-      dependencies: widget.dependencies ?? AppDependencies.create(),
+      dependencies:
+          widget.dependencies ??
+          (widget.usePersistentStorage
+              ? AppDependencies.createPersistent()
+              : AppDependencies.create()),
     );
   }
 
@@ -178,7 +187,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final receipts = controller.store.receipts;
+    final receipts = controller.receipts;
     return ListView(
       padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
       children: [
@@ -213,7 +222,7 @@ class HomeScreen extends StatelessWidget {
         else if (controller.homeState == HomeState.error)
           ErrorState(
             message: 'Локальне сховище тимчасово недоступне.',
-            onRetry: () => controller.setHomeState(HomeState.normal),
+            onRetry: controller.retryLocalStorage,
           )
         else if (controller.homeState == HomeState.offline)
           const InfoCard(
@@ -280,6 +289,30 @@ class ScanScreen extends StatelessWidget {
             'Камера, OCR і мережа не підключені. Оберіть синтетичний приклад.',
       ),
       const SizedBox(height: 20),
+      Text('Фото чека', style: Theme.of(context).textTheme.titleLarge),
+      const SizedBox(height: 8),
+      _ImageIntakeStatus(controller: controller),
+      const SizedBox(height: 8),
+      FilledButton.icon(
+        onPressed:
+            controller.imageIntakeState == ReceiptImageIntakeState.selecting
+            ? null
+            : () async {
+                await controller.selectReceiptImage();
+                if (context.mounted &&
+                    controller.imageIntakeState ==
+                        ReceiptImageIntakeState.ready) {
+                  Navigator.of(context).pushNamed(AppRoute.preview.path);
+                }
+              },
+        icon: const Icon(Icons.photo_library_outlined),
+        label: Text(
+          controller.imageIntakeState == ReceiptImageIntakeState.selecting
+              ? 'Вибираємо фото…'
+              : 'Вибрати фото чека',
+        ),
+      ),
+      const SizedBox(height: 20),
       Text('Оберіть приклад', style: Theme.of(context).textTheme.titleLarge),
       const SizedBox(height: 10),
       for (final fixture in controller.fixturePort.scenarios)
@@ -316,44 +349,136 @@ class PreviewScreen extends StatelessWidget {
   final AppController controller;
 
   @override
-  Widget build(BuildContext context) => ListView(
-    padding: const EdgeInsets.all(20),
-    children: [
-      Container(
-        height: 260,
-        decoration: BoxDecoration(
-          color: const Color(0xFFE8EEF6),
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: const Color(0xFFB8C7D9)),
+  Widget build(BuildContext context) {
+    final draft = controller.imageDraft;
+    if (controller.imageIntakeState == ReceiptImageIntakeState.selecting) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (controller.imageIntakeState == ReceiptImageIntakeState.error) {
+      return Center(
+        child: ErrorState(
+          message: 'Не вдалося локально імпортувати фото.',
+          onRetry: controller.imageFailure?.retryable == true
+              ? controller.retryReceiptImage
+              : null,
         ),
-        child: const Center(
-          child: Icon(Icons.receipt_long, size: 80, color: Color(0xFF486581)),
+      );
+    }
+    if (controller.imageIntakeState == ReceiptImageIntakeState.ready &&
+        draft != null) {
+      return ListView(
+        padding: const EdgeInsets.all(20),
+        children: [
+          Container(
+            height: 260,
+            decoration: BoxDecoration(
+              color: const Color(0xFFE8EEF6),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: const Color(0xFFB8C7D9)),
+            ),
+            child: const Center(
+              child: Icon(
+                Icons.image_outlined,
+                size: 80,
+                color: Color(0xFF486581),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          const InfoCard(
+            icon: Icons.photo_library_outlined,
+            title: 'Фото чека збережено локально',
+            message: 'OCR ще не запущено. Фото не додано до бази чеків.',
+          ),
+          const SizedBox(height: 12),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${draft.width} × ${draft.height} px'),
+                  Text('${draft.byteSize} bytes · ${draft.mimeType}'),
+                ],
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () =>
+                Navigator.of(context).pushNamed(AppRoute.scan.path),
+            child: const Text('Обрати інше фото'),
+          ),
+        ],
+      );
+    }
+    return ListView(
+      padding: const EdgeInsets.all(20),
+      children: [
+        Container(
+          height: 260,
+          decoration: BoxDecoration(
+            color: const Color(0xFFE8EEF6),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: const Color(0xFFB8C7D9)),
+          ),
+          child: const Center(
+            child: Icon(Icons.receipt_long, size: 80, color: Color(0xFF486581)),
+          ),
         ),
-      ),
-      const SizedBox(height: 16),
-      const InfoCard(
-        icon: Icons.check_circle_outline,
-        title: 'Область виглядає добре',
-        message: 'Це synthetic preview. Реальне фото буде підключено пізніше.',
-      ),
-      const SizedBox(height: 20),
-      FilledButton.icon(
-        onPressed: () {
-          controller.beginProcessing();
-          Navigator.of(context).pushNamed(AppRoute.processing.path);
-        },
-        icon: const Icon(Icons.auto_awesome),
-        label: const Padding(
-          padding: EdgeInsets.symmetric(vertical: 12),
-          child: Text('Обробити приклад'),
+        const SizedBox(height: 16),
+        const InfoCard(
+          icon: Icons.check_circle_outline,
+          title: 'Область виглядає добре',
+          message:
+              'Це synthetic preview. Реальне фото буде підключено пізніше.',
         ),
-      ),
-      TextButton(
-        onPressed: () => Navigator.of(context).pushNamed(AppRoute.scan.path),
-        child: const Text('Обрати інший приклад'),
-      ),
-    ],
-  );
+        const SizedBox(height: 20),
+        FilledButton.icon(
+          onPressed: () {
+            controller.beginProcessing();
+            Navigator.of(context).pushNamed(AppRoute.processing.path);
+          },
+          icon: const Icon(Icons.auto_awesome),
+          label: const Padding(
+            padding: EdgeInsets.symmetric(vertical: 12),
+            child: Text('Обробити приклад'),
+          ),
+        ),
+        TextButton(
+          onPressed: () => Navigator.of(context).pushNamed(AppRoute.scan.path),
+          child: const Text('Обрати інший приклад'),
+        ),
+      ],
+    );
+  }
+}
+
+class _ImageIntakeStatus extends StatelessWidget {
+  const _ImageIntakeStatus({required this.controller});
+  final AppController controller;
+
+  @override
+  Widget build(BuildContext context) => switch (controller.imageIntakeState) {
+    ReceiptImageIntakeState.selecting => const Padding(
+      padding: EdgeInsets.symmetric(vertical: 8),
+      child: LinearProgressIndicator(),
+    ),
+    ReceiptImageIntakeState.ready => const InfoCard(
+      icon: Icons.check_circle_outline,
+      title: 'Фото готове до перегляду',
+      message: 'Збережено локально; OCR ще не запускався.',
+    ),
+    ReceiptImageIntakeState.cancelled => const Text('Вибір фото скасовано.'),
+    ReceiptImageIntakeState.error => ErrorState(
+      message: 'Не вдалося локально імпортувати фото.',
+      onRetry: controller.imageFailure?.retryable == true
+          ? controller.retryReceiptImage
+          : null,
+    ),
+    ReceiptImageIntakeState.idle => const Text(
+      'Виберіть одну фотографію чека з бібліотеки пристрою.',
+    ),
+  };
 }
 
 class ProcessingScreen extends StatelessWidget {
@@ -523,7 +648,7 @@ class ReviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final issues = controller.store.receipts
+    final issues = controller.receipts
         .where((receipt) => receipt.needsReview)
         .toList();
     final blockingState = _blockingDemoState(
@@ -531,7 +656,9 @@ class ReviewScreen extends StatelessWidget {
       emptyTitle: 'Черга порожня',
       emptyMessage: 'Чисті чеки не потрапляють сюди.',
       errorMessage: 'Черга перевірки недоступна через локальну помилку.',
-      onRetry: () => controller.setReviewState(DemoState.normal),
+      onRetry: controller.isPersistent
+          ? controller.retryLocalStorage
+          : () => controller.setReviewState(DemoState.normal),
     );
     if (blockingState != null) {
       return ListView(
@@ -732,7 +859,9 @@ class HistoryScreen extends StatelessWidget {
       emptyTitle: 'Історія порожня',
       emptyMessage: 'Збережені чеки з’являться тут.',
       errorMessage: 'Історія недоступна через локальну помилку запиту.',
-      onRetry: () => controller.setHistoryState(DemoState.normal),
+      onRetry: controller.isPersistent
+          ? controller.retryLocalStorage
+          : () => controller.setHistoryState(DemoState.normal),
     );
     if (blockingState != null) {
       return ListView(
@@ -746,12 +875,12 @@ class HistoryScreen extends StatelessWidget {
         if (controller.historyState == DemoState.offline) const OfflineBanner(),
         SectionTitle(title: 'Усі покупки', action: 'Фільтри', onTap: () {}),
         const SizedBox(height: 12),
-        if (controller.store.receipts.isEmpty)
+        if (controller.receipts.isEmpty)
           const EmptyState(
             title: 'Історія порожня',
             message: 'Збережені чеки з’являться тут.',
           ),
-        for (final receipt in controller.store.receipts)
+        for (final receipt in controller.receipts)
           ReceiptCard(
             receipt: receipt,
             onTap: () {
@@ -829,7 +958,7 @@ class InsightsScreen extends StatelessWidget {
       MetricCard(
         label: 'Сума у вибірці',
         value:
-            '${controller.store.receipts.fold<int>(0, (sum, item) => sum + item.total.minor) ~/ 100},00 UAH',
+            '${controller.receipts.fold<int>(0, (sum, item) => sum + item.total.minor) ~/ 100},00 UAH',
       ),
       const SizedBox(height: 10),
       const Card(
