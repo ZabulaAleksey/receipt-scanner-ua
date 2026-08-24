@@ -85,6 +85,7 @@ receipt-scanner-ua/
 │  ├─ ARCHITECTURE.md
 │  ├─ DECISIONS.md
 │  ├─ DESIGN.md
+│  ├─ CALM_BLUE_UI.md
 │  ├─ AI_PLAN.md
 │  ├─ AI_STATUS.md
 │  ├─ ROADMAP.md

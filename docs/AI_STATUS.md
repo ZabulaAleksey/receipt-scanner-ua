@@ -4,6 +4,7 @@
 
 - Репозиторий перемещён в `~/codex-workspace/receipt-scanner-ua`; linked worktree восстановлен.
 - Содержание универсального контракта, R00–R05 и legacy backlog 00–23 полностью объединено в единственный `prompts/STAGES.md`.
+- Calm Blue UI перенесён из глобального `~/.codex/DESIGN.md` в проектный `docs/CALM_BLUE_UI.md` и подключён через канонический `docs/DESIGN.md` без перезаписи Receipt-specific правил.
 - Project overlay validator, Dart formatting, Flutter analyze и 14 Flutter tests — PASS.
 - Основной checkout остаётся в пользовательском merge с R04/R05; `MERGE_HEAD`, index и backup ref сохранены, автоматическое разрешение не выполнялось.
 - Push/merge не выполнялись.

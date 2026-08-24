@@ -19,7 +19,7 @@ R00–R03 сформировали UX-first контракт и Flutter shell. �
 ## Источники истины
 
 - `docs/ARCHITECTURE.md` — границы приложения и адаптеров;
-- `docs/DESIGN.md` и UX-документы — принятые пользовательские состояния;
+- `docs/DESIGN.md` — каноническая адаптация UX/visual contract; `docs/CALM_BLUE_UI.md` — принадлежащий проекту подробный design-system baseline;
 - `docs/SECURITY.md` и `docs/PRIVACY.md` — обработка чеков, изображений и логов;
 - `docs/DECISIONS.md` — ADR;
 - `docs/ROADMAP.md`, `docs/AI_PLAN.md`, `docs/AI_STATUS.md` — последовательность и evidence;
