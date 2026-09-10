@@ -8,7 +8,7 @@
 
 ## Governance migration — 2026-08-24
 
-- Репозиторий перемещён в `~/codex-workspace/receipt-scanner-ua`; linked worktree восстановлен.
+- Репозиторий находится в `${PROJECTS_ROOT}/receipt-scanner-ua` (локальный default: `~/receipt-scanner-ua`); `main` синхронизирован с `origin/main`.
 - Содержание универсального контракта, R00–R05 и legacy backlog 00–23 полностью объединено в единственный `prompts/STAGES.md`.
 - Calm Blue UI перенесён из глобального `~/.codex/DESIGN.md` в проектный `docs/CALM_BLUE_UI.md` и подключён через канонический `docs/DESIGN.md` без перезаписи Receipt-specific правил.
 - Project overlay validator, Dart formatting, Flutter analyze и 14 Flutter tests — PASS.
