@@ -66,4 +66,4 @@ R04 не пишет raw receipt images, real receipts, PII или secrets в Git
 - [UX MVP specification](ux-mvp.spec.md)
 - [ADR-002 и ADR-005](../../docs/DECISIONS.md)
 - [Security](../../docs/SECURITY.md) и [Privacy](../../docs/PRIVACY.md)
-- [R04 implementation prompt](../../prompts/R04-local-receipt-persistence.md)
+- [Historical R04 stage contract](../../docs/notes/legacy-stage-contracts.md)

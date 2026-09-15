@@ -14,7 +14,7 @@ Receipt Scanner UA — local-first мобильное приложение дл�
 
 ## Подтверждённое состояние
 
-R00–R03 сформировали UX-first контракт и Flutter shell. R04 (SQLite persistence), R05 (gallery image intake) и governance migration объединены в `main`; native Android/iOS runtime остаётся `UNVERIFIED`. Подробные этапы, включая R04/R05 и backlog 00–23, консолидированы в `prompts/STAGES.md`.
+R00–R03 сформировали UX-first контракт и Flutter shell. R04 (SQLite persistence), R05 (gallery image intake) и governance migration объединены в `main`; native Android/iOS runtime остаётся `UNVERIFIED`. Выбранный R05 и evidence ведутся в `docs/STAGES.md`; прежние подробные R00–R05/00–23 contracts сохранены в `docs/notes/legacy-stage-contracts.md`.
 
 ## Источники истины
 
@@ -22,8 +22,8 @@ R00–R03 сформировали UX-first контракт и Flutter shell. R
 - `docs/DESIGN.md` — каноническая адаптация UX/visual contract; `docs/CALM_BLUE_UI.md` — принадлежащий проекту подробный design-system baseline;
 - `docs/SECURITY.md` и `docs/PRIVACY.md` — обработка чеков, изображений и логов;
 - `docs/DECISIONS.md` — ADR;
-- `docs/ROADMAP.md`, `docs/AI_PLAN.md`, `docs/AI_STATUS.md` — последовательность и evidence;
-- `prompts/STAGES.md` — единственный подробный исполняемый источник этапов.
+- `docs/ROADMAP.md` — последовательность; `docs/STAGES.md` — один текущий stage/evidence/NEXT;
+- `docs/notes/legacy-stage-contracts.md` — historical contract reference без live status authority.
 
 ## Gates
 

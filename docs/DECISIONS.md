@@ -98,4 +98,17 @@ Tests/benchmark: 36 Flutter unit/widget/component tests passed, including negati
 
 Основания: [image_picker](https://pub.dev/packages/image_picker) — Flutter-maintained plugin для photo library/camera, описывающий iOS usage description, Android Photo Picker и lost-data recovery.
 
+## ADR-007 — docs/STAGES.md как единый live state owner
+
+Status: Accepted for state-location migration.
+Decision: `docs/STAGES.md` выбирает ровно один R05 record и владеет
+его status/blockers/evidence/NEXT. `docs/ROADMAP.md` задаёт UX-first
+порядок, SPEC — requirements. Прежний R00–R05/00–23 catalog сохранён
+в `docs/notes/legacy-stage-contracts.md` с Git parent/hash и без live
+authority. Separate AI plan/status выводятся после сохранения
+historical facts в `docs/notes/legacy-ai-state-evidence.md`.
+Consequences: R05 остаётся `implemented_unverified` до platform gates;
+integration of code в `main` не доказывает Android/iOS runtime или
+backend E2E. Formal DEV bridge не создаётся одним docs path.
+
 ---

@@ -1,13 +1,14 @@
 # Контекстная совместимость (жёсткая проверка)
 
-Статус: R00–R03 пройдены; project overlay совместим с каскадом правил.
+Исторический R00–R03 local overlay прошёл проверки; formal DEV bridge
+отсутствует и текущая state-location migration описана ниже отдельно.
 
 ## Maintenance — консолидация статуса
 
 | Изменение | Класс | Вывод |
 |---|---|---|
-| Удаление `docs/PROGRESS.md` | OBSOLETE | Файл полностью дублировал `AI_STATUS.md` и `AI_PLAN.md`; уникального контракта или evidence не содержал |
-| Рабочие ссылки на статус | EXTEND | `AI_STATUS.md` остаётся каноном подтверждённого состояния, `AI_PLAN.md` — следующей работы |
+| Удаление `docs/PROGRESS.md` | OBSOLETE | На момент maintenance файл дублировал отдельные AI status/plan; их live роль затем заменена ADR-007 |
+| Рабочие ссылки на статус | EXTEND | `docs/STAGES.md` — единый owner status/evidence/NEXT после ADR-007 |
 | Локальные команды Flutter tests в `AGENTS.md` | EXTEND | Устаревшее утверждение об отсутствии автотестов синхронизировано с фактическим R03 toolchain |
 
 Удаление не меняет product requirements, roadmap или test contracts. Git history сохраняет историческое содержимое `PROGRESS.md`.
@@ -41,7 +42,7 @@ R02 не изменяет глобальные test/fallback policies: прин�
 |---|---|---|
 | `specs/system.spec.md`, `specs/README.md` | PROJECT_ONLY | Канонические Receipt-specific product requirements |
 | `docs/SECURITY.md`, `docs/PRIVACY.md` | EXTEND | Project delta поверх глобальных security/fallback policies |
-| `docs/AI_PLAN.md`, актуализация status/progress | PROJECT_ONLY | Локальная маршрутизация следующего этапа и evidence |
+| `docs/STAGES.md`, актуализация status/progress | PROJECT_ONLY | Локальная маршрутизация одного этапа и evidence после ADR-007 |
 | ADR-001..003, architecture/design/roadmap updates | PROJECT_ONLY | Receipt-specific boundaries и решения |
 | Canonical source list и anti-overengineering в `AGENTS.md` | EXTEND | Уточнение локального overlay без копирования ДЕВ |
 | Удаление `AGENTS.proposed.md` | OBSOLETE | Дублирующий proposal заменён активным project `AGENTS.md` |
@@ -70,11 +71,11 @@ R02 не изменяет глобальные test/fallback policies: прин�
 | Preset | workspace/presets | INHERITED | Для `receipt-scanner-ua` не используется отдельный preset (директория `projects/receipt-scanner-ua` не подключена к preset).
 | `AGENTS.md` (global) | root/global | INHERITED | Базовые правила из `~/.codex/AGENTS.md`.
 | `AGENTS.md` (project) | project | EXTEND | Проектный overlay с локальными ограничениями и правилами.
-| `docs/AI_STATUS.md` | project | PROJECT_ONLY | Описание текущего статуса проекта.
+| `docs/STAGES.md` | project | PROJECT_ONLY | Единый выбранный этап, статус, evidence и NEXT.
 | `docs/CONTEXT_COMPATIBILITY.md` | project | PROJECT_ONLY | Локальный аудит совместимости и delta-решений.
 | `docs/CONTEXT_AUTOMATION.md` | project | PROJECT_ONLY | Локальные процессные правила проектной автоматизации.
 | `README.md` | project | PROJECT_ONLY | Оперируемый индекс и структура проекта.
-| `prompts/*` | project | PROJECT_ONLY | Stage-подсказки и чеклисты на уровне проекта.
+| `docs/notes/legacy-stage-contracts.md` | project | HISTORICAL | Старые stage contracts без live status authority.
 | agents/hooks/MCP/skills (локальные файлы) | project | OBSOLETE | Локальный слой не нужен: подтверждённого пробела нет, файлы отсутствуют. |
 | hooks (активные) | project | OBSOLETE | Проектные hooks не требуются; активных hook-файлов нет.
 | MCP | project | OBSOLETE | Проектный MCP не требуется; локальных конфигов нет.
@@ -86,3 +87,26 @@ R02 не изменяет глобальные test/fallback policies: прин�
 
 - Нулевой проектный конфиг/папки по `agents/`, `hooks/`, `mcp/`, `config/`, `*.toml` в самом репозитории.
 - Исторические упоминания прошлого `AGENTS.proposed.md` оставлены только как лог/контекст, но не как активный артефакт.
+
+## Brownfield state-location migration
+
+Read-only `reconcile_project_framework.py` повторён на GitHub `main`
+`f706261` в clean isolated clone. `prompts/STAGES.md`, AI_PLAN и
+AI_STATUS классифицированы `MERGE`; `docs/STAGES.md` — `ADD`.
+Flutter mobile code/tests, assets, `pubspec.lock`, platform manifests,
+fixtures и runtime receipt data защищены как `FORBIDDEN_TO_OVERWRITE`.
+Source SHA256/rollback parent сохранены в
+`docs/notes/legacy-ai-state-evidence.md`.
+
+CONFLICT: AI_STATUS описывал R05 в рабочей ветке и одновременно
+`docs/project-context.md` называл его интегрированным. Product commit
+`79e77ca` и merge `02b08d4` — ancestors of GitHub main, поэтому
+код интегрирован; Windows image-intake exit verdict и Android/iOS
+runtime всё ещё отсутствуют. Selected R05 — `implemented_unverified`;
+NEXT `R05-PLATFORM-EVIDENCE`, без camera/OCR completion claim.
+
+Flutter/Dart executable на этом Windows host не найден в PATH и
+проверенных стандартных SDK locations. New Flutter restore/tests не
+заявлены. Structural stage adapter и Markdown/path checks повторяются
+после migration. Formal `.codex/dev-project.toml` отсутствует;
+путь STAGES не включает full DEV inheritance сам по себе.

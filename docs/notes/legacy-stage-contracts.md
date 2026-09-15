@@ -1,4 +1,12 @@
-# Этапы Receipt Scanner UA
+# Исторические stage contracts Receipt Scanner UA
+
+Archive исходного `prompts/STAGES.md`, SHA256:
+`ac5e628c844c28fc24c3182604dd7c32c1499df9c29cd651a823099a540dd945`.
+Ниже сохранены уникальные прежние R00–R05 и 00–23 contracts для
+review/rollback. Они не выбирают live stage/status/NEXT; текущий
+owner — `docs/STAGES.md`, approved requirements — SPEC.
+
+## Прежний catalog (исторический текст)
 
 Единственный исполняемый источник этапов проекта. Статусы сверяются с `docs/ROADMAP.md` и `docs/AI_STATUS.md`; требования — со связанными SPEC и ADR. Документ объединяет принятую UX-first последовательность R00–R05 и сохранённый backlog 00–23 без потери уникальных ограничений.
 

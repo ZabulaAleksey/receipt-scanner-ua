@@ -1,6 +1,6 @@
 # Автоматизация контекста
 
-> Исторический reference исходной декомпозиции. Активный порядок этапов определяется `prompts/README.md`, а текущий статус — `docs/AI_STATUS.md`.
+> Исторический reference исходной декомпозиции. Активный порядок этапов определяется `docs/ROADMAP.md`, а текущий этап/status/NEXT — `docs/STAGES.md`.
 
 ## 3. Совместимость с существующим архивом «АВТОМАТИЗАЦИЯ КОНТЕКСТА»
 
@@ -102,7 +102,7 @@ src/receipt_scanner/normalization/AGENTS.md
 
 ### Не загружать автоматически
 
-- весь `PROMPTS.md`;
+- весь исторический `docs/notes/legacy-stage-contracts.md`;
 - весь `ROADMAP.md`;
 - все TOML-файлы субагентов;
 - все Skill bodies;
@@ -146,8 +146,7 @@ Do not duplicate generic agents, hooks, MCP, Git workflow or common security rol
 - docs/DECISIONS.md
 - docs/DESIGN.md
 - docs/CALM_BLUE_UI.md
-- docs/AI_STATUS.md
-- docs/AI_PLAN.md
+- docs/STAGES.md
 - docs/CONTEXT_COMPATIBILITY.md
 - docs/DATA_MODEL.md
 - docs/OCR_PIPELINE.md
@@ -159,7 +158,7 @@ Use uv + project .venv + shared uv cache.
 
 ## Work discipline
 Prompt → inspect target context → plan → implement small change → test →
-benchmark when relevant → reviewer → docs → AI_STATUS / AI_PLAN.
+benchmark when relevant → reviewer → docs → STAGES.
 ```
 
 ### 19.2. Rules
@@ -349,8 +348,7 @@ TASK-SPECIFIC CONTEXT
 [ ] ARCHITECTURE обновлена при boundary change
 [ ] DECISIONS обновлён при ADR
 [ ] DESIGN обновлён при UI change
-[ ] AI_STATUS обновлён при изменении подтверждённого состояния
-[ ] AI_PLAN обновлён при изменении следующего шага
+[ ] STAGES обновлён при изменении подтверждённого состояния и следующего шага
 [ ] experimental feature имеет fallback
 ```
 

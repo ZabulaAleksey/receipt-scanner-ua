@@ -1,6 +1,6 @@
 # UX MVP specification
 
-Статус: принятый UX MVP-контракт R02. Реализацию приложения не описывает и не разрешает. Verification evidence R03 хранится в `docs/AI_STATUS.md`.
+Статус: принятый UX MVP-контракт R02. Реализацию приложения не описывает и не разрешает. Текущий verification evidence принадлежит `docs/STAGES.md`; historical R03 evidence доступен из Git и `docs/notes/legacy-ai-state-evidence.md`.
 
 ## Цель
 

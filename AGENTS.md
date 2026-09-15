@@ -4,7 +4,7 @@
 
 ## Инварианты проекта
 
-- Приоритетная продуктовая последовательность: `UX MVP → Functional MVP → Production MVP`; актуальный порядок этапов находится в `prompts/README.md`.
+- Приоритетная продуктовая последовательность: `UX MVP → Functional MVP → Production MVP`; порядок находится в `docs/ROADMAP.md`, текущий stage/status/NEXT — в `docs/STAGES.md`.
 - Windows/Python остаётся baseline для processing core и CLI, но не запрещает отдельные Android/iOS native app targets. Mobile stack выбирается только через ADR/spike.
 - Consumer core обязан работать local-first/offline без обязательного account, cloud OCR и server storage.
 - OCR SDK подключается через adapter boundary; Receipt Scanner не должен зависеть от одного provider. Text Recognition Core является предпочтительной интеграционной границей, если его контракт подходит.
@@ -20,8 +20,8 @@
 
 ## Маршрутизация контекста
 
-- Начинай с `docs/AI_STATUS.md`, затем открывай один относящийся к задаче документ по архитектуре, модели данных, OCR, нормализации или качеству.
-- При работе над этапом используй только текущий prompt этапа из `prompts/`.
+- Начинай с выбранного record в `docs/STAGES.md`, затем открывай один относящийся к задаче документ по архитектуре, модели данных, OCR, нормализации или качеству.
+- При работе над этапом не загружай исторический catalog из `docs/notes/legacy-stage-contracts.md` целиком.
 - Не загружай одновременно полную дорожную карту, коллекцию prompts, fixtures, дерево правил, набор SPEC и `LEARNING_LOG.md`.
 
 ## Канонические источники
@@ -30,8 +30,8 @@
 - UX/visual requirements: `docs/DESIGN.md`; подключённый проектный design-system baseline: `docs/CALM_BLUE_UI.md`;
 - system boundaries: `docs/ARCHITECTURE.md`;
 - security/privacy delta: `docs/SECURITY.md`, `docs/PRIVACY.md`;
-- stages: `docs/ROADMAP.md`, `prompts/README.md`;
-- current evidence/next work: `docs/AI_STATUS.md`, `docs/AI_PLAN.md`;
+- stages: `docs/ROADMAP.md`, `docs/STAGES.md`;
+- current evidence/next work: выбранный record в `docs/STAGES.md`;
 - architectural decisions: `docs/DECISIONS.md`.
 
 

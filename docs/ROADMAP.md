@@ -7,7 +7,7 @@ R00 Reconciliation [COMPLETE]
 → R01 Project overlay refresh [COMPLETE]
 → R02 UX MVP specification [COMPLETE]
 → R03 Fixture-driven native mobile shell [COMPLETE]
-→ Functional MVP: local DB, camera, OCR, parsing, normalization, review [PLANNING]
+→ Functional MVP: local DB, camera, OCR, parsing, normalization, review [PARTIAL: R04 Windows-validated; R05 implemented_unverified]
 → Production MVP: optional sync/account/subscription, recovery, privacy/store release
 → Future B2B branch
 ```

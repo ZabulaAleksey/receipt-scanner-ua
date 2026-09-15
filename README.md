@@ -1,8 +1,8 @@
-# Receipt Scanner UA — архитектура, АВТОМАТИЗАЦИЯ КОНТЕКСТА и промпты для Codex
+# Receipt Scanner UA — архитектура, АВТОМАТИЗАЦИЯ КОНТЕКСТА и этапы для Codex
 
 **Назначение:** локальная система для обработки фотографий украинских чеков: OCR → парсинг → нормализация товаров → история цен → Excel.<br>
 **Режим:** UX-first; Windows/Python processing core; Android/iOS native target; local-first.<br>
-**Ключевой принцип:** проект наследует уже установленную **AI Dev Team / «АВТОМАТИЗАЦИЮ КОНТЕКСТА»** и содержит только локальные project-specific deltas.<br>
+**Ключевой принцип:** глобальный Codex router действует как user layer, а проект содержит локальные instructions; formal DEV bridge пока не включён.<br>
 **Дата спецификации:** 2026-08-10.
 
 ---
@@ -16,9 +16,9 @@
 - [System specification](specs/system.spec.md) — требования и границы UX/Functional/Production MVP.
 - [Roadmap](docs/ROADMAP.md) — UX-first stages и сохранённый legacy backlog.
 - [Security](docs/SECURITY.md) и [Privacy](docs/PRIVACY.md) — project-specific data boundaries.
-- [AI Plan](docs/AI_PLAN.md) и [AI Status](docs/AI_STATUS.md) — следующий шаг и подтверждённое состояние.
+- [STAGES](docs/STAGES.md) — текущий этап, подтверждённое состояние и следующий шаг.
 - [Definition of Done](docs/DEFINITION_OF_DONE.md) — общие критерии завершения этапа.
-- [Stage-промпты](prompts/README.md) — активная цепочка R00–R05 и legacy backlog 00–23.
+- [Исторические stage contracts](docs/notes/legacy-stage-contracts.md) — прежние R00–R05 и remapped backlog 00–23.
 
 ## R05 local image intake
 
@@ -38,4 +38,4 @@ flutter test --no-pub integration_test/local_image_intake_flow_test.dart -d wind
 
 ## Правило загрузки
 
-Для обычной задачи открывайте только `AGENTS.md`, текущий раздел `docs/AI_STATUS.md`, один релевантный документ и один stage-промпт. Полный набор промптов автоматически не загружайте.
+Для обычной задачи открывайте только `AGENTS.md`, выбранный record в `docs/STAGES.md` и один релевантный документ. Полный архив stage contracts автоматически не загружайте.

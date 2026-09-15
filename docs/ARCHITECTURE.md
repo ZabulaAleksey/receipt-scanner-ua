@@ -101,10 +101,9 @@ receipt-scanner-ua/
 │  ├─ DECISIONS.md
 │  ├─ DESIGN.md
 │  ├─ CALM_BLUE_UI.md
-│  ├─ AI_PLAN.md
-│  ├─ AI_STATUS.md
+│  ├─ STAGES.md
 │  ├─ ROADMAP.md
-│  ├─ PROMPTS.md
+│  ├─ notes/legacy-stage-contracts.md
 │  ├─ CONTEXT_COMPATIBILITY.md
 │  ├─ DATA_MODEL.md
 │  ├─ OCR_PIPELINE.md
