@@ -44,11 +44,9 @@ Android/iOS product runtime evidence фиксируется отдельно. Б
   команды, exit verdict и результаты privacy/negative checks без
   пользовательских изображений или secrets. Это разблокирует terminal
   native/platform gates R05; backend E2E остаётся отдельным blocker.
-- `USER-RSU-STAGES-INTEGRATION` — `PENDING`, condition: isolated
-  `feature/docs-stages-canonical` commit/push, compatibility matrix,
-  archival preservation и structural checks готовы. Действие: разрешить
-  merge этой точной ветки в `main` после review неизменных mobile code/tests.
-  Ожидаемое evidence: clean main ancestry, GitHub default branch
-  содержит `docs/STAGES.md`, но не `prompts/STAGES.md`, `docs/AI_PLAN.md`
-  и `docs/AI_STATUS.md`; canonical adapter выбирает R05,
-  `implemented_unverified` и NEXT. Это разблокирует единый live state owner.
+- `USER-RSU-STAGES-INTEGRATION` — `DONE`: пользователь разрешил merge
+  `feature/docs-stages-canonical`; `main` fast-forward до `a3c18c0` и
+  опубликован. GitHub read-back подтвердил только `docs/STAGES.md` из
+  четырёх state paths; canonical adapter выбирает R05,
+  `implemented_unverified` и NEXT. Platform action выше остаётся
+  `PENDING`; Flutter tests не повторены на этом host.
